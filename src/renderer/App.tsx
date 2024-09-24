@@ -1,9 +1,9 @@
-import React from 'react'
-
+import Login from './pages/login'
 function App(): JSX.Element {
   return (
     <>
-      <h1>Hello World</h1>
+      <div className="App">Electron-Vite-React-App</div>
+      <Login></Login>
     </>
   )
 }

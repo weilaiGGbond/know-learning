@@ -1,6 +1,5 @@
-import './assets/main.css'
-
 import React from 'react'
+import './assets/base.css'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import { ConfigProvider } from 'antd'
