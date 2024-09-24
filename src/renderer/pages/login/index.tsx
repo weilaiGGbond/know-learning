@@ -1,8 +1,12 @@
 import { Input, Flex, Button, Radio, Divider } from 'antd'
 import { WechatOutlined, KeyOutlined, GithubOutlined } from '@ant-design/icons'
 import logo from '@renderer/assets/logo.png'
+import {useNavigate} from'react-router-dom'
 
 function login(): JSX.Element {
+  const gotoHome = () => {
+  
+  }
   return (
     <div>
       <div className="px-10 py-5">
@@ -20,7 +24,7 @@ function login(): JSX.Element {
               <Input placeholder="6位短信验证码" className="h-10" />
               <Button className="h-10">获取验证码</Button>
             </Flex>
-            <Button className="h-10 bg-blue-100 duration-500" type="primary">
+            <Button className="h-10 bg-blue-100 duration-500" type="primary" onClick={gotoHome}>
               登录 / 注册
             </Button>
           </Flex>
