@@ -1,23 +1,30 @@
-import { createBrowserRouter } from "react-router-dom";
-import Login from "@renderer/pages/login";
-import Home from "@renderer/pages/home/index";
-import UserHome from "@renderer/pages/user/userHome";
+// src/router/index.ts
+import { createBrowserRouter } from 'react-router-dom'
+import Home from '@renderer/pages/home'
+import Login from '@renderer/pages/login'
+import Asset from '@renderer/pages/assets'
 import Test from "@renderer/pages/test/index";
 import MemorandumIndex from '@renderer/pages/memorandum/index'
 
 const router = createBrowserRouter([
-    {
-        path: '/login',
-        element: <Login />
-    },
-    {
-        path: '/home',
+  {
+    path: '/',
+    element: <Home />,
+    children: [
+      {
+        path: 'welcome',
         element: <Home />
-    },
-    {
-        path: '/userhome',
-        element: <UserHome />
-    },
+      },
+      {
+        path: 'my-course',
+        element: <Asset />
+      }
+    ]
+  },
+  {
+    path: '/login',
+    element: <Login />
+  },
     {
         path: '/test',
         element: <Test />
@@ -26,11 +33,10 @@ const router = createBrowserRouter([
         path: '/memorandum',
         element: <MemorandumIndex />
     },
-    {
-        path: '*',
-        element: <Login />
-    },
+  {
+    path: '*',
+    element: <Login /> // 捕获所有未匹配的路由
+  }
 ])
+
 export default router
-
-

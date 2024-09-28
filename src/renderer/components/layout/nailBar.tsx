@@ -3,7 +3,6 @@ import { Layout, Modal } from 'antd'
 import '@renderer/styles/layout/nailbar.scss'
 const { Header, Footer, Sider, Content } = Layout;
 import Icon from '@renderer/assets/icon.png';
-import '@renderer/styles/layout/nailbar.scss'
 import React from 'react';
 const { confirm } = Modal;
 const NailBar = (props): JSX.Element => {

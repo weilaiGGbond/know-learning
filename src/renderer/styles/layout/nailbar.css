@@ -1,7 +1,9 @@
 .nailbarMain {
   width: 100%;
   position: sticky;
-  z-index: 5;
+  top: 0;
+  z-index: 10000;
+  background-color: #f5f5f5;
 }
 
 .leftIcon {
