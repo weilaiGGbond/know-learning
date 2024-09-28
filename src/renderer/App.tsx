@@ -1,7 +1,8 @@
-import Login from './pages/login'
+import NailBar from './components/layout/nailBar';
 function App(): JSX.Element {
   return (
     <>
+    <NailBar/>
     </>
   )
 }
