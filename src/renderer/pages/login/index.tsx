@@ -1,7 +1,6 @@
 import { Input, Flex, Button, Radio, Divider } from 'antd'
 import { WechatOutlined, KeyOutlined, GithubOutlined } from '@ant-design/icons'
 import logo from '@renderer/assets/logo.png'
-import {useNavigate} from'react-router-dom'
 
 function login(): JSX.Element {
   const gotoHome = () => {
