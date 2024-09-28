@@ -28,6 +28,10 @@ function Home(): JSX.Element {
   const gotoUser=()=>{
     navigate('/userhome')
   }
+  const gotoTest=()=>{
+    navigate('/test')
+  }
+
   return (
     <div>
       <NailBar>
@@ -36,6 +40,9 @@ function Home(): JSX.Element {
       <div>
         <div className='userHomecolor'>
           <button onClick={gotoUser}>点击去个人中心页</button>          
+        </div>
+        <div className='userHomecolor'>
+          <button onClick={gotoTest}>点击去考试页</button>          
         </div>
       </div>
     </div>
