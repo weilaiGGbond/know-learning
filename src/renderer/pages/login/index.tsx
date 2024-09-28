@@ -1,13 +1,16 @@
 import { Input, Flex, Button, Radio, Divider } from 'antd'
-import { WechatOutlined, KeyOutlined, GithubOutlined } from '@ant-design/icons'
+import { WechatOutlined, KeyOutlined, GithubOutlined, SwitcherOutlined } from '@ant-design/icons'
 import logo from '@renderer/assets/logo.png'
-
-function login(): JSX.Element {
+import { useNavigate } from 'react-router-dom'
+import NailBar from '@renderer/components/layout/nailBar'
+const Login = (): JSX.Element => {
+  const navigate = useNavigate()
   const gotoHome = () => {
-  
+    navigate('/home')
   }
   return (
     <div>
+      <NailBar />
       <div className="px-10 py-5">
         <Flex vertical justify="center">
           <img src={logo} alt="logo" className="w-32" />
@@ -54,4 +57,4 @@ function login(): JSX.Element {
   )
 }
 
-export default login
+export default Login
