@@ -1,6 +1,6 @@
 import NailBar from '@renderer/components/layout/nailBar'
 import React from 'react'
-import '@renderer/styles/test/index.scss'
+import '@renderer/assets/styles/test/index.scss'
 import { Button } from 'antd'
 import icon from '@renderer/assets/icon.png'
 import { useNavigate } from 'react-router-dom'

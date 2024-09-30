@@ -1,6 +1,6 @@
 import NailBar from '@renderer/components/layout/nailBar'
 import React from 'react'
-import '@renderer/styles/test/index.scss'
+import '@renderer/assets/styles/test/index.scss'
 import PreTest from '@renderer/components/test/preTest'
 
 const Test = (): JSX.Element => {

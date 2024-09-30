@@ -7,15 +7,6 @@
   border-radius: 6px;
 }
 
-.memorandum::-webkit-scrollbar {
-  width: 6px;
-}
-
-.memorandum::-webkit-scrollbar-thumb {
-  background-color: #d5e3ed;
-  border-radius: 10px;
-}
-
 .memorandum__main {
   width: 95%;
   margin: 0 auto;
@@ -40,9 +31,31 @@
 
 .memorandum__main-right-conten {
   background-color: #e6f4ff;
-  height: 20px;
   border-radius: 6px;
   margin-top: 20px;
+}
+
+.memorandumright {
+  padding: 6px 10px;
+}
+
+.memorandumright__titleSize {
+  font-size: 17px;
+}
+
+.memorandumright__contenSize {
+  font-size: 15px;
+  padding-top: 5px;
+  padding-bottom: 6px;
+}
+
+.memorandumright__contenSize:hover {
+  cursor: pointer;
+  color: #3d6cb8;
+}
+
+:where(.css-dev-only-do-not-override-qnu6hi).ant-radio-button-wrapper:last-child {
+  display: none;
 }
 
 .events {
@@ -66,4 +79,10 @@
 
 .notes-month section {
   font-size: 28px;
+}
+
+.memorandumlist {
+  height: 80vh;
+  overflow-y: scroll;
+  padding: 10px 10px;
 }

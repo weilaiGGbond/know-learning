@@ -6,11 +6,10 @@ import NailBar from '@renderer/components/layout/nailBar'
 const Login = (): JSX.Element => {
   const navigate = useNavigate()
   const gotoHome = () => {
-    navigate('/home')
+    navigate('/test')
   }
   return (
     <div>
-      <NailBar />
       <div className="px-10 py-5">
         <Flex vertical justify="center">
           <img src={logo} alt="logo" className="w-32" />

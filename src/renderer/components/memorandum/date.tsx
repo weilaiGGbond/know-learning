@@ -1,5 +1,6 @@
 import { Badge, Calendar } from 'antd';
 import React from 'react'
+import moment from'moment'
 
 const Datedum = (): JSX.Element => {
     function monthCellRender(value) {
@@ -60,7 +61,8 @@ const Datedum = (): JSX.Element => {
     }      
     return (
         <div>
-            <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} />,
+            <Calendar validRange={[moment(new Date()),moment().add(0, 'days')]}
+            dateCellRender={dateCellRender} monthCellRender={null}  mode={"month"}/>,
         </div>
     )
 }

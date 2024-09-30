@@ -1,0 +1,28 @@
+.AssetIndex .ant-card-body {
+  padding: 10px;
+}
+
+.assetContainer :where(.css-dev-only-do-not-override-qnu6hi).ant-affix {
+  padding-block-start: 55px;
+}
+
+:where(.css-dev-only-do-not-override-1wmv0zb).ant-drawer .ant-drawer-mask {
+  position: fixed !important;
+}
+
+.ant-drawer-content-wrapper {
+  position: fixed !important;
+}
+
+#test-pro-layout .ant-pro-layout .ant-layout-header.ant-pro-layout-header-fixed-header {
+  inset-block-start: 30px;
+}
+
+.srollBar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.srollBar::-webkit-scrollbar-thumb {
+  background-color: #d5e3ed;
+  border-radius: 10px;
+}

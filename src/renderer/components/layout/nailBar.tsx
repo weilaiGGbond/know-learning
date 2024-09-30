@@ -1,6 +1,6 @@
 import { CloseOutlined, ExpandOutlined, MinusOutlined } from '@ant-design/icons'
 import { Layout, Modal } from 'antd'
-import '@renderer/styles/layout/nailbar.scss'
+import '@renderer/assets/styles/layout/nailbar.scss'
 const { Header, Footer, Sider, Content } = Layout;
 import Icon from '@renderer/assets/icon.png';
 import React from 'react';

@@ -4,16 +4,6 @@
     padding-top: 10px;
     overflow-y: scroll;
     height: 95vh;
-
-    &::-webkit-scrollbar {
-        width:6px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: #d5e3ed;
-        border-radius: 10px;
-    }
-
     border-radius: 6px;
 
     &__main {
@@ -26,23 +16,42 @@
         &-left {
             width: 70%;
         }
+
         &-right {
             color: rgb(70, 69, 69);
             width: 28%;
             padding: 10px 8px;
+
             &-title {
-                font-size:25px;
+                font-size: 25px;
             }
+
             &-conten {
                 background-color: #e6f4ff;
-                height: 20px;
                 border-radius: 6px;
                 margin-top: 20px;
             }
         }
     }
 }
-
+.memorandumright{
+    padding: 6px 10px;
+    &__titleSize{
+        font-size: 17px;
+    }
+    &__contenSize{
+        font-size: 15px;
+        padding-top: 5px;
+        padding-bottom: 6px;
+        &:hover{
+            cursor: pointer;
+            color: rgb(61, 108, 184);
+        }
+    }
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-radio-button-wrapper:last-child {
+    display: none; 
+}
 .events {
     list-style: none;
     margin: 0;
@@ -64,4 +73,9 @@
 
 .notes-month section {
     font-size: 28px;
+}
+.memorandumlist{
+    height: 80vh;
+    overflow-y:scroll;
+    padding: 10px 10px;
 }
