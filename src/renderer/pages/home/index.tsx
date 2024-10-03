@@ -17,7 +17,6 @@ import tps from '@renderer/assets/tps.png'
 import { props } from './setting'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import '@renderer/assets/styles/common.scss'
-import NailBar from '@renderer/components/layout/nailBar'
 
 function Home(): JSX.Element {
   const settings: ProSettings | undefined = {

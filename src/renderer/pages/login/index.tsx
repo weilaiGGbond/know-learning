@@ -2,7 +2,7 @@ import { Input, Flex, Button, Radio, Divider } from 'antd'
 import { WechatOutlined, KeyOutlined, GithubOutlined } from '@ant-design/icons'
 import logo from '@renderer/assets/logo.png'
 import { useNavigate } from 'react-router-dom'
-import NailBar from '@renderer/components/layout/nailBar'
+
 const Login = (): JSX.Element => {
   const navigate = useNavigate()
   const gotoHome = () => {
@@ -10,7 +10,6 @@ const Login = (): JSX.Element => {
   }
   return (
     <div>
-      <NailBar />
       <div className="px-10 py-5">
         <Flex vertical justify="center">
           <img src={logo} alt="logo" className="w-32" />
