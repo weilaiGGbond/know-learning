@@ -7,6 +7,7 @@ import zhCN from 'antd/es/locale/zh_CN'
 import 'tailwindcss/tailwind.css'
 import router from './router'
 import { RouterProvider } from 'react-router-dom'
+import '@renderer/assets/styles/common.scss'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

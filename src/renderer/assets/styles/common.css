@@ -21,8 +21,7 @@
 .srollBar::-webkit-scrollbar {
   width: 6px;
 }
-
 .srollBar::-webkit-scrollbar-thumb {
   background-color: #d5e3ed;
   border-radius: 10px;
-}
+}/*# sourceMappingURL=common.css.map */
