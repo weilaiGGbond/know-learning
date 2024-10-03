@@ -36,6 +36,7 @@ const router = createBrowserRouter([
     element: <MemorandumIndex />
   },
   {
+    
     path: '/message',
     element: <Message />,
     children: [
