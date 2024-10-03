@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 const Login = (): JSX.Element => {
   const navigate = useNavigate()
   const gotoHome = () => {
-    navigate('/home')
+    navigate('/test')
   }
   return (
     <div>

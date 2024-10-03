@@ -1,0 +1,92 @@
+.memorandum {
+    background-color: #f2f2f2;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    overflow-y: scroll;
+    height: 95vh;
+    border-radius: 6px;
+
+    &__main {
+        width: 95%;
+        margin: 0 auto;
+        border-radius: 6px;
+        background-color: white;
+        display: flex;
+
+        &-left {
+            width: 70%;
+        }
+
+        &-right {
+            color: rgb(70, 69, 69);
+            width: 28%;
+            padding: 10px 8px;
+
+            &-title {
+                font-size: 25px;
+            }
+
+            &-conten {
+                background-color: #e6f4ff;
+                border-radius: 6px;
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
+.memorandumright {
+    padding: 6px 10px;
+
+    &__titleSize {
+        font-size: 17px;
+    }
+
+    &__contenSize {
+        font-size: 15px;
+        padding-top: 5px;
+        padding-bottom: 6px;
+
+        &:hover {
+            cursor: pointer;
+            color: rgb(61, 108, 184);
+        }
+    }
+}
+
+:where(.css-dev-only-do-not-override-qnu6hi).ant-radio-button-wrapper:last-child {
+    display: none;
+}
+
+.events {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.events .ant-badge-status {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    text-overflow: ellipsis;
+    font-size: 12px;
+}
+
+.notes-month {
+    text-align: center;
+    font-size: 28px;
+}
+
+.notes-month section {
+    font-size: 28px;
+}
+
+.memorandumlist {
+    max-height: 90vh;
+    overflow-y: scroll;
+    padding: 10px 10px;
+}
+.memorandumSearch{
+    margin-top: 10px;
+    padding: 6px;
+}
