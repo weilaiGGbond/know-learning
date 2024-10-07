@@ -76,3 +76,27 @@
         transform: scale(1); 
     }
 }
+.rightDraw{
+    padding-top: 20px;
+}
+.drawBtnShare{
+    float: right;
+}
+.peopleTitle{
+    float: right;
+}
+.grouplistMain{
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px dashed #1677ff;
+}
+.ant-descriptions-header{
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #1677ff;
+}
+.groupList{
+    display: flex;
+    &__avater{
+        margin-left: 10px;
+    }
+}
