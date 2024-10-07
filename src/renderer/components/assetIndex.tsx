@@ -10,8 +10,8 @@ function AssetIndex(): JSX.Element {
         className="AssetIndex"
         style={{ width: 200 }}
         cover={
-          <div className="w-100% h-24 overflow-hidden">
-            <img alt="example" className="w-100%" src={example} />
+          <div className="w-full h-24 overflow-hidden">
+            <img alt="example" className="w-full" src={example} />
           </div>
         }
       >

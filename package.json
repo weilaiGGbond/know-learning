@@ -28,6 +28,7 @@
     "antd": "^5.20.6",
     "electron-updater": "^6.1.7",
     "moment": "^2.30.1",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.26.2",
     "reqwest": "^2.0.5"
   },

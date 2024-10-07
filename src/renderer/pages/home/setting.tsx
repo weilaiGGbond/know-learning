@@ -1,5 +1,6 @@
 import { CrownFilled, SmileFilled, TabletFilled } from '@ant-design/icons'
 import Asset from '../assets'
+import PersonCenter from '../user'
 interface RouteItem {
   path: string
   name?: string
@@ -27,6 +28,12 @@ const route: RouteItem = {
       icon: <TabletFilled />,
       path: 'list',
       component: Asset
+    },
+    {
+      name: '个人中心',
+      icon: <TabletFilled />,
+      path: 'person',
+      component: PersonCenter
     }
   ]
 }
