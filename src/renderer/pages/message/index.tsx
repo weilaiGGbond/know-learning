@@ -6,6 +6,11 @@ import ListMessage from '@renderer/components/message/listMessage'
 import MessagePeople from '@renderer/components/message/messPeople'
 import { Route, Routes } from 'react-router-dom'
 const Message = (): JSX.Element => {
+    const contact = {
+        id: 1,
+        name: '张三',
+        avatar: 'https://example.com/avatar.jpg', // 替换为实际头像链接
+    };
     return (
         <div>
             <div className='message'>
@@ -22,13 +27,17 @@ const Message = (): JSX.Element => {
                     </div>
                     <div className='message__main-right'>
                         <Routes>
-                            <Route path='/message' element={
+                            <Route path='/' element={
                                 <div className='message__main-right-iconmessage'>
                                     <img src={emptyMessage} alt="" />
+                                    <p>
+                                        暂无消息
+                                    </p>
                                 </div>
-
                             } />
-                            <Route path='/message/people' element={<MessagePeople />} />
+                            <Route path='/people' element={<MessagePeople contact={contact} >
+                            </MessagePeople>
+                            } />
                         </Routes>
                     </div>
 
