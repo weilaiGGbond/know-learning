@@ -32,7 +32,7 @@ function createWindow(): void {
   }
 
   // IPC listeners
-  ipcMain.on('maximize-window', (event) => {
+  ipcMain.on('maximize-window', (_) => {
     const win = BrowserWindow.getFocusedWindow()
     if (win) {
       if (win.isMaximized()) {
@@ -43,14 +43,14 @@ function createWindow(): void {
     }
   })
 
-  ipcMain.on('minimize-window', (event) => {
+  ipcMain.on('minimize-window', (_) => {
     const win = BrowserWindow.getFocusedWindow()
     if (win) {
-      win.hide()
+      win.minimize()
     }
   })
 
-  ipcMain.on('close-window', (event) => {
+  ipcMain.on('close-window', (_) => {
     mainWindow.close()
   })
 }

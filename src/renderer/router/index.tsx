@@ -7,9 +7,12 @@ import Test from '@renderer/pages/test/index'
 import MemorandumIndex from '@renderer/pages/memorandum/index'
 import Message from '@renderer/pages/message'
 import MessagePeople from '@renderer/components/message/messPeople'
+import Course from '@renderer/pages/course'
 import PersonCenter from '@renderer/pages/user'
+import AssetList from '@renderer/pages/course/assets'
+// import MessagePeople from '@renderer/components/message/messPeople'
 const router = createBrowserRouter([
-  {/*  */
+  {
     path: '/',
     element: <Home />,
     children: [
@@ -24,6 +27,20 @@ const router = createBrowserRouter([
       {
         path: 'person',
         element: <PersonCenter />
+      },
+      {
+        path: 'course',
+        element: <Course />,
+        children: [
+          {
+            path: 'assetList',
+            element: <AssetList />
+          },
+          {
+            path: 'message',
+            element: <Message />
+          }
+        ]
       }
     ]
   },
@@ -31,6 +48,7 @@ const router = createBrowserRouter([
     path: '/login',
     element: <Login />
   },
+
   {
     path: '/test',
     element: <Test />
@@ -38,16 +56,6 @@ const router = createBrowserRouter([
   {
     path: '/memorandum',
     element: <MemorandumIndex />
-  },
-  {
-    path: '/message',
-    element: <Message />,
-    children: [
-      {
-        path: 'people',
-        element: <Message />
-      }
-    ]
   },
   {
     path: '*',
