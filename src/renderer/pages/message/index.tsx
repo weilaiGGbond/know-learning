@@ -13,6 +13,7 @@ const Message = (): JSX.Element => {
     };
     return (
         <div>
+            
             <div className='message'>
                 <div className='message__main srollBar'>
                     <div className='message__main-left'>

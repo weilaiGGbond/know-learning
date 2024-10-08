@@ -46,7 +46,7 @@ function createWindow(): void {
   ipcMain.on('minimize-window', (event) => {
     const win = BrowserWindow.getFocusedWindow()
     if (win) {
-      win.hide()
+      win.minimize()
     }
   })
 

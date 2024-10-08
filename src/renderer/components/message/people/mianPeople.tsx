@@ -10,6 +10,8 @@ export default function MianPeople({ contact }) {
     const [placement] = useState<DrawerProps['placement']>('right')
 
     const showDrawer = () => {
+        console.log('02222');
+        
         setOpen(true);
     };
 
