@@ -3,7 +3,11 @@
     padding: 10px;
   }
 }
-
+.course-detail {
+  .ant-layout-header {
+    -webkit-app-region: no-drag;
+  }
+}
 .ant-layout-header {
   -webkit-app-region: drag;
   .ant-menu-title-content,
