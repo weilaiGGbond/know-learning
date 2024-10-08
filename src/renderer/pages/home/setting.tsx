@@ -2,6 +2,7 @@ import { CrownFilled, SmileFilled, TabletFilled } from '@ant-design/icons'
 import Asset from '../assets'
 import PersonCenter from '../user'
 import Course from '../course'
+import NoticeSystem from '../notice'
 interface RouteItem {
   path: string
   name?: string
@@ -45,8 +46,7 @@ const route: RouteItem = {
       name: '通知',
       icon: <TabletFilled />,
       path: 'notify',
-
-      component: Course
+      component: NoticeSystem
     }
   ]
 }
