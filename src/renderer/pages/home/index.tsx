@@ -28,7 +28,9 @@ function Home(): JSX.Element {
   const { route } = props
   console.log(route)
   const gotoMessage = () => {
-    navigate('/message')
+    console.log('111114444');
+    
+    navigate('/notify')
   }
   const maxSizeMethods = () => {
     window.api.maximizeWindow()
@@ -125,7 +127,7 @@ function Home(): JSX.Element {
               <div
                 className="h-6 w-[1.5px] bg-[#ccc] mx-2"
                 style={{ pointerEvents: 'none', paddingInline: 0 }}
-              ></div> /*  */,
+              ></div>,
               <MinusOutlined className="dragger" onClick={minimizeMethods} />,
               <ExpandOutlined className="dragger" onClick={maxSizeMethods} />,
               <CloseOutlined className="dragger" onClick={closeMethods} />

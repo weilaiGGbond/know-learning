@@ -41,6 +41,12 @@ const route: RouteItem = {
       icon: <TabletFilled />,
       path: 'course',
       component: Course
+    }, {
+      name: '通知',
+      icon: <TabletFilled />,
+      path: 'notify',
+
+      component: Course
     }
   ]
 }

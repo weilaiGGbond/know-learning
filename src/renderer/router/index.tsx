@@ -10,6 +10,7 @@ import MessagePeople from '@renderer/components/message/messPeople'
 import Course from '@renderer/pages/course'
 import PersonCenter from '@renderer/pages/user'
 import AssetList from '@renderer/pages/course/assets'
+import NoticeSystem from '@renderer/pages/notice/index'
 // import MessagePeople from '@renderer/components/message/messPeople'
 const router = createBrowserRouter([
   {
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
             element: <Message />
           }
         ]
+      },
+      {
+        path:'notify',
+        element: <NoticeSystem />
+
       }
     ]
   },
