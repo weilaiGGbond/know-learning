@@ -1,0 +1,37 @@
+.notifyMain {
+  width: 100%;
+  height: 84vh;
+  position: relative;
+  background-color: white;
+  padding: 6px;
+  border-radius: 6px;
+  overflow-y: scroll;
+}
+
+.notifyMain::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notifyMain::-webkit-scrollbar-thumb {
+  background-color: #d5e3ed;
+  border-radius: 10px;
+}
+
+.notifyMain__title {
+  position: relative;
+  padding: 10px;
+}
+
+.notifyMain__title-flex {
+  position: sticky;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkBox {
+  margin-right: 10px;
+  position: relative;
+  top: -5px;
+}

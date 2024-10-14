@@ -47,21 +47,21 @@ const router = createBrowserRouter([
         path:'notify',
         element: <NoticeSystem />
 
-      }
+      },
+      {
+        path:'test',
+        element: <Test />
+
+      },
+      {
+        path: '/memorandum',
+        element: <MemorandumIndex />
+      },
     ]
   },
   {
     path: '/login',
     element: <Login />
-  },
-
-  {
-    path: '/test',
-    element: <Test />
-  },
-  {
-    path: '/memorandum',
-    element: <MemorandumIndex />
   },
   {
     path: '*',

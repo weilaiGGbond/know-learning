@@ -3,6 +3,8 @@ import Asset from '../assets'
 import PersonCenter from '../user'
 import Course from '../course'
 import NoticeSystem from '../notice'
+import Test from '../test'
+import MemorandumIndex from '../memorandum'
 interface RouteItem {
   path: string
   name?: string
@@ -43,10 +45,15 @@ const route: RouteItem = {
       path: 'course',
       component: Course
     }, {
-      name: '通知',
-      icon: <TabletFilled />,
       path: 'notify',
       component: NoticeSystem
+    }, {
+      path: 'test',
+      component: Test
+    },
+    , {
+      path: 'memorandum',
+      component: MemorandumIndex
     }
   ]
 }

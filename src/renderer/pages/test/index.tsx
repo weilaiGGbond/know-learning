@@ -6,7 +6,6 @@ import PreTest from '@renderer/components/test/preTest'
 const Test = (): JSX.Element => {
     return (
         <div>
-            <NailBar />
             <PreTest typeTitle='考试'>
                 <div className='testMain__conten'>
                     <div className='testMain__mainConten'>
