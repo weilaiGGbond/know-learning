@@ -8,12 +8,20 @@ import 'tailwindcss/tailwind.css'
 import router from './router'
 import { RouterProvider } from 'react-router-dom'
 import '@renderer/assets/styles/common.scss'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import store, { persistor } from './store'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ConfigProvider locale={zhCN}>
-      <App />
-      <RouterProvider router={router}/>
-    </ConfigProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <ConfigProvider locale={zhCN}>
+          <App />
+          <RouterProvider router={router} />
+        </ConfigProvider>
+      </PersistGate>
+    </Provider>
+    ,
   </React.StrictMode>
 )

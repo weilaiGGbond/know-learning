@@ -28,8 +28,8 @@ function Home(): JSX.Element {
   const { route } = props
   console.log(route)
   const gotoMessage = () => {
-    console.log('111114444');
-    
+    console.log('111114444')
+
     navigate('/notify')
   }
   const maxSizeMethods = () => {
@@ -196,16 +196,18 @@ function Home(): JSX.Element {
         }}
         // menuItemRender={(item, dom) => <Link to={item.path}>{dom}</Link>}
         onMenuHeaderClick={(e) => console.log(e)}
-        menuItemRender={(item, dom) => (
-          <div
-            onClick={() => {
-              setPathname(item.path || '/welcome')
-              navigate(item.path || '/welcome') // 路由跳转
-            }}
-          >
-            {dom}
-          </div>
-        )}
+        menuItemRender={(item, dom) =>
+          item.display === false ? null : (
+            <div
+              onClick={() => {
+                setPathname(item.path || '/welcome')
+                navigate(item.path || '/welcome') // 路由跳转
+              }}
+            >
+              {dom}
+            </div>
+          )
+        }
         {...settings}
       >
         <PageContainer title={false}>
