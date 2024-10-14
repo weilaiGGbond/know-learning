@@ -50,7 +50,7 @@ const Course = (): JSX.Element => {
           }))}
         />
       </div>
-      <div className="flex flex-col flex-grow h-full">
+      <div className="flex flex-col flex-grow h-full w-full">
         <div className="p-2 flex-1 h-full">
           {/* 占据剩余高度 */}
           {currentComponent}

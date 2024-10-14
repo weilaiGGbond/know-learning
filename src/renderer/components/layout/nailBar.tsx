@@ -14,15 +14,9 @@ const NailBar = (props): JSX.Element => {
   }
 
   const closeMethods = () => {
-    confirm({
-      title: '退出程序',
-      content: '确定要退出程序吗',
-      onOk() {
-        window.api.closeWindow()
-      },
-      onCancel() {}
-    })
+    window.api.closeLoginWindow();
   }
+
   // let slotElement = [];
 
   // let { children } = props;
@@ -48,12 +42,6 @@ const NailBar = (props): JSX.Element => {
         </Content>
         <Sider className="rightWindow">
           <div className="rightWindow__list">
-            {/* <div onClick={sizeWindow}>
-                            {slotElement}
-                        </div> */}
-
-            <MinusOutlined className="rightWindow__list-icon" onClick={minimizeMethods} />
-            <ExpandOutlined className="rightWindow__list-icon" onClick={maxSizeMethods} />
             <CloseOutlined className="rightWindow__list-icon" onClick={closeMethods} />
           </div>
         </Sider>
