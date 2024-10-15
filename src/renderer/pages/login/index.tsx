@@ -1,12 +1,17 @@
 import { Input, Flex, Button, Divider, Checkbox } from 'antd'
-import { WechatOutlined, GithubOutlined, SafetyCertificateFilled } from '@ant-design/icons'
+import {
+  WechatOutlined,
+  GithubOutlined,
+  SafetyCertificateFilled,
+  EyeTwoTone,
+  EyeInvisibleOutlined
+} from '@ant-design/icons'
 import logo from '@renderer/assets/logo.png'
 import { useNavigate } from 'react-router-dom'
 import NailBar from '@renderer/components/layout/nailBar'
 import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { login } from '@renderer/api/login'
-
 import { setToken } from '@renderer/store/reducers/person'
 const Login = (): JSX.Element => {
   const navigate = useNavigate()
@@ -32,6 +37,13 @@ const Login = (): JSX.Element => {
     if (isChecked) {
       login({ username: userName, password }).then((res) => {
         console.log(res)
+
+        dispatch(setToken(res.data.token))
+        // 关闭登录、
+        window.api.openWindow()
+        window.api.closeLoginWindow()
+        // 打开主界面
+        navigate('/')
       })
     }
   }
@@ -57,12 +69,13 @@ const Login = (): JSX.Element => {
                 onChange={handleUserNameChange}
               />
               <Flex gap={12}>
-                <Input
+                <Input.Password
                   placeholder="请输入用户密码"
                   className="h-10"
                   type="password"
                   value={password}
                   onChange={handlePasswordChange}
+                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                 />
               </Flex>
               <Button

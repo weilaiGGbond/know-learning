@@ -97,11 +97,12 @@ app.whenReady().then(() => {
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
-  ipcMain.on('open-login-window', () => {
-    if (!loginWindow) {
-      createLoginWindow()
+  ipcMain.on('open-main-window', () => {
+    if (!mainWindow) {
+      createWindow()
     }
   })
+
   ipcMain.on('close-login-window', () => {
     if (loginWindow) {
       loginWindow.close()
