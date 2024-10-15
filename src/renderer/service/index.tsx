@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, InternalAxiosRequestConfig, Canceler } from 'axios'
-import { notification, Spin } from 'antd'
+import { message, Spin } from 'antd'
 import { getTokenAuth } from '@renderer/utils/auth'
 interface CustomOptions {
   loading: boolean
@@ -25,7 +25,7 @@ async function myAxios(axiosConfig: AxiosRequestConfig, customOptions?: Partial<
     repeat_request_cancel: true,
     reduct_data_format: true,
     error_message_show: true,
-    code_message_show: false,
+    code_message_show: true,
     ...customOptions
   }
   service.interceptors.request.use(
@@ -40,7 +40,7 @@ async function myAxios(axiosConfig: AxiosRequestConfig, customOptions?: Partial<
           loadingInstance._target = <Spin />
         }
       }
-      if (getTokenAuth() && config.url !== '/login') {
+      if (getTokenAuth() && config.url !== '/user/login') {
         config.headers.Authorization = getTokenAuth()
       }
       return config
@@ -51,11 +51,10 @@ async function myAxios(axiosConfig: AxiosRequestConfig, customOptions?: Partial<
     (response) => {
       removePending(response.config)
       if (custom_options.loading) closeLoading(custom_options)
-      if (custom_options.code_message_show && response.data && response.data.code !== 0) {
-        notification.error({
-          message: '错误',
-          description: response.data.message
-        })
+      if (custom_options.code_message_show && response.data && response.data.code !== 20000) {
+
+        message.error(response.data.errMsg)
+
         return Promise.reject(response.data)
       }
       return custom_options.reduct_data_format ? response.data : response
@@ -151,10 +150,9 @@ function httpErrorStatusHandle(error: any) {
   if (error.message.includes('timeout')) messageString = '网络请求超时！'
   if (error.message.includes('Network'))
     messageString = window.navigator.onLine ? '服务端异常！' : '您断网了！'
-  notification.error({
-    message: '错误',
-    description: messageString
-  })
+  message.error(messageString)
+
+
 }
 
 export default myAxios
