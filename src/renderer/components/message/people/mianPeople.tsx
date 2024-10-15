@@ -1,20 +1,21 @@
 //右边弹出框
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Drawer, Button, Radio, DrawerProps, Space, Avatar, Descriptions, RadioChangeEvent } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import '@renderer/assets/styles/message/index.scss'
 import AddNew from './addNew';
 import GroupList from '../group/groupList';
+import { getInvite } from '@renderer/api/teacher';
 export default function MianPeople({ contact }) {
     const [open, setOpen] = useState(false);
     const [placement] = useState<DrawerProps['placement']>('right')
+    const [QRstring, setQRstring] = useState('');
+    const [lessonId] = useState(1);
 
     const showDrawer = () => {
-        console.log('02222');
-        
+       
         setOpen(true);
     };
-
     const onClose = () => {
         setOpen(false);
     };
@@ -48,7 +49,7 @@ export default function MianPeople({ contact }) {
                 className='rightDraw'
             >
                 <div>
-                  <GroupList/>
+                    <GroupList />
                 </div>
             </Drawer>
         </div>

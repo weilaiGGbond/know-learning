@@ -1,10 +1,14 @@
 import { Avatar, Badge, Button, Input, List, Modal, Radio } from 'antd';
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import icon from '@renderer/assets/img/image.png'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { getInvite } from '@renderer/api/teacher/index'
 export default function AddNew() {
     const { Search } = Input;
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [QRstring, setQRstring] = useState('');
+    const [lessonId] = useState(1);
+
     const data = [
         {
             title: '鹤归江野',
@@ -28,15 +32,24 @@ export default function AddNew() {
         },
     ];
     const showModal = () => {
+        console.log('14444');
+        
+        getInvitedData()
+
         setIsModalOpen(true);
     };
+    const getInvitedData=async ()=>{
+        const invitedData=await getInvite({lessonId})
+        console.log(invitedData);
+        
+    }
     const { confirm } = Modal;
     const handleOk = () => {
         confirm({
             title: '邀请入群',
             content: '确定邀请入群吗',
             okText: '确定',
-          cancelText: '取消',
+            cancelText: '取消',
             onOk() {
                 setIsModalOpen(false);
                 console.log('OK');
