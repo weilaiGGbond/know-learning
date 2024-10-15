@@ -21,9 +21,12 @@ const personSlice = createSlice({
     setToken: (state, action) => {
       console.log(action, action.payload)
       state.token = action.payload
+    },
+    clearToken: (state) => {
+      state.token = ''
     }
   }
 })
 
-export const { setToken, decrement } = personSlice.actions
+export const { setToken, clearToken } = personSlice.actions
 export default personSlice.reducer

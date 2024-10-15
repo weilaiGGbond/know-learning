@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import NailBar from '@renderer/components/layout/nailBar'
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { login } from '@renderer/api/login'
+
 import { setToken } from '@renderer/store/reducers/person'
 const Login = (): JSX.Element => {
   const navigate = useNavigate()
@@ -28,8 +30,9 @@ const Login = (): JSX.Element => {
 
   const handleLogin = () => {
     if (isChecked) {
-      console.log(userName, password)
-      dispatch(setToken(userName))
+      login({ username: userName, password }).then((res) => {
+        console.log(res)
+      })
     }
   }
 

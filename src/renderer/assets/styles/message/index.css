@@ -4,7 +4,6 @@
   padding-bottom: 10px;
   padding-top: 10px;
 }
-
 .message__main {
   background-color: rgba(255, 255, 255, 0.5);
   height: 94vh;
@@ -14,37 +13,31 @@
   display: flex;
   overflow-y: scroll;
 }
-
 .message__main-left {
   width: 20%;
   height: 100%;
   border-right: 1px dashed #a0cceb;
 }
-
 .message__main-left-title {
   background-color: white;
-  color: #727070;
+  color: rgb(114, 112, 112);
   padding: 10px 8px;
   font-size: 13px;
 }
-
 .message__main-left-content {
   height: 100%;
   overflow-y: scroll;
 }
-
 .message__main-right {
   width: 80%;
   height: 100%;
 }
-
 .message__main-right-iconmessage {
   width: 40%;
   margin: 0 auto;
   text-align: center;
-  color: #b7b6b6;
+  color: rgb(183, 182, 182);
 }
-
 .message__main-right-iconmessage img {
   width: 100%;
   height: 100%;
@@ -57,7 +50,6 @@
 .hoverIcon {
   position: relative;
 }
-
 .hoverIcon__icon {
   display: none;
   position: absolute;
@@ -71,7 +63,6 @@
 .hoverIcon:hover {
   cursor: pointer;
 }
-
 .hoverIcon:hover .hoverIcon__icon {
   display: block;
   opacity: 1;
@@ -104,7 +95,6 @@
 .groupList {
   display: flex;
 }
-
 .groupList__avater {
   margin-left: 10px;
-}
+}/*# sourceMappingURL=index.css.map */

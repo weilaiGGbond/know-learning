@@ -14,8 +14,8 @@ const electronHandler = {
     },
 
     getStoreValue(key: any) {
-      const resp = ipcRenderer.sendSync('getStore', key)
-      return resp
+      const res = ipcRenderer.send('getStore', key)
+      return res
     },
 
     deleteStore(key: any) {
@@ -40,4 +40,6 @@ if (process.contextIsolated) {
   window.electron = electronAPI
   // @ts-ignore (define in dts)
   window.api = api
+  // @ts-ignore (define in dts)
+  window.store = electronHandler
 }

@@ -1,15 +1,16 @@
-const electronStore = window.store
+const electronStore = window.store?.ipcRenderer
+console.log(electronStore, 1111111111)
 
 const electronStorage = {
   getItem: async (key: unknown) => {
-    const value = await electronStore.get(key)
+    const value =  electronStore.getStoreValue(key)
     return value ? JSON.stringify(value) : null
   },
-  setItem: (key: unknown, value: string) => {
-    electronStore.set(key, JSON.parse(value))
+  setItem:async (key: unknown, value: string) => {
+    electronStore.setStoreValue(key, JSON.parse(value))
   },
   removeItem: (key: unknown) => {
-    electronStore.set(key, undefined)
+    electronStore.deleteStore(key)
   }
 }
 

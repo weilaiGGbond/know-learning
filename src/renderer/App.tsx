@@ -1,9 +1,5 @@
-import NailBar from './components/layout/nailBar';
 function App(): JSX.Element {
-  return (
-    <>
-    </>
-  )
+  return <></>
 }
 
 export default App

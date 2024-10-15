@@ -2,9 +2,15 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-const Store = require('electron-store')
-const store = new Store()
-initIpcRenderer()
+// import Store from 'electron-store'
+// interface storeType<T> {
+//   set<T>(key: string, value: T): void
+//   get<T>(key: string, defaultValue?: T): T | undefined
+//   delete(key: string): void
+// }
+
+// const store = new Store<storeType<unknown>>()
+// initIpcRenderer()
 let mainWindow: BrowserWindow | null = null
 let loginWindow: BrowserWindow | null = null
 const Authentication = ''
@@ -119,19 +125,22 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+let Store
+;(async () => {
+  Store = (await import('electron-store')).default
+  const store = new Store()
+  return function initIpcRenderer() {
+    ipcMain.on('setStore', (_, key, value) => {
+      store.set(key, value)
+    })
 
-function initIpcRenderer() {
-  ipcMain.on('setStore', (_, key, value) => {
-    store.set(key, value)
-  })
+    ipcMain.on('getStore', (_, key) => {
+      let value = store.get(key)
+      _.returnValue = value || ''
+    })
 
-  ipcMain.on('getStore', (_, key) => {
-    let value = store.get(key)
-    _.returnValue = value || ''
-  })
-
-  ipcMain.on('deleteStore', (_, key) => {
-    let value = store.delete(key)
-    _.returnValue = value || ''
-  })
-}
+    ipcMain.on('deleteStore', (_, key) => {
+      store.delete(key)
+    })
+  }
+})()
