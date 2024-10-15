@@ -3,7 +3,7 @@ export const login = (param: { username: string; password: string }) => {
   let data = { username: '', password: '' }
   data = { ...data, ...param }
   return myAxios({
-    url: '/login',
+    url: '/user/login',
     method: 'post',
     data: data
   })
