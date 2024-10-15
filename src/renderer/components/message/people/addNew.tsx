@@ -1,12 +1,14 @@
-import { Avatar, Badge, Button, Input, List, Modal, Radio } from 'antd';
+import { Avatar, Badge, Button, Input, List, Modal, QRCode, QRCodeProps, Radio, Space, Spin } from 'antd';
 import React, { useCallback, useState } from 'react'
 import icon from '@renderer/assets/img/image.png'
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 import { getInvite } from '@renderer/api/teacher/index'
+import { QRStatus } from 'antd/es/qr-code/interface';
 export default function AddNew() {
     const { Search } = Input;
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [QRstring, setQRstring] = useState('');
+    const [QRstring, setQRstring] = useState('qqq');
+    const [status,setStatus] = useState<QRStatus|undefined>('loading');
     const [lessonId] = useState(1);
 
     const data = [
@@ -33,15 +35,14 @@ export default function AddNew() {
     ];
     const showModal = () => {
         console.log('14444');
-        
-        getInvitedData()
+
+        // getInvitedData()
 
         setIsModalOpen(true);
     };
-    const getInvitedData=async ()=>{
-        const invitedData=await getInvite({lessonId})
+    const getInvitedData = async () => {
+        const invitedData = await getInvite(lessonId)
         console.log(invitedData);
-        
     }
     const { confirm } = Modal;
     const handleOk = () => {
@@ -60,6 +61,31 @@ export default function AddNew() {
         });
 
     };
+    //二维码
+    const customStatusRender: QRCodeProps['statusRender'] = (info) => {
+        switch (info.status) {
+            case 'expired':
+                return (
+                    <div>
+                        <CloseCircleFilled style={{ color: 'red' }} /> {info.locale?.expired}
+                        <p>
+                            <Button type="link" onClick={info.onRefresh}>
+                                <ReloadOutlined /> {info.locale?.refresh}
+                            </Button>
+                        </p>
+                    </div>
+                );
+            case 'loading':
+                return (
+                    <Space direction="vertical">
+                        <Spin />
+                        <p>Loading...</p>
+                    </Space>
+                );
+            default:
+                return null;
+        }
+    };
 
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -73,33 +99,8 @@ export default function AddNew() {
                 邀请入群
             </Button>
             <Modal title="邀请入群" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <Search
-                    placeholder="通过学号或姓名搜索"
-                    allowClear
-                    enterButton="搜索"
-                    size="large"
-                    onSearch={onSearch}
-                />
-                <List className='addnewPeople'
-                    itemLayout="horizontal"
-                    dataSource={data}
-                    renderItem={item => (
-                        <List.Item className='hoverIcon'>
-                            <List.Item.Meta
-                                avatar={
 
-                                    <Avatar src={icon} />
-
-                                }
-                                title={item.title}
-
-                            />
-                            <Radio>
-
-                            </Radio>
-                        </List.Item>
-                    )}
-                />
+                <QRCode value={QRstring} status={status} statusRender={customStatusRender} />
             </Modal>
         </div>
     )
