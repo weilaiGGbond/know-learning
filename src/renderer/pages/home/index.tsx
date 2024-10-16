@@ -1,5 +1,6 @@
 import {
   CloseOutlined,
+  EditOutlined,
   ExpandOutlined,
   MessageOutlined,
   MinusOutlined,
@@ -16,6 +17,7 @@ import tps from '@renderer/assets/tps.png'
 import { props } from './setting'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import '@renderer/assets/styles/layout/nailbar.scss'
+import AddNewRoom from '@renderer/components/studentAbility/addNewRoom'
 function Home(): JSX.Element {
   const settings: ProSettings | undefined = {
     fixSiderbar: true,
@@ -28,7 +30,6 @@ function Home(): JSX.Element {
   const { route } = props
   console.log(route)
   const gotoMessage = () => {
-    console.log('111114444')
 
     navigate('/notify')
   }
@@ -173,10 +174,13 @@ function Home(): JSX.Element {
               <div className="userName text-sm">张三上刷</div>
             </div>,
             <MessageOutlined key="MessageOutlined" className="dragger" onClick={gotoMessage} />,
+            <>
+            <AddNewRoom/>
+
             <div
               className="h-6 w-[1.5px] bg-[#ccc] mx-2"
               style={{ pointerEvents: 'none', paddingInline: 0 }}
-            ></div>,
+            ></div></>,
             <MinusOutlined className="dragger" onClick={minimizeMethods} />,
             <ExpandOutlined className="dragger" onClick={maxSizeMethods} />,
             <CloseOutlined className="dragger" onClick={closeMethods} />,

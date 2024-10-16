@@ -15,7 +15,7 @@ export const getInvite = (lessonId: number) => {
   return myAxios({
     url: '/tea/getInvite',
     method: 'get',
-    params: lessonId
+    params: {lessonId}
   })
 }
 

@@ -4,6 +4,10 @@ import icon from '@renderer/assets/img/image.png'
 import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 import { getInvite } from '@renderer/api/teacher/index'
 import { QRStatus } from 'antd/es/qr-code/interface';
+interface responseInvite{
+    code:number,
+    data:string
+}
 export default function AddNew() {
     const { Search } = Input;
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,15 +38,16 @@ export default function AddNew() {
         },
     ];
     const showModal = () => {
-        console.log('14444');
-
-        // getInvitedData()
-
+        setStatus("loading")
+        getInvitedData()
+        setStatus(undefined)
         setIsModalOpen(true);
     };
     const getInvitedData = async () => {
-        const invitedData = await getInvite(lessonId)
-        console.log(invitedData);
+        const invitedData = await getInvite(lessonId) as unknown as responseInvite
+        if(invitedData.code==20000){
+            setQRstring(invitedData.data)
+        }
     }
     const { confirm } = Modal;
     const handleOk = () => {
@@ -53,7 +58,7 @@ export default function AddNew() {
             cancelText: '取消',
             onOk() {
                 setIsModalOpen(false);
-                console.log('OK');
+                
             },
             onCancel() {
                 console.log('Cancel');
