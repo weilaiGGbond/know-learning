@@ -2,19 +2,35 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-// import Store from 'electron-store'
-// interface storeType<T> {
-//   set<T>(key: string, value: T): void
-//   get<T>(key: string, defaultValue?: T): T | undefined
-//   delete(key: string): void
-// }
-
-// const store = new Store<storeType<unknown>>()
-// initIpcRenderer()
 let mainWindow: BrowserWindow | null = null
 let loginWindow: BrowserWindow | null = null
 const Authentication = ''
-// 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjYzVkN2JjMTliMDQ0NGM2YTQ4ZDc0MjQzYzc0YmQ5MiIsInN1YiI6IjEiLCJpc3MiOiJzZyIsImlhdCI6MTcyODczODk4MCwiZXhwIjoxNzI5MzQzNzgwfQ.p0Cd0dVkE3OWjz7uRcwX4-Q4KBLjQQeO-doM-He1l_4'
+import Store from 'electron-store' // 同步导入
+
+let store = new Store()
+
+initIpcRenderer()
+function initIpcRenderer() {
+  ipcMain.on('setStore', (_, key, value) => {
+    store.set(key, value)
+  })
+
+  ipcMain.on('getStore', (event, key) => {
+    try {
+      const value = store.get(key) // 使用 electron-store 获取存储的值
+      // 确保 event.returnValue 被赋予的是字符串、对象等合法值
+      event.returnValue = value !== undefined ? value : null
+    } catch (error) {
+      event.returnValue = null // 如果有错误，返回 null 而不是字符串
+      console.error('Error retrieving value from store:', error)
+    }
+  })
+
+  ipcMain.on('deleteStore', (_, key) => {
+    store.delete(key)
+  })
+}
+
 function createWindow(): void {
   mainWindow = new BrowserWindow({
     width: 1100,
@@ -24,7 +40,7 @@ function createWindow(): void {
     autoHideMenuBar: true,
     icon: icon,
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, '../preload/index.mjs'),
       sandbox: false
     }
   })
@@ -75,14 +91,11 @@ function createLoginWindow(): void {
     frame: false, // Hide default window controls
     modal: true, // Modal to prevent interaction with other windows until closed
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, '../preload/index.mjs'),
       sandbox: false
     }
   })
 
-  loginWindow.on('closed', () => {
-    loginWindow = null
-  })
 
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     loginWindow.loadURL(`${process.env['ELECTRON_RENDERER_URL']}/login`) // Load login page
@@ -126,22 +139,3 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-let Store
-;(async () => {
-  Store = (await import('electron-store')).default
-  const store = new Store()
-  return function initIpcRenderer() {
-    ipcMain.on('setStore', (_, key, value) => {
-      store.set(key, value)
-    })
-
-    ipcMain.on('getStore', (_, key) => {
-      let value = store.get(key)
-      _.returnValue = value || ''
-    })
-
-    ipcMain.on('deleteStore', (_, key) => {
-      store.delete(key)
-    })
-  }
-})()

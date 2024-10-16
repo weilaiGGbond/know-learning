@@ -11,21 +11,17 @@ const api = {
 }
 const electronHandler = {
   ipcRenderer: {
+    getStoreValue(key: any) {
+      return ipcRenderer.sendSync('getStore', key) // 使用 sendSync 获取同步返回值
+    },
     setStoreValue: (key: any, value: any) => {
       ipcRenderer.send('setStore', key, value)
     },
-
-    getStoreValue(key: any) {
-      const res = ipcRenderer.send('getStore', key)
-      return res
-    },
-
-    deleteStore(key: any) {
+    deleteStore: (key: any) => {
       ipcRenderer.send('deleteStore', key)
     }
   }
 }
-
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.

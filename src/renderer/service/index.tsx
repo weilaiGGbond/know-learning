@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig, InternalAxiosRequestConfig, Canceler } from 'axios'
 import { message, Spin } from 'antd'
 import { getTokenAuth } from '@renderer/utils/auth'
+console.log(22222, await getTokenAuth(), 11111111111111)
+
 interface CustomOptions {
   loading: boolean
   repeat_request_cancel: boolean
@@ -40,8 +42,10 @@ async function myAxios(axiosConfig: AxiosRequestConfig, customOptions?: Partial<
           loadingInstance._target = <Spin />
         }
       }
-      if (getTokenAuth() && config.url !== '/user/login') {
-        config.headers.Authorization = getTokenAuth()
+      console.log(await getTokenAuth(), 8888888888888, 'token')
+
+      if ((await getTokenAuth()) && config.url !== '/user/login') {
+        config.headers.token = await getTokenAuth()
       }
       return config
     },
@@ -52,7 +56,6 @@ async function myAxios(axiosConfig: AxiosRequestConfig, customOptions?: Partial<
       removePending(response.config)
       if (custom_options.loading) closeLoading(custom_options)
       if (custom_options.code_message_show && response.data && response.data.code !== 20000) {
-
         message.error(response.data.errMsg)
 
         return Promise.reject(response.data)
@@ -151,8 +154,6 @@ function httpErrorStatusHandle(error: any) {
   if (error.message.includes('Network'))
     messageString = window.navigator.onLine ? '服务端异常！' : '您断网了！'
   message.error(messageString)
-
-
 }
 
 export default myAxios
