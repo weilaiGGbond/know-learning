@@ -120,6 +120,11 @@ app.whenReady().then(() => {
       loginWindow.close()
     }
   })
+  ipcMain.on('open-login-window', () => {
+    if (!loginWindow) {
+      createLoginWindow()
+    }
+  })
   if (BrowserWindow.getAllWindows().length === 0 && !Authentication) {
     createLoginWindow()
   } else {

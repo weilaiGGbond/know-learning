@@ -24,3 +24,15 @@ export const deleteTokenAuth = async () => {
     console.error('Error deleting token:', error)
   }
 }
+
+export const learnStorage = {
+  getItem: async (key: string) => {
+    return await electronStorage.getItem(key)
+  },
+  set: async (key: string, value: string) => {
+    await electronStorage.setItem(key, value)
+  },
+  remove: async (key: string) => {
+    electronStorage.removeItem(key)
+  }
+}

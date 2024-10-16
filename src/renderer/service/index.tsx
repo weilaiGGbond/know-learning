@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, InternalAxiosRequestConfig, Canceler } from 'axios'
-import { message, Spin } from 'antd'
-import { getTokenAuth } from '@renderer/utils/auth'
-console.log(22222, await getTokenAuth(), 11111111111111)
+import { message, Modal, Spin } from 'antd'
+import { deleteTokenAuth, getTokenAuth } from '@renderer/utils/auth'
 
 interface CustomOptions {
   loading: boolean
@@ -42,8 +41,6 @@ async function myAxios(axiosConfig: AxiosRequestConfig, customOptions?: Partial<
           loadingInstance._target = <Spin />
         }
       }
-      console.log(await getTokenAuth(), 8888888888888, 'token')
-
       if ((await getTokenAuth()) && config.url !== '/user/login') {
         config.headers.token = await getTokenAuth()
       }
@@ -52,10 +49,21 @@ async function myAxios(axiosConfig: AxiosRequestConfig, customOptions?: Partial<
     (error) => Promise.reject(error)
   )
   service.interceptors.response.use(
-    (response) => {
+    async (response) => {
       removePending(response.config)
       if (custom_options.loading) closeLoading(custom_options)
       if (custom_options.code_message_show && response.data && response.data.code !== 20000) {
+        if ((await getTokenAuth()) && response.data.code === 401) {
+          Modal.warning({
+            title: '登录过期提醒',
+            content: '登录已过期，请重新登录',
+            onOk() {
+              deleteTokenAuth()
+              window.api.openLoginWindow()
+              window.api.closeWindow()
+            }
+          })
+        }
         message.error(response.data.errMsg)
 
         return Promise.reject(response.data)

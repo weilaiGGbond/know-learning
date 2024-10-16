@@ -1,6 +1,5 @@
 import {
   CloseOutlined,
-  EditOutlined,
   ExpandOutlined,
   MessageOutlined,
   MinusOutlined,
@@ -24,13 +23,14 @@ function Home(): JSX.Element {
     layout: 'mix',
     splitMenus: true
   }
+  // 判断用户角色，根据角色决定是否显示菜单
+  
   const navigate = useNavigate()
 
   const [pathname, setPathname] = useState('/welcome')
   const { route } = props
   console.log(route)
   const gotoMessage = () => {
-
     navigate('/notify')
   }
   const maxSizeMethods = () => {
@@ -175,12 +175,13 @@ function Home(): JSX.Element {
             </div>,
             <MessageOutlined key="MessageOutlined" className="dragger" onClick={gotoMessage} />,
             <>
-            <AddNewRoom/>
+              <AddNewRoom />
 
-            <div
-              className="h-6 w-[1.5px] bg-[#ccc] mx-2"
-              style={{ pointerEvents: 'none', paddingInline: 0 }}
-            ></div></>,
+              <div
+                className="h-6 w-[1.5px] bg-[#ccc] mx-2"
+                style={{ pointerEvents: 'none', paddingInline: 0 }}
+              ></div>
+            </>,
             <MinusOutlined className="dragger" onClick={minimizeMethods} />,
             <ExpandOutlined className="dragger" onClick={maxSizeMethods} />,
             <CloseOutlined className="dragger" onClick={closeMethods} />,

@@ -7,7 +7,8 @@ const api = {
   minimizeWindow: () => ipcRenderer.send('minimize-window'),
   openWindow: () => ipcRenderer.send('open-main-window'),
   closeWindow: () => ipcRenderer.send('close-window'),
-  closeLoginWindow: () => ipcRenderer.send('close-login-window')
+  closeLoginWindow: () => ipcRenderer.send('close-login-window'),
+  openLoginWindow: () => ipcRenderer.send('open-login-window')
 }
 const electronHandler = {
   ipcRenderer: {
