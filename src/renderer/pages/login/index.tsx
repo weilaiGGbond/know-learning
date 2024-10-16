@@ -13,7 +13,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { login } from '@renderer/api/login'
 import { setToken } from '@renderer/store/reducers/person'
-import { deleteTokenAuth, getTokenAuth, setTokenAuth } from '@renderer/utils/auth'
+import { setTokenAuth } from '@renderer/utils/auth'
 const Login = (): JSX.Element => {
   const navigate = useNavigate()
   const [userName, setUserName] = useState('')
@@ -37,17 +37,13 @@ const Login = (): JSX.Element => {
   const handleLogin = () => {
     if (isChecked) {
       login({ username: userName, password }).then(async (res) => {
-        console.log(res)
-
         await setTokenAuth(res.data.token)
-        console.log(1111111111, getTokenAuth(), 9999)
-
         dispatch(setToken(res.data.token))
         // 关闭登录、
         window.api.openWindow()
-        // window.api.closeLoginWindow()
+        window.api.closeLoginWindow()
         // 打开主界面
-        // navigate('/')
+        navigate('/')
       })
     }
   }

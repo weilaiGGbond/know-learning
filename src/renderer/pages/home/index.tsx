@@ -16,7 +16,6 @@ import tps from '@renderer/assets/tps.png'
 import { props } from './setting'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import '@renderer/assets/styles/layout/nailbar.scss'
-import { getTokenAuth } from '@renderer/utils/auth'
 function Home(): JSX.Element {
   const settings: ProSettings | undefined = {
     fixSiderbar: true,

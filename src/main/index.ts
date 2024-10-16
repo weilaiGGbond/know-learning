@@ -4,7 +4,6 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 let mainWindow: BrowserWindow | null = null
 let loginWindow: BrowserWindow | null = null
-const Authentication = ''
 import Store from 'electron-store' // 同步导入
 
 let store = new Store()
@@ -30,6 +29,7 @@ function initIpcRenderer() {
     store.delete(key)
   })
 }
+const Authentication = store.get('token')
 
 function createWindow(): void {
   mainWindow = new BrowserWindow({
@@ -96,7 +96,6 @@ function createLoginWindow(): void {
     }
   })
 
-
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     loginWindow.loadURL(`${process.env['ELECTRON_RENDERER_URL']}/login`) // Load login page
   } else {
@@ -121,16 +120,18 @@ app.whenReady().then(() => {
       loginWindow.close()
     }
   })
-  if (BrowserWindow.getAllWindows().length === 0) createLoginWindow()
-  // createWindow()
+  if (BrowserWindow.getAllWindows().length === 0 && !Authentication) {
+    createLoginWindow()
+  } else {
+    createWindow()
+  }
 
   app.on('activate', () => {
-    console.log('activate', BrowserWindow.getAllWindows().length === 0 && !Authentication)
-
-    if (BrowserWindow.getAllWindows().length === 0) createLoginWindow()
-    // } else {
-    //   createWindow()
-    // }
+    if (BrowserWindow.getAllWindows().length === 0 && !Authentication) {
+      createLoginWindow()
+    } else {
+      createWindow()
+    }
   })
 })
 
