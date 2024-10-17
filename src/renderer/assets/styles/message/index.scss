@@ -100,3 +100,18 @@
         margin-left: 10px;
     }
 }
+.listMain{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    .listMainTitle{
+        width: 30%;
+        margin-left: 20px;
+        .listMainText{
+            font-size: 16px;
+        }
+    }
+    .listMainTeacher{
+        width: 40%; 
+    }
+}

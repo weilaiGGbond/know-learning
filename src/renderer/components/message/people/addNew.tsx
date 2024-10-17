@@ -13,30 +13,8 @@ export default function AddNew() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [QRstring, setQRstring] = useState('qqq');
     const [status,setStatus] = useState<QRStatus|undefined>('loading');
-    const [lessonId] = useState(1);
+    const [lessonId] = useState(2);
 
-    const data = [
-        {
-            title: '鹤归江野',
-
-            read: false
-        },
-        {
-            title: '鹤归江野',
-
-            read: false
-        },
-        {
-            title: '鹤归江野',
-
-            read: false
-        },
-        {
-            title: '鹤归江野',
-
-            read: true
-        },
-    ];
     const showModal = () => {
         setStatus("loading")
         getInvitedData()
@@ -94,6 +72,7 @@ export default function AddNew() {
 
     const handleCancel = () => {
         setIsModalOpen(false);
+        setQRstring('')
     };
     const onSearch = () => {
 

@@ -1,19 +1,54 @@
-import { EditOutlined } from '@ant-design/icons';
+import { AliwangwangOutlined, EditOutlined } from '@ant-design/icons';
 import { Avatar, Button, Input, List, Modal, Space } from 'antd';
 import React, { useState } from 'react';
 import Empty from '@renderer/assets/img/emptyMessage.png';
+import { joinClass } from '@renderer/api/student/student';
+import '@renderer/assets/styles/message/index.scss'
+
 interface ListItem {
     title: string;
     description: string;
     avatar: string;
 }
+interface NewRoomInvite {
+    data: joinObj;
+
+    code: number;
+    title: string;
+    description: string;
+    avatar: string;
+}
+interface joinObj {
+    status: any;
+    lessonName: string;
+    lessonId: number;
+    name: string;
+    stuClass: string;
+
+}
 const AddNewRoom = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [listAddnew, setListAddnew] = useState([{
-        title: '高数',
-        description: '开课人：xxx',
-        avatar: ''
-    }]); // 假设这个状态会被更新
+    const [listAddnew, setListAddnew] = useState<joinObj>({
+        name: '',
+        status: null,
+        lessonName: '',
+        lessonId: 1,
+        stuClass: ''
+    });
+    //课程码的输入框
+    const [inputValue, setInputValue] = useState('');
+    const joinNewClassMethods = () => {
+        Modal.warning({
+            title: '加入新班级',
+            content: '确定加入新班级？',
+            async onOk() {
+                const invitedData = await joinClass(inputValue) as unknown as NewRoomInvite
+                if (invitedData.code == 20000) {
+                    setListAddnew(invitedData.data)
+                }
+            }
+        })
+    }
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -30,31 +65,50 @@ const AddNewRoom = () => {
             <EditOutlined onClick={showModal} />
             <Modal title="填写邀请码" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <Space.Compact style={{ width: '100%' }}>
-                    <Input defaultValue="请填写验证码" />
-                    <Button type="primary">确定</Button>
+                    <Input defaultValue="请填写验证码" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+                    <Button type="primary" onClick={joinNewClassMethods}>确定</Button>
                 </Space.Compact>
-                {listAddnew.length === 0 ? (
+                {listAddnew.name == '' ? (
                     <img src={Empty} alt="没有数据" style={{ width: '100%', textAlign: 'center' }} />
                 ) : (
-                    <List
-                        itemLayout="horizontal"
-                        dataSource={listAddnew}
-                        renderItem={(item, index) => (
-                            <List.Item>
-                                <List.Item.Meta
-                                    avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
-                                    title={<a href="https://ant.design">{item.title}</a>}
-                                    description={
-                                        item.description
-                                    }
-                              
-                                />
-                                <div style={{color:"#1677ff"}}>
-                                   申请
+
+                    <div className='listMain'>
+                        <Avatar size={32} icon={<Avatar src={<AliwangwangOutlined />} />} />
+                        <div className='listMainTitle'>
+                            <p className='listMainText'>
+                                {listAddnew.lessonName}
+
+                            </p>
+                            <p>
+                                {listAddnew.stuClass}
+
+                            </p>
+                        </div>
+                        <div className='listMainTeacher'>
+                            <p>
+                                {listAddnew.name}
+                            </p>
+                        </div>
+                        <div>
+                            {listAddnew.status === 1 ? (
+                                <div style={{ color: "#1677ff" }}>
+                                    同意
                                 </div>
-                            </List.Item>
-                        )}
-                    />
+                            ) : listAddnew.status === 2 ? (
+                                <div style={{ color: "#fc3d49" }}>
+                                    已拒绝
+                                </div>
+                            ) : listAddnew.status === 0 ? (
+                                <div style={{ color: "#1677ff" }}>
+                                    审核中
+                                </div>
+                            ) : null}
+                        </div>
+                    </div>
+
+
+
+
                 )}
             </Modal>
         </div>

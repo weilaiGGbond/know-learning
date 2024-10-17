@@ -5,13 +5,9 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import '@renderer/assets/styles/message/index.scss'
 import AddNew from './addNew';
 import GroupList from '../group/groupList';
-import { getInvite } from '@renderer/api/teacher';
 export default function MianPeople({ contact }) {
     const [open, setOpen] = useState(false);
     const [placement] = useState<DrawerProps['placement']>('right')
-    const [QRstring, setQRstring] = useState('');
-    const [lessonId] = useState(1);
-
     const showDrawer = () => {
        
         setOpen(true);
@@ -20,11 +16,6 @@ export default function MianPeople({ contact }) {
         setOpen(false);
     };
     const [size, setSize] = useState<'default' | 'middle' | 'small'>('default');
-
-    const onChange = (e: RadioChangeEvent) => {
-        console.log('size checked', e.target.value);
-        setSize(e.target.value);
-    };
 
     return (
         <div>
