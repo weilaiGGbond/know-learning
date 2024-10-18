@@ -11,6 +11,8 @@ import Course from '@renderer/pages/course'
 import PersonCenter from '@renderer/pages/user'
 import AssetList from '@renderer/pages/course/assets'
 import NoticeSystem from '@renderer/pages/notice/index'
+import TeacherSystem from '@renderer/pages/message/teacher'
+import StudentSystem from '@renderer/pages/message/student'
 // import MessagePeople from '@renderer/components/message/messPeople'
 const router = createBrowserRouter([
   {
@@ -54,7 +56,15 @@ const router = createBrowserRouter([
       {
         path: '/memorandum',
         element: <MemorandumIndex />
-      }
+      },
+      {
+        path: '/teacherSys',
+        element: <TeacherSystem />
+      },
+      {
+        path: '/studentSys',
+        element: <StudentSystem />
+      },
     ]
   },
   {

@@ -127,3 +127,17 @@
 .listMain .listMainTeacher {
   width: 40%;
 }
+
+.systemMainSroll {
+  max-height: 82vh;
+  overflow-y: scroll;
+}
+
+.systemMainSroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.systemMainSroll::-webkit-scrollbar-thumb {
+  background-color: #d5e3ed;
+  border-radius: 10px;
+}

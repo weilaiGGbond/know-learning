@@ -16,9 +16,12 @@ import tps from '@renderer/assets/tps.png'
 import { props } from './setting'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import '@renderer/assets/styles/layout/nailbar.scss'
-
-import { logout } from '@renderer/api/login'
+import AddNewRoom from '@renderer/components/studentAbility/addNewRoom'
+import { useSelector } from 'react-redux'
+import { learnStorage } from '@renderer/utils/auth'
 function Home(): JSX.Element {
+
+
   const settings: ProSettings | undefined = {
     fixSiderbar: true,
     layout: 'mix',
@@ -48,8 +51,14 @@ function Home(): JSX.Element {
   const [pathname, setPathname] = useState('/welcome')
   const { route } = props
   console.log(route)
-  const gotoMessage = () => {
-    navigate('/notify')
+  const gotoMessage = async () => {
+    const role = await learnStorage.getItem('role')
+    if (role == 0) {
+      return navigate('/studentSys')
+    } else {
+      return navigate('/teacherSys')
+
+    }
   }
   const maxSizeMethods = () => {
     window.api.maximizeWindow()
@@ -66,7 +75,7 @@ function Home(): JSX.Element {
       onOk() {
         window.api.closeWindow()
       },
-      onCancel() {}
+      onCancel() { }
     })
   }
   return (
