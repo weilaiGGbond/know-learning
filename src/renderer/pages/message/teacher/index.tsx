@@ -1,7 +1,8 @@
 import React from 'react'
-import { List, Card, Typography, Tag, Space } from 'antd';
+import { List, Card, Typography, Tag, Space, Button } from 'antd';
 import { BellOutlined, UserOutlined, TeamOutlined, SettingOutlined } from '@ant-design/icons';
-
+import '@renderer/assets/styles/common.scss'
+import "@renderer/assets/styles/message/index.scss"
 const { Title, Text } = Typography;
 
 interface Notification {
@@ -13,23 +14,9 @@ interface Notification {
 }
 const notifications: Notification[] = [
     {
-        id: 1,
-        title: '系统更新通知',
-        content: 'QQ将于今晚22:00-23:00进行系统维护，请提前保存重要信息。',
-        type: 'system',
-        time: '10分钟前'
-    },
-    {
-        id: 2,
-        title: '群公告更新',
-        content: '技术交流群更新了新的群规，请所有成员查看并遵守。',
-        type: 'group',
-        time: '30分钟前'
-    },
-    {
         id: 3,
         title: '好友请求',
-        content: '用户"张三"请求添加您为好友。',
+        content: '用户"张三"加入你的班级。',
         type: 'friend',
         time: '1小时前'
     },
@@ -40,6 +27,35 @@ const notifications: Notification[] = [
         type: 'settings',
         time: '2小时前'
     },
+    {
+        id: 5,
+        title: '隐私设置变更',
+        content: '您的课程申请已通过',
+        type: 'settings',
+        time: '2小时前'
+    },
+    {
+        id: 5,
+        title: '隐私设置变更',
+        content: '您的课程申请已通过',
+        type: 'settings',
+        time: '2小时前'
+    },
+    {
+        id: 5,
+        title: '隐私设置变更',
+        content: '您的课程申请已通过',
+        type: 'settings',
+        time: '2小时前'
+    },
+    {
+        id: 5,
+        title: '隐私设置变更',
+        content: '您的课程申请已通过',
+        type: 'settings',
+        time: '2小时前'
+    },
+    
 ];
 const getIcon = (type: string) => {
     switch (type) {
@@ -72,8 +88,8 @@ const getTagColor = (type: string) => {
 };
 const TeacherSystem = (): JSX.Element => {
     return (
-        <div>
-            <Card style={{ width: '100%', maxWidth: 600, margin: 'auto' }}>
+        <div className='scrollBar systemMainSroll'>
+            <Card style={{ width: '100%', margin: 'auto' }}>
                 <Title level={4} style={{ marginBottom: 20 }}>系统通知</Title>
                 <List
                     itemLayout="horizontal"
@@ -85,16 +101,22 @@ const TeacherSystem = (): JSX.Element => {
                                 title={
                                     <Space>
                                         <Text strong>{item.title}</Text>
-                                        <Tag color={getTagColor(item.type)}>{item.type}</Tag>
                                     </Space>
                                 }
                                 description={
                                     <Space direction="vertical" style={{ width: '100%' }}>
                                         <Text>{item.content}</Text>
+
                                         <Text type="secondary" style={{ fontSize: '12px' }}>{item.time}</Text>
                                     </Space>
                                 }
                             />
+                            {
+                                item.type === 'friend' ? <div>
+                                    <Button type="link" size="small">同意</Button>
+                                    <Button type="link" style={{color:'#fc3d49',marginLeft:"10px"}} size="small">拒绝</Button>
+                                </div> : null
+                            }
                         </List.Item>
                     )}
                 />

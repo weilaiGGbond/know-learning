@@ -5,6 +5,8 @@ import Course from '../course'
 import NoticeSystem from '../notice'
 import Test from '../test'
 import MemorandumIndex from '../memorandum'
+import TeacherSystem from '../message/teacher'
+import StudentSystem from '../message/student'
 interface RouteItem {
   path: string
   name?: string
@@ -47,7 +49,16 @@ const route: RouteItem[] = [
     icon: <TabletFilled />,
     path: 'course',
     component: Course
-  }
+  },
+  {  
+    path: 'studentSys',
+    component: StudentSystem
+  },
+  {
+
+    path: 'teacherSys',
+    component: TeacherSystem
+  },
 ]
 const displayRoute: DisplayRoute[] = [
   {

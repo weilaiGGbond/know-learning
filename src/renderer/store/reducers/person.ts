@@ -20,6 +20,7 @@ const personSlice = createSlice({
       state.count -= 1
     },
     setToken: (state, action) => {
+      console.log('2222' );
       setTokenAuth(action.payload)
       state.token = action.payload
     },

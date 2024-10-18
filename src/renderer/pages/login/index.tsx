@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux'
 import { login } from '@renderer/api/login'
 import { setToken } from '@renderer/store/reducers/person'
 import { setTokenAuth, learnStorage } from '@renderer/utils/auth'
+import { setNewConnect } from '@renderer/store/reducers/socket'
 const Login = (): JSX.Element => {
   const navigate = useNavigate()
   const [userName, setUserName] = useState('')
@@ -37,9 +38,13 @@ const Login = (): JSX.Element => {
   const handleLogin = () => {
     if (isChecked) {
       login({ username: userName, password }).then(async (res) => {
+        console.log('111111');
+        
+        dispatch(setNewConnect('222'))
         await setTokenAuth(res.data.token)
         await learnStorage.set('role', res.data.role)
         dispatch(setToken(res.data.token))
+        //连接websocket
         // 关闭登录
         window.api.openWindow()
         window.api.closeLoginWindow()
