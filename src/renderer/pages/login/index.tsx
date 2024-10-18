@@ -37,6 +37,7 @@ const Login = (): JSX.Element => {
   const handleLogin = () => {
     if (isChecked) {
       login({ username: userName, password }).then(async (res) => {
+        console.log(res)
         await setTokenAuth(res.data.token)
         await learnStorage.set('role', res.data.role)
         dispatch(setToken(res.data.token))

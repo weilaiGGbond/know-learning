@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons'
 import type { ProSettings } from '@ant-design/pro-components'
 import { PageContainer, ProLayout } from '@ant-design/pro-components'
-import { Input, Modal } from 'antd'
+import { Button, Input, Modal, Popover } from 'antd'
 import { useState } from 'react'
 import avatar from '@renderer/assets/weixintupian.jpg'
 import background from '@renderer/assets/background.png'
@@ -16,15 +16,33 @@ import tps from '@renderer/assets/tps.png'
 import { props } from './setting'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import '@renderer/assets/styles/layout/nailbar.scss'
-import AddNewRoom from '@renderer/components/studentAbility/addNewRoom'
+
+import { logout } from '@renderer/api/login'
 function Home(): JSX.Element {
   const settings: ProSettings | undefined = {
     fixSiderbar: true,
     layout: 'mix',
     splitMenus: true
   }
-  // 判断用户角色，根据角色决定是否显示菜单
-  
+  const log = () => {
+    Modal.confirm({
+      title: '退出登录',
+      content: '确定要退出登录吗',
+      onOk() {
+        logout()
+      },
+      onCancel() {}
+    })
+  }
+  const content = (
+    <div className="flex flex-col gap-1">
+      <Button type="text">个人中心</Button>
+      <Button type="text" onClick={log}>
+        退出登录
+      </Button>
+    </div>
+  )
+
   const navigate = useNavigate()
 
   const [pathname, setPathname] = useState('/welcome')
@@ -52,7 +70,7 @@ function Home(): JSX.Element {
     })
   }
   return (
-    <div id="test-pro-layout">
+    <div id="test-pro-layout" className="h-screen">
       <ProLayout
         title=""
         logo={
@@ -167,21 +185,21 @@ function Home(): JSX.Element {
                 />
               </div>
             ) : undefined,
-            <div className="flex items-center gap-1  dragger">
-              <div className="avatar w-7 h-7 rounded-full">
-                <img src={avatar} alt="用户头像" className="w-full h-full rounded-full" />
+            <Popover content={content} trigger="click">
+              <div className="flex items-center gap-1  dragger">
+                <div className="avatar w-7 h-7 rounded-full">
+                  <img src={avatar} alt="用户头像" className="w-full h-full rounded-full" />
+                </div>
+                <div className="userName text-sm">张三上刷</div>
               </div>
-              <div className="userName text-sm">张三上刷</div>
-            </div>,
-            <MessageOutlined key="MessageOutlined" className="dragger" onClick={gotoMessage} />,
-            <>
-              <AddNewRoom />
+            </Popover>,
 
-              <div
-                className="h-6 w-[1.5px] bg-[#ccc] mx-2"
-                style={{ pointerEvents: 'none', paddingInline: 0 }}
-              ></div>
-            </>,
+            <MessageOutlined key="MessageOutlined" className="dragger" onClick={gotoMessage} />,
+
+            <div
+              className="h-6 w-[1.5px] bg-[#ccc] mx-2"
+              style={{ pointerEvents: 'none', paddingInline: 0 }}
+            ></div>,
             <MinusOutlined className="dragger" onClick={minimizeMethods} />,
             <ExpandOutlined className="dragger" onClick={maxSizeMethods} />,
             <CloseOutlined className="dragger" onClick={closeMethods} />,

@@ -1,8 +1,10 @@
 // 创建班级
 import myAxios from '@renderer/service'
-export const login = (param: { end: string; lessonName: string }, file: File) => {
+export const creatLesson = (param: { end: string; lessonName: string }, file: FormData) => {
   let data = { end: '', lessonName: '' }
   data = { ...data, ...param }
+  console.log(data)
+
   return myAxios({
     url: '/tea/create',
     method: 'post',
@@ -15,7 +17,7 @@ export const getInvite = (lessonId: number) => {
   return myAxios({
     url: '/tea/getInvite',
     method: 'get',
-    params: {lessonId}
+    params: { lessonId }
   })
 }
 

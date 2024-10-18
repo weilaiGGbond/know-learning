@@ -6,17 +6,25 @@ import { joinClass } from '@renderer/api/student/student';
 import '@renderer/assets/styles/message/index.scss'
 
 interface ListItem {
-    title: string;
-    description: string;
-    avatar: string;
+  title: string
+  description: string
+  avatar: string
 }
 interface NewRoomInvite {
-    data: joinObj;
+  data: joinObj;
 
-    code: number;
-    title: string;
-    description: string;
-    avatar: string;
+  code: number;
+  title: string;
+  description: string;
+  avatar: string;
+}
+interface joinObj {
+  status: any;
+  lessonName: string;
+  lessonId: number;
+  name: string;
+  stuClass: string;
+
 }
 interface joinObj {
     status: any;
@@ -56,9 +64,9 @@ const AddNewRoom = () => {
         setIsModalOpen(false);
     };
 
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+  const handleCancel = () => {
+    setIsModalOpen(false)
+  }
 
     return (
         <div className='dragger'>
@@ -115,4 +123,4 @@ const AddNewRoom = () => {
     );
 };
 
-export default AddNewRoom;
+export default AddNewRoom
