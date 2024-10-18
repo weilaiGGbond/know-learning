@@ -110,7 +110,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
   ipcMain.on('open-main-window', () => {
-    if (!mainWindow) {
+    if (!mainWindow || mainWindow.isDestroyed()) {
       createWindow()
     }
   })
@@ -121,8 +121,10 @@ app.whenReady().then(() => {
     }
   })
   ipcMain.on('open-login-window', () => {
-    if (!loginWindow) {
+    if (!loginWindow || loginWindow.isDestroyed()) {
       createLoginWindow()
+    } else {
+      loginWindow.show()
     }
   })
   if (BrowserWindow.getAllWindows().length === 0 && !Authentication) {

@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         element: <PersonCenter />
       },
       {
-        path: 'course',
+        path: 'course/:id',
         element: <Course />,
         children: [
           {
@@ -48,14 +48,13 @@ const router = createBrowserRouter([
         element: <NoticeSystem />
       },
       {
-        path:'test',
+        path: 'test',
         element: <Test />
-
       },
       {
         path: '/memorandum',
         element: <MemorandumIndex />
-      },
+      }
     ]
   },
   {

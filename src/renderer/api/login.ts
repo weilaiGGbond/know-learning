@@ -11,9 +11,8 @@ export const login = (param: { username: string; password: string }) => {
 }
 // 退出登录
 export const logout = async () => {
-  await deleteTokenAuth()
+  deleteTokenAuth()
   // 打开登录窗口
   window.api.openLoginWindow()
-  window.api.closeMainWindow()
-  // 关闭主窗口
+  window.api.closeWindow()
 }
