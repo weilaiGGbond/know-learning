@@ -19,9 +19,8 @@ import '@renderer/assets/styles/layout/nailbar.scss'
 import AddNewRoom from '@renderer/components/studentAbility/addNewRoom'
 import { useSelector } from 'react-redux'
 import { learnStorage } from '@renderer/utils/auth'
+import { logout } from '@renderer/api/login'
 function Home(): JSX.Element {
-
-
   const settings: ProSettings | undefined = {
     fixSiderbar: true,
     layout: 'mix',

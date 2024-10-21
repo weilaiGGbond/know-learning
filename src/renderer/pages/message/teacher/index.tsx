@@ -3,6 +3,7 @@ import { List, Card, Typography, Tag, Space, Button } from 'antd';
 import { BellOutlined, UserOutlined, TeamOutlined, SettingOutlined } from '@ant-design/icons';
 import '@renderer/assets/styles/common.scss'
 import "@renderer/assets/styles/message/index.scss"
+import TeacherMessage from '@renderer/hook/message/teacher';
 const { Title, Text } = Typography;
 
 interface Notification {
@@ -55,72 +56,48 @@ const notifications: Notification[] = [
         type: 'settings',
         time: '2小时前'
     },
-    
-];
-const getIcon = (type: string) => {
-    switch (type) {
-        case 'system':
-            return <BellOutlined style={{ color: '#1890ff' }} />;
-        case 'group':
-            return <TeamOutlined style={{ color: '#52c41a' }} />;
-        case 'friend':
-            return <UserOutlined style={{ color: '#faad14' }} />;
-        case 'settings':
-            return <SettingOutlined style={{ color: '#722ed1' }} />;
-        default:
-            return <BellOutlined />;
-    }
-};
 
-const getTagColor = (type: string) => {
-    switch (type) {
-        case 'system':
-            return 'blue';
-        case 'group':
-            return 'green';
-        case 'friend':
-            return 'gold';
-        case 'settings':
-            return 'purple';
-        default:
-            return 'default';
-    }
-};
+];
 const TeacherSystem = (): JSX.Element => {
+    const { flag, data, teachermessageSroll, scrollRef } = TeacherMessage()
     return (
-        <div className='scrollBar systemMainSroll'>
+        <div ref={scrollRef} className='scrollBar systemMainSroll' onScroll={teachermessageSroll}>
             <Card style={{ width: '100%', margin: 'auto' }}>
+               
                 <Title level={4} style={{ marginBottom: 20 }}>系统通知</Title>
                 <List
                     itemLayout="horizontal"
-                    dataSource={notifications}
+                    dataSource={data}
                     renderItem={(item) => (
                         <List.Item>
                             <List.Item.Meta
-                                avatar={getIcon(item.type)}
+                                avatar={<UserOutlined style={{ color: '#faad14' }} />}
                                 title={
                                     <Space>
-                                        <Text strong>{item.title}</Text>
+                                        <Text strong>{item.lessonName}</Text>
                                     </Space>
                                 }
                                 description={
                                     <Space direction="vertical" style={{ width: '100%' }}>
-                                        <Text>{item.content}</Text>
+                                        <Text>{item.name}申请加入您的{item.stuClass}</Text>
 
                                         <Text type="secondary" style={{ fontSize: '12px' }}>{item.time}</Text>
                                     </Space>
                                 }
                             />
-                            {
-                                item.type === 'friend' ? <div>
-                                    <Button type="link" size="small">同意</Button>
-                                    <Button type="link" style={{color:'#fc3d49',marginLeft:"10px"}} size="small">拒绝</Button>
-                                </div> : null
-                            }
+
+                            <div>
+                                <Button type="link" size="small">同意</Button>
+                                <Button type="link" style={{ color: '#fc3d49', marginLeft: "10px" }} size="small">拒绝</Button>
+                            </div>
+
                         </List.Item>
                     )}
                 />
             </Card>
+            {
+                flag == true ? <p className='textNonedata'>已经到底了</p> : null
+            }
         </div>
     )
 }

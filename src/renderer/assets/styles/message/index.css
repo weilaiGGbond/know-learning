@@ -141,3 +141,10 @@
   background-color: #d5e3ed;
   border-radius: 10px;
 }
+
+.textNonedata {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+}

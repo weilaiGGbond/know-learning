@@ -38,12 +38,11 @@ const Login = (): JSX.Element => {
   const handleLogin = () => {
     if (isChecked) {
       login({ username: userName, password }).then(async (res) => {
-        console.log('111111');
-        
-        dispatch(setNewConnect('222'))
         await setTokenAuth(res.data.token)
         await learnStorage.set('role', res.data.role)
         dispatch(setToken(res.data.token))
+        dispatch(setNewConnect(res.data.token))
+        debugger
         //连接websocket
         // 关闭登录
         window.api.openWindow()
