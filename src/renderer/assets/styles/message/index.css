@@ -148,3 +148,19 @@
   padding-bottom: 10px;
   background-color: white;
 }
+
+.messageTextMain {
+  position: relative;
+}
+
+.messageTextMain .messageText {
+  position: absolute;
+  background-color: rgba(247, 40, 40, 0.764);
+  color: rgba(247, 40, 40, 0.764);
+  transform: scale(0.5);
+  top: 34%;
+  border-radius: 50%;
+  right: 8%;
+  width: 10px;
+  height: 10px;
+}

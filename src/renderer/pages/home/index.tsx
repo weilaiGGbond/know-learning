@@ -8,7 +8,7 @@ import {
 import type { ProSettings } from '@ant-design/pro-components'
 import { PageContainer, ProLayout } from '@ant-design/pro-components'
 import { Button, Input, Modal, Popover } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import avatar from '@renderer/assets/weixintupian.jpg'
 import background from '@renderer/assets/background.png'
 import tvp from '@renderer/assets/tvp.png'
@@ -18,8 +18,10 @@ import { useNavigate, Route, Routes } from 'react-router-dom'
 import '@renderer/assets/styles/layout/nailbar.scss'
 import AddNewRoom from '@renderer/components/studentAbility/addNewRoom'
 import { useSelector } from 'react-redux'
-import { learnStorage } from '@renderer/utils/auth'
+import { getTokenAuth, learnStorage } from '@renderer/utils/auth'
 import { logout } from '@renderer/api/login'
+import userMessage from '@renderer/hook/message/user'
+import useWebSocket from '@renderer/hook/socketConnet'
 function Home(): JSX.Element {
   const settings: ProSettings | undefined = {
     fixSiderbar: true,
@@ -33,7 +35,7 @@ function Home(): JSX.Element {
       onOk() {
         logout()
       },
-      onCancel() {}
+      onCancel() { }
     })
   }
   const content = (
@@ -77,6 +79,27 @@ function Home(): JSX.Element {
       onCancel() { }
     })
   }
+
+  const { noReadmessageData } = userMessage()
+  const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
+    url: `ws://81.70.144.36:8080/ws/audit`, 
+    onOpen: () => {
+    //连接成功
+      console.log('WebSocket connected');
+    },
+    onClose: () => {
+    //连接关闭
+      console.log('WebSocket disconnected');
+    },
+    onError: (event) => {
+    //连接异常
+      console.error('WebSocket error:', event);
+    },
+    onMessage: (message) => {
+    //收到消息
+      console.log('WebSocket received message:', message);
+    }
+  })
   return (
     <div id="test-pro-layout" className="h-screen">
       <ProLayout
@@ -202,7 +225,14 @@ function Home(): JSX.Element {
               </div>
             </Popover>,
 
-            <MessageOutlined key="MessageOutlined" className="dragger" onClick={gotoMessage} />,
+            <div className='messageTextMain'>
+              <MessageOutlined key="MessageOutlined" className="dragger" onClick={gotoMessage} />,
+
+              {
+                noReadmessageData > 0 && <div className='messageText'></div>
+
+              }
+            </div>,
 
             <div
               className="h-6 w-[1.5px] bg-[#ccc] mx-2"

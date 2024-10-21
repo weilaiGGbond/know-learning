@@ -1,3 +1,4 @@
+import { getTokenAuth } from "@renderer/utils/auth";
 import { useEffect, useRef, useState } from "react";
 type Message = {
   type: string,
@@ -32,8 +33,14 @@ const useWebSocket = (
   const reconnectTimeRef = useRef<NodeJS.Timer>()
   const [lastMessage, setLastMessage] = useState('');//最新的消息
 
+  const getToken = (async () => {
+    const tokendata = await getTokenAuth()
+    return tokendata
+  })
   //连接函数
-  const connect = () => {
+  const connect = async () => {
+    const dataToken = await getToken();
+    console.log(dataToken,'855555555');
     setIsConnected(false)
     const socket = new WebSocket(url)
     socket.onopen = () => {
@@ -54,11 +61,11 @@ const useWebSocket = (
       }
 
     }
-    socket.onerror=(event)=>{
-      console.log('websocket error',event);
+    socket.onerror = (event) => {
+      console.log('websocket error', event);
     }
     socket.onmessage = (event) => {
-      const message=JSON.parse(event.data)
+      const message = JSON.parse(event.data)
       console.log(`Websocket 接收到消息：${message}`);
       setLastMessage(message)
       onMessage(message)
@@ -67,21 +74,21 @@ const useWebSocket = (
 
 
   }
-  useEffect(()=>{
+  useEffect(() => {
     connect()
-    return ()=>{
+    return () => {
       socketRef.current?.close()
       clearTimeout(reconnectTimeRef.current)
     }
-  },[])
+  }, [])
   const sendMessage = (message: any) => {
-    if(isConnected && socketRef.current){
+    if (isConnected && socketRef.current) {
       console.log('发送消息');
       socketRef.current.send(JSON.stringify(message))
-    }else{
+    } else {
       console.log('没连接');
     }
   }
-  return [socketRef.current,sendMessage,lastMessage,isConnected]
+  return [socketRef.current, sendMessage, lastMessage, isConnected]
 }
 export default useWebSocket
