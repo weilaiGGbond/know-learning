@@ -40,11 +40,9 @@ const useWebSocket = (
   //连接函数
   const connect = async () => {
     const dataToken = await getToken();
-    console.log(dataToken,'855555555');
     setIsConnected(false)
-    const socket = new WebSocket(url)
+    const socket = new WebSocket(url,[`${dataToken}`])
     socket.onopen = () => {
-      console.log('已经连接websocket');
       setIsConnected(true)
       setReconnectAttempt(0)
       onOpen()
@@ -53,13 +51,12 @@ const useWebSocket = (
       setIsConnected(false)
       onClose(event)
 
-      if (reconnectAttempt < reconnectAttempts) {
-        reconnectTimeRef.current = setTimeout(() => {
-          setReconnectAttempt((precount) => precount + 1)
-          connect()
-        }, reconnectInterval)
-      }
-
+      // if (reconnectAttempt < reconnectAttempts) {
+      //   reconnectTimeRef.current = setTimeout(() => {
+      //     setReconnectAttempt((precount) => precount + 1)
+      //     connect()
+      //   }, reconnectInterval)
+      // }
     }
     socket.onerror = (event) => {
       console.log('websocket error', event);
@@ -78,7 +75,7 @@ const useWebSocket = (
     connect()
     return () => {
       socketRef.current?.close()
-      clearTimeout(reconnectTimeRef.current)
+      // clearTimeout(reconnectTimeRef.current)
     }
   }, [])
   const sendMessage = (message: any) => {
