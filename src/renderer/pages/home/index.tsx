@@ -58,7 +58,6 @@ function Home(): JSX.Element {
       return navigate('/studentSys')
     } else {
       return navigate('/teacherSys')
-
     }
   }
   const maxSizeMethods = () => {
@@ -98,6 +97,8 @@ function Home(): JSX.Element {
     onMessage: (message) => {
     //收到消息
       console.log('WebSocket received message:', message);
+      message.info('收到一条新消息，请及时查看')
+
     }
   })
   return (

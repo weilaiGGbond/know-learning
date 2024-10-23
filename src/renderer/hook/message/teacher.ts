@@ -2,6 +2,7 @@ import { aduitStudentApplication, joinLesson, readMessage } from "@renderer/api/
 import { Modal } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
 import userMessage from "./user";
+import useWebSocket from "../socketConnet";
 
 interface TeacherMessage {
     status: number;
@@ -17,6 +18,23 @@ interface Responsedata {
     msg: string
 }
 const useTeacherMessage = () => {
+    //websocket
+    const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
+        url: `ws://81.70.144.36:8080/ws/audit`, 
+        onOpen: () => {
+          console.log('WebSocket connected');
+        },
+        onClose: () => {
+          console.log('WebSocket disconnected');
+        },
+        onError: (event) => {
+          console.error('WebSocket error:', event);
+        },
+        onMessage: (message) => {
+          console.log('Received message:', message);
+
+        }
+      })
     const { setRead } = userMessage()
     const { confirm } = Modal;
     const [page, setPage] = useState(1);
@@ -70,9 +88,10 @@ const useTeacherMessage = () => {
             cancelText: '取消',
             async onOk() {
                 const argeeData = await aduitStudentApplication(1, lessonStuId) as unknown as Responsedata
-                console.log(argeeData);
+                console.log(argeeData,'222222');
                 if (argeeData.code === 20000) {
                     getTeacherApply()
+                    sendMessage(JSON.stringify(argeeData.data))
                 }
             },
             onCancel() {
@@ -92,6 +111,7 @@ const useTeacherMessage = () => {
                 const refuseData = await aduitStudentApplication(2, lessonStuId) as unknown as Responsedata
                 if (refuseData.code === 20000) {
                     getTeacherApply()
+                    sendMessage(JSON.stringify(refuseData.data))
                 }
             },
             onCancel() {

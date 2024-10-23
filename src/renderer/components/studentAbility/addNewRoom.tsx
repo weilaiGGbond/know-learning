@@ -1,9 +1,10 @@
 import { AliwangwangOutlined, EditOutlined } from '@ant-design/icons';
-import { Avatar, Button, Input, List, Modal, Space } from 'antd';
+import { Avatar, Button, Input, List, message, Modal, Space } from 'antd';
 import React, { useState } from 'react';
 import Empty from '@renderer/assets/img/emptyMessage.png';
 import { joinClass } from '@renderer/api/student/student';
 import '@renderer/assets/styles/message/index.scss'
+import useWebSocket from '@renderer/hook/socketConnet';
 
 interface ListItem {
   title: string
@@ -36,6 +37,26 @@ interface joinObj {
 }
 const AddNewRoom = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    //websocket
+    const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
+        url: `ws://81.70.144.36:8080/ws/audit`, 
+        onOpen: () => {
+        //连接成功
+          console.log('WebSocket connected');
+        },
+        onClose: () => {
+        //连接关闭
+          console.log('WebSocket disconnected');
+        },
+        onError: (event) => {
+        //连接异常
+          console.error('WebSocket error:', event);
+        },
+        onMessage: (message) => {
+        //收到消息
+          console.log('WebSocket received message:', message);
+        }
+      })
     const [listAddnew, setListAddnew] = useState<joinObj>({
         name: '',
         status: null,
@@ -53,6 +74,10 @@ const AddNewRoom = () => {
                 const invitedData = await joinClass(inputValue) as unknown as NewRoomInvite
                 if (invitedData.code == 20000) {
                     setListAddnew(invitedData.data)
+                    sendMessage(JSON.stringify(invitedData.data))
+                    message.success('申请中，等待老师同意')
+                }else{
+                    message.error('加入失败,请检查邀请码')
                 }
             }
         })
@@ -113,9 +138,6 @@ const AddNewRoom = () => {
                             ) : null}
                         </div>
                     </div>
-
-
-
 
                 )}
             </Modal>
