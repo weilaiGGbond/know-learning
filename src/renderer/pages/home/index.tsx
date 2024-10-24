@@ -17,9 +17,10 @@ import { props } from './setting'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import '@renderer/assets/styles/layout/nailbar.scss'
 import AddNewRoom from '@renderer/components/studentAbility/addNewRoom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getTokenAuth, learnStorage } from '@renderer/utils/auth'
 import { logout } from '@renderer/api/login'
+import { setNewConnect } from '@renderer/store/reducers/socket'
 import userMessage from '@renderer/hook/message/user'
 import useWebSocket from '@renderer/hook/socketConnet'
 function Home(): JSX.Element {
@@ -61,6 +62,8 @@ function Home(): JSX.Element {
     }
   }
   const maxSizeMethods = () => {
+    console.log(1111111111)
+
     window.api.maximizeWindow()
   }
 
@@ -75,7 +78,7 @@ function Home(): JSX.Element {
       onOk() {
         window.api.closeWindow()
       },
-      onCancel() { }
+      onCancel() {}
     })
   }
 
@@ -292,3 +295,6 @@ function Home(): JSX.Element {
 }
 
 export default Home
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.')
+}

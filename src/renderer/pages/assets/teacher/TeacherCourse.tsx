@@ -60,8 +60,8 @@ export function TeacherCourse(): JSX.Element {
     >
       <Flex wrap gap={25}>
         {list.map((data) => (
-          <Link to={`/course/${data.lessonId}`}>
-            <AssetIndex key={data.lessonId} data={data} />
+          <Link to={`/course/${data.lessonId}`} key={data.lessonId}>
+            <AssetIndex data={data} />
           </Link>
         ))}
       </Flex>

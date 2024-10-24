@@ -9,7 +9,7 @@ import Message from '@renderer/pages/message'
 import MessagePeople from '@renderer/components/message/messPeople'
 import Course from '@renderer/pages/course'
 import PersonCenter from '@renderer/pages/user'
-import AssetList from '@renderer/pages/course/assets'
+import AssetList from '@renderer/pages/course/assent'
 import NoticeSystem from '@renderer/pages/notice/index'
 import TeacherSystem from '@renderer/pages/message/teacher'
 import StudentSystem from '@renderer/pages/message/student'
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         element: <PersonCenter />
       },
       {
-        path: 'course/:id',
+        path: 'course/:lessonId',
         element: <Course />,
         children: [
           {
@@ -64,7 +64,7 @@ const router = createBrowserRouter([
       {
         path: '/studentSys',
         element: <StudentSystem />
-      },
+      }
     ]
   },
   {

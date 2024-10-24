@@ -42,6 +42,8 @@ export const getFileList = (param: {
 }) => {
   let data = { parentId: 0, docTitle: '', pageNum: 1, pageSize: 10, lessonId: 0 }
   data = { ...data, ...param }
+  console.log(data)
+
   return myAxios({
     url: '/tea/listFile',
     method: 'get',
@@ -50,18 +52,13 @@ export const getFileList = (param: {
 }
 
 // 创建文件夹
-export const createFolder = (param: {
-  parentId: number
-  dirName: string
-  lessonId: number
-  isRoot: 0 | 1
-}) => {
-  let data = { parentId: 0, dirName: '', lessonId: 0, isRoot: 0 }
+export const createFolder = (param: { parentId: number; dirName: string; lessonId: number }) => {
+  let data = { parentId: 0, dirName: '', lessonId: 0 }
   data = { ...data, ...param }
   return myAxios({
     url: '/tea/makeDir',
     method: 'post',
-    data: data
+    params: data
   })
 }
 
