@@ -7,7 +7,7 @@ import AddNewRoom from '@renderer/components/studentAbility/addNewRoom'
 import { learnStorage } from '@renderer/utils/auth'
 import { CreateLesson } from './teacher/createLesson'
 import { TeacherCourse } from './teacher/TeacherCourse'
-import { Route, Routes } from 'react-router-dom'
+// import { Route, Routes } from 'react-router-dom'
 import { StudentCourse } from './student/StudentCourse'
 type SearchProps = GetProps<typeof Input.Search>
 const { Search } = Input
@@ -55,7 +55,7 @@ function Asset(): JSX.Element {
   return (
     <div>
       <Flex justify="space-between">
-        <Flex gap={20}>{role == 1 ? <AddNewRoom /> : <CreateLesson />}</Flex>
+        <Flex gap={20}>{role == 1 ? <CreateLesson /> : <AddNewRoom />}</Flex>
         <Flex gap={20}>
           <Search
             placeholder="搜索课程"
@@ -76,12 +76,7 @@ function Asset(): JSX.Element {
             回收站
           </Button>
         }
-      >
-        {/* <Routes>
-          <Route path="/teacher" element={<TeacherCourse />} />
-          <Route path="/student" element={<StudentCourse />} />
-        </Routes> */}
-      </PageContainer>
+      ></PageContainer>
     </div>
   )
 }

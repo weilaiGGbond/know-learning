@@ -1,4 +1,4 @@
-import { getLessonList } from '@renderer/api/teacher'
+import { studentCourses } from '@renderer/api/student'
 import AssetIndex from '@renderer/components/assetIndex'
 import { Divider, Flex, Skeleton } from 'antd'
 import { useCallback, useEffect, useState } from 'react'
@@ -29,7 +29,7 @@ export function StudentCourse(): JSX.Element {
       return
     }
     setLoading(true)
-    getLessonList(formState)
+    studentCourses(formState)
       .then((body) => {
         console.log(body)
 

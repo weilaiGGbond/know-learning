@@ -64,7 +64,7 @@ function createWindow(): void {
     const win = BrowserWindow.getFocusedWindow()
     if (win) {
       if (win.isMaximized()) {
-        win.unmaximize()
+        win.restore()
       } else {
         win.maximize()
       }

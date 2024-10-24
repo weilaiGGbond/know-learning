@@ -17,11 +17,13 @@ import { props } from './setting'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import '@renderer/assets/styles/layout/nailbar.scss'
 import AddNewRoom from '@renderer/components/studentAbility/addNewRoom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { learnStorage } from '@renderer/utils/auth'
+import { logout } from '@renderer/api/login'
+import { setNewConnect } from '@renderer/store/reducers/socket'
 function Home(): JSX.Element {
-
-
+  const dispatch = useDispatch()
+  dispatch(setNewConnect('222'))
   const settings: ProSettings | undefined = {
     fixSiderbar: true,
     layout: 'mix',
@@ -57,10 +59,11 @@ function Home(): JSX.Element {
       return navigate('/studentSys')
     } else {
       return navigate('/teacherSys')
-
     }
   }
   const maxSizeMethods = () => {
+    console.log(1111111111)
+
     window.api.maximizeWindow()
   }
 
@@ -75,7 +78,7 @@ function Home(): JSX.Element {
       onOk() {
         window.api.closeWindow()
       },
-      onCancel() { }
+      onCancel() {}
     })
   }
   return (
@@ -262,3 +265,6 @@ function Home(): JSX.Element {
 }
 
 export default Home
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.')
+}

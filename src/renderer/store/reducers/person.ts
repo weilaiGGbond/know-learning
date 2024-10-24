@@ -13,14 +13,14 @@ const personSlice = createSlice({
     count: 0
   },
   reducers: {
-    increment: (state) => {
-      state.count += 1
+    increment: (state, action) => {
+      console.log(action.payload)
     },
     decrement: (state) => {
       state.count -= 1
     },
     setToken: (state, action) => {
-      console.log('2222' );
+      console.log('2222')
       setTokenAuth(action.payload)
       state.token = action.payload
     },
