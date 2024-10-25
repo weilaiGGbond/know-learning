@@ -10,22 +10,18 @@ import {
   Modal,
   Progress,
   Skeleton,
-  Upload
+  Upload,
+  UploadProps,
+  UploadFile
 } from 'antd'
 import { Breadcrumb } from 'antd'
-import { InboxOutlined, PlusOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons'
-import wordIcon from '@renderer/assets/img/wordIcon.png'
-import pdfIcon from '@renderer/assets/img/pdfIcon.png'
-import unknown from '@renderer/assets/img/unknown.png'
-import dir from '@renderer/assets/img/dir.png'
-import xlsx from '@renderer/assets/img/xlsx.png'
+import { PlusOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons'
 
 import { useCourse } from '..'
 import { createFolder, getFileList } from '@renderer/api/teacher'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import FileUpload from '@renderer/common/upload'
-
-const { Dragger } = Upload
+import { getFileType } from './assent'
 
 function AssetList(): JSX.Element {
   const [progress, setProgress] = useState(0)
@@ -36,7 +32,20 @@ function AssetList(): JSX.Element {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
   const [isCreateDirModalOpen, setIsCreateDirModalOpen] = useState(false)
   const [dirName, setDirName] = useState('')
+  const [fileName, setfileName] = useState('')
+  const [fileList, setFileList] = useState<UploadFile[]>([])
   const { lessonId } = useCourse()
+  const props: UploadProps = {
+    beforeUpload: (file: UploadFile) => {
+      setFileList([file])
+      return false
+    },
+    onChange: useCallback(({ fileList }) => {
+      setFileList(fileList)
+    }, []),
+    fileList: fileList,
+    maxCount: 1
+  }
   const [formState, setFormState] = useState<FormStateType>({
     docTitle: '',
     pageNum: 1,
@@ -44,7 +53,6 @@ function AssetList(): JSX.Element {
     parentId: -1,
     lessonId: lessonId
   })
-
   const getDirInfo = useCallback((item: DataType) => {
     const newInfo = { id: item.docId, name: item.docTitle }
     setDirInfo((prev) => [...prev, newInfo])
@@ -65,7 +73,6 @@ function AssetList(): JSX.Element {
     },
     [dirInfo]
   )
-
   const handleCreateDir = () => {
     createFolder({
       dirName,
@@ -83,21 +90,26 @@ function AssetList(): JSX.Element {
   }
   // 创建文件
   const handleCreateFile = () => {
-    setIsCreateDirModalOpen(false)
-    // 处理创建文件的逻辑
-  }
+    if (!fileName || !fileList.length || !fileList[0].originFileObj) {
+      message.warning('请填写完整信息')
+      return
+    }
 
-  const getFileType = (item: DataType) => {
-    if (item.isDir === 1) return dir
-    const extension = item.docRef?.split('.').pop() || ''
-    return iconMap[extension] || unknown
+    const fileUpload = new FileUpload(
+      fileList[0].originFileObj,
+      1024 * 1024 * 5,
+      fileName,
+      (progressValue) => {
+        setProgress(progressValue) // Update progress
+      }
+    )
+    fileUpload.startUpload()
+    setIsUploadModalOpen(false)
   }
 
   const loadMoreData = useCallback(() => {
     if (loading || !hasMore) return
     setLoading(true)
-    console.log(formState)
-
     getFileList(formState)
       .then((body) => {
         setData((prevData) => [...prevData, ...body.data.records])
@@ -114,13 +126,6 @@ function AssetList(): JSX.Element {
       })
       .finally(() => setLoading(false))
   }, [formState, loading, hasMore])
-  const handleFileUpload = (file: File) => {
-    const fileUpload = new FileUpload(file, 1024 * 1024 * 2, file.name, (progressValue) => {
-      setProgress(progressValue) // Update progress
-    })
-
-    fileUpload.startUpload()
-  }
   useEffect(() => {
     loadMoreData()
   }, [formState.docTitle, formState.pageNum, formState.parentId])
@@ -159,18 +164,20 @@ function AssetList(): JSX.Element {
       <Modal
         title="上传文件"
         open={isUploadModalOpen}
-        onOk={() => setIsUploadModalOpen(false)}
+        onOk={handleCreateFile}
         onCancel={() => setIsUploadModalOpen(false)}
       >
         <Progress percent={progress} />
-        <Dragger>
-          <div className="h-36 flex flex-col justify-center">
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
-            <p className="ant-upload-hint">单击或拖动文件到此区域进行上传</p>
-          </div>
-        </Dragger>
+        <Form labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+          <Form.Item label="文件名">
+            <Input value={fileName} onChange={(e) => setfileName(e.target.value)} />
+          </Form.Item>
+          <Form.Item label="上传文件">
+            <Upload {...props}>
+              <Button icon={<UploadOutlined />}>选择文件</Button>
+            </Upload>
+          </Form.Item>
+        </Form>
       </Modal>
 
       <Modal

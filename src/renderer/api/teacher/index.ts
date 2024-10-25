@@ -63,13 +63,17 @@ export const createFolder = (param: { parentId: number; dirName: string; lessonI
 }
 
 // 上传文件
-export const uploadFile = (param: { parentId: number; lessonId: number }, file: File) => {
-  let data = { parentId: 0, lessonId: 0 }
+export const uploadFile = (param: {
+  fileName: string
+  filePath: string
+  lessonId: number
+  parentId: number
+}) => {
+  let data = { fileName: '', filePath: '', lessonId: 0, parentId: 0 }
   data = { ...data, ...param }
   return myAxios({
     url: '/tea/makeFile',
     method: 'post',
-    data: file,
     params: data
   })
 }
