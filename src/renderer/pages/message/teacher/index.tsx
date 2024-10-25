@@ -28,7 +28,7 @@ const TeacherSystem = (): JSX.Element => {
                                 description={
                                     <Space direction="vertical" style={{ width: '100%' }}>
                                         <Text>{item.name}申请加入您的{item.stuClass}</Text>
-                                        <Text type="secondary" style={{ fontSize: '12px' }}>{item.time}</Text>
+                                        {/* <Text type="secondary" style={{ fontSize: '12px' }}>{item.time}</Text> */}
                                     </Space>
                                 }
                             />
