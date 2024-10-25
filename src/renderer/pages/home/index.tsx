@@ -54,6 +54,7 @@ function Home(): JSX.Element {
   console.log(route)
   const gotoMessage = async () => {
     const role = await learnStorage.getItem('role')
+    setRead(0)
     if (role == 0) {
       return navigate('/studentSys')
     } else {
@@ -79,7 +80,7 @@ function Home(): JSX.Element {
     })
   }
 
-  const { noReadmessageData } = userMessage()
+  const { noReadmessageData,setRead } = userMessage()
   const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
     url: `ws://81.70.144.36:8080/ws/audit`, 
     onOpen: () => {

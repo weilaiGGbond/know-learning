@@ -51,7 +51,8 @@ const useTeacherMessage = () => {
     const readMessageMethods=(async ()=>{
         const data=await readMessage() as unknown as Responsedata
         if(data.code===20000){
-            setRead(0)
+            setRead(data.data)
+
         }
 
     })
@@ -88,7 +89,6 @@ const useTeacherMessage = () => {
             cancelText: '取消',
             async onOk() {
                 const argeeData = await aduitStudentApplication(1, lessonStuId) as unknown as Responsedata
-                console.log(argeeData,'222222');
                 if (argeeData.code === 20000) {
                     getTeacherApply()
                     sendMessage(JSON.stringify(argeeData.data))
