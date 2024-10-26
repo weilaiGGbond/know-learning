@@ -1,13 +1,24 @@
 import { List } from "antd"
 import { Content } from "antd/es/layout/layout"
+import InfiniteScroll from "react-infinite-scroll-component"
 
-const ChatConten = (() => {
+const ChatConten = ((chatMessage) => {
     return (
         <Content
             style={{ overflowY: 'auto', padding: '16px', background: '#fff' }}
             className="srollBar overflow-auto"
         >
-            {/* <List
+            {chatMessage}
+                  {/* <InfiniteScroll
+        dataLength={data.length}
+        next={loadMoreData}
+        hasMore={data.length < 50}
+        loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+        endMessage={<Divider plain>暂时没有更多消息了</Divider>}
+        scrollableTarget="scrollableDiv"
+        inverse={true}
+      >
+            <List
                 dataSource={messages}
                 renderItem={(message) => (
                     <div>
@@ -35,7 +46,9 @@ const ChatConten = (() => {
                         </div>
                     </div>
                 )}
-            /> */}
+            />
+            </InfiniteScroll> */}
         </Content>
     )
 })
+export default ChatConten
