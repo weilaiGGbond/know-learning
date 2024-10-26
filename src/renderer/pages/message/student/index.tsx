@@ -1,81 +1,19 @@
-import React from 'react'
-import { List, Card, Typography, Tag, Space, Button } from 'antd';
+import React, { useEffect } from 'react'
+import { List, Card, Typography, Tag, Space, Button, Skeleton, Divider } from 'antd';
 import { BellOutlined, UserOutlined, TeamOutlined, SettingOutlined, ReadOutlined, BgColorsOutlined, AreaChartOutlined } from '@ant-design/icons';
-
 const { Title, Text } = Typography;
 import '@renderer/assets/styles/message/index.scss'
-interface Notification {
-    id: number;
-    title: string;
-    content: string;
-    type: 'system' | 'homework' | 'test' | 'memo';
-    time: string;
-}
-const notifications: Notification[] = [
-    {
-        id: 1,
-        title: '系统更新通知',
-        content: '您的申请加入课程已同意',
-        type: 'system',
-        time: '10分钟前'
-    },
-    {
-        id: 2,
-        title: '作业通知',
-        content: '您还有作业未完成',
-        type: 'homework',
-        time: '30分钟前'
-    },
-    {
-        id: 3,
-        title: '考试通知',
-        content: '您还有考试未完成',
-        type: 'test',
-        time: '1小时前'
-    },
-    {
-        id: 4,
-        title: '备忘录更新',
-        content: '您备忘录还有事项未完成',
-        type: 'memo',
-        time: '2小时前'
-    },
-];
-const getIcon = (type: string) => {
-    switch (type) {
-        case 'system':
-            return <BellOutlined style={{ color: '#1890ff' }} />;
-        case 'homework':
-            return <BgColorsOutlined style={{ color: '#52c41a' }} />;
-        case 'test':
-            return <AreaChartOutlined style={{ color: '#faad14' }} />;
-        case 'memo':
-            return <ReadOutlined style={{ color: '#722ed1' }} />;
-        default:
-            return <BellOutlined />;
-    }
-};
-
-const getTagColor = (type: string) => {
-    switch (type) {
-        case 'system':
-            return 'blue';
-        case 'homework':
-            return 'green';
-        case 'test':
-            return 'gold';
-        case 'memo':
-            return 'purple';
-        default:
-            return 'default';
-    }
-};
+import useStudentMessage from '@renderer/hook/message/student';
+import Utils from '@renderer/utils/util';
+import InfiniteScroll from 'react-infinite-scroll-component';
 const StudentSystem = (): JSX.Element => {
+    const { pages,page, data, getTeacherApply } = useStudentMessage()
     return (
         <div className='systemMainSroll'>
-            <Card style={{ width: '100%', maxWidth: 800, margin: 'auto' }}>
-                <Title level={4} style={{ marginBottom: 20 }}>系统通知</Title>
-                <List
+            <   div id="scrollableDiv" style={{ width: '100%', maxWidth: 800, margin: 'auto' }}>
+                <Title level={4} style={{ marginBottom: 20 }}>课程通知</Title>
+
+                {/* <List
                     itemLayout="horizontal"
                     dataSource={notifications}
                     renderItem={(item) => (
@@ -102,9 +40,41 @@ const StudentSystem = (): JSX.Element => {
                         </List.Item>
 
                     )}
+                /> */}
+                <InfiniteScroll
+                    dataLength={data.length}
+                    next={getTeacherApply}
+                    hasMore={pages>page}
+                    loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+                    endMessage={<Divider plain>暂时没有更多</Divider>}
+                    scrollableTarget="scrollableDiv"
+                >
+
+                <List
+                    dataSource={data}
+                    renderItem={(item) => (
+                        <List.Item key={item.updateTime}>
+                            <List.Item.Meta
+                                avatar={<BellOutlined style={{ color: '#1890ff' }} />}
+                                title={
+                                    <Space>
+                                        <Text strong>申请入课程通知</Text>
+                                    </Space>
+                                }
+                                description={
+                                    <Space direction="vertical" style={{ width: '100%' }}>
+                                        <Text>{item.lessonName}</Text>
+                                        <Text type="secondary" style={{ fontSize: '12px' }}>{Utils.timeAgo(item.updateTime)}</Text>
+                                    </Space>
+                                }
+                            />
+
+                        </List.Item>
+                    )}
                 />
-            </Card>
+            </InfiniteScroll>
         </div>
+        </div >
     )
 }
 export default StudentSystem
