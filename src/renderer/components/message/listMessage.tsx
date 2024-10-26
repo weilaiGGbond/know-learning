@@ -3,6 +3,8 @@ import React from 'react'
 import icon from '@renderer/assets/img/image.png'
 import { CloseOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import useWebSocket from '@renderer/hook/socketConnet';
+
 const { confirm } = Modal;
 const ListMessage = () => {
     const navigate = useNavigate()
@@ -43,6 +45,25 @@ const ListMessage = () => {
     const gotoPeople=()=>{
         navigate('/message/people')
     }
+    const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
+        url: `ws://81.70.144.36:8080/ws/les`, 
+        onOpen: () => {
+        //连接成功
+          console.log('WebSocket connected');
+        },
+        onClose: () => {
+        //连接关闭
+          console.log('WebSocket disconnected');
+        },
+        onError: (event) => {
+        //连接异常
+          console.error('WebSocket error:', event);
+        },
+        onMessage: (message) => {
+        //收到消息
+          console.log('WebSocket received message:', message);
+        }
+      })
     return (
   <div className='listmessage'>
           <List
