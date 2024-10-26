@@ -16,13 +16,13 @@ import {
 } from 'antd'
 import { Breadcrumb } from 'antd'
 import { PlusOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons'
-
+import Icon from '@renderer/components/Icon'
 import { useCourse } from '..'
-import { createFolder, getFileList } from '@renderer/api/teacher'
+import dir from '@renderer/assets/img/dir.png'
+import { createFolder, getFileList, uploadFile } from '@renderer/api/teacher'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import FileUpload from '@renderer/common/upload'
-import { getFileType } from './assent'
-
+import { getFileInfo } from './assent'
 function AssetList(): JSX.Element {
   const [progress, setProgress] = useState(0)
   const [dirInfo, setDirInfo] = useState<DirType[]>([{ id: -1, name: '全部资源' }])
@@ -37,6 +37,11 @@ function AssetList(): JSX.Element {
   const { lessonId } = useCourse()
   const props: UploadProps = {
     beforeUpload: (file: UploadFile) => {
+      // 判断是否有文件名
+      if (!fileName) {
+        const fileName = getFileInfo(file.name).name
+        setfileName(fileName)
+      }
       setFileList([file])
       return false
     },
@@ -89,22 +94,45 @@ function AssetList(): JSX.Element {
     setIsCreateDirModalOpen(false)
   }
   // 创建文件
-  const handleCreateFile = () => {
+  const handleCreateFile = async () => {
+    // 获取完整的文件名
+
     if (!fileName || !fileList.length || !fileList[0].originFileObj) {
       message.warning('请填写完整信息')
       return
     }
-
+    const extension = getFileInfo(fileList[0].name).extension
+    const fullFileName = `${fileName}.${extension}`
     const fileUpload = new FileUpload(
       fileList[0].originFileObj,
       1024 * 1024 * 5,
-      fileName,
+      fullFileName,
       (progressValue) => {
         setProgress(progressValue) // Update progress
       }
     )
-    fileUpload.startUpload()
-    setIsUploadModalOpen(false)
+    const result: any = await fileUpload.startUpload()
+    if (result.code === 20000) {
+      uploadFile({
+        fileName: fullFileName,
+        filePath: result.data,
+        lessonId: formState.lessonId,
+        parentId: formState.parentId
+      })
+        .then((res) => {
+          if (res) {
+            // 创建成功后处理逻辑
+            message.success('创建成功')
+            loadMoreData()
+            setIsUploadModalOpen(false)
+          }
+        })
+        .catch((err) => {
+          message.error(err.errMsg)
+        })
+    } else {
+      message.error('上传失败')
+    }
   }
 
   const loadMoreData = useCallback(() => {
@@ -232,7 +260,11 @@ function AssetList(): JSX.Element {
               <List.Item key={item.id}>
                 <Flex align="center" gap={10} onDoubleClick={() => getDirInfo(item)}>
                   <div className="typeFile h-8 w-8">
-                    <img src={getFileType(item)} alt="文件" className="w-full h-full" />
+                    {item.isDir === 1 ? (
+                      <img src={dir} alt="文件" className="w-full h-full" />
+                    ) : (
+                      <Icon fileUrl={item.docRef} />
+                    )}
                   </div>
                   <p
                     className="nameFile text-nowrap text-ellipsis overflow-hidden max-w-md"

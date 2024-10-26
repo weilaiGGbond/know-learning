@@ -19,7 +19,7 @@ const loadingInstance = {
 async function myAxios(axiosConfig: AxiosRequestConfig, customOptions?: Partial<CustomOptions>) {
   const service = axios.create({
     baseURL: 'http://81.70.144.36:8080',
-    timeout: 20000
+    timeout: 10000
   })
   const custom_options: CustomOptions = {
     loading: false,

@@ -9,6 +9,16 @@ export const login = (param: { username: string; password: string }) => {
     data: data
   })
 }
+
+// 获取用户信息
+export const getUserInfo = () => {
+  return myAxios({
+    url: '/user/getProfile',
+    method: 'get',
+    params: {}
+  })
+}
+
 // 退出登录
 export const logout = async () => {
   deleteTokenAuth()

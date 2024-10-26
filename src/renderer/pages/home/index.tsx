@@ -16,14 +16,20 @@ import tps from '@renderer/assets/tps.png'
 import { props } from './setting'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import '@renderer/assets/styles/layout/nailbar.scss'
-import AddNewRoom from '@renderer/components/studentAbility/addNewRoom'
-import { useDispatch, useSelector } from 'react-redux'
 import { getTokenAuth, learnStorage } from '@renderer/utils/auth'
-import { logout } from '@renderer/api/login'
+import { getUserInfo, logout } from '@renderer/api/login'
 import { setNewConnect } from '@renderer/store/reducers/socket'
 import userMessage from '@renderer/hook/message/user'
 import useWebSocket from '@renderer/hook/socketConnet'
 function Home(): JSX.Element {
+  const [user, setUser] = useState({
+    avatar: avatar,
+    stuClass: null,
+    username: '',
+    name: '',
+    sex: '',
+    email: null
+  })
   const settings: ProSettings | undefined = {
     fixSiderbar: true,
     layout: 'mix',
@@ -36,9 +42,16 @@ function Home(): JSX.Element {
       onOk() {
         logout()
       },
-      onCancel() { }
+      onCancel() {}
     })
   }
+
+  // 获取用户信息
+  useEffect(() => {
+    getUserInfo().then((res) => {
+      setUser((prev) => ({ ...prev, ...res.data }))
+    })
+  }, [])
   const content = (
     <div className="flex flex-col gap-1">
       <Button type="text">个人中心</Button>
@@ -85,24 +98,23 @@ function Home(): JSX.Element {
 
   const { noReadmessageData,setRead } = userMessage()
   const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
-    url: `ws://81.70.144.36:8080/ws/audit`, 
+    url: `ws://81.70.144.36:8080/ws/audit`,
     onOpen: () => {
-    //连接成功
-      console.log('WebSocket connected');
+      //连接成功
+      console.log('WebSocket connected')
     },
     onClose: () => {
-    //连接关闭
-      console.log('WebSocket disconnected');
+      //连接关闭
+      console.log('WebSocket disconnected')
     },
     onError: (event) => {
-    //连接异常
-      console.error('WebSocket error:', event);
+      //连接异常
+      console.error('WebSocket error:', event)
     },
     onMessage: (message) => {
-    //收到消息
-      console.log('WebSocket received message:', message);
+      //收到消息
+      console.log('WebSocket received message:', message)
       message.info('收到一条新消息，请及时查看')
-
     }
   })
   return (
@@ -224,19 +236,18 @@ function Home(): JSX.Element {
             <Popover content={content} trigger="click">
               <div className="flex items-center gap-1  dragger">
                 <div className="avatar w-7 h-7 rounded-full">
-                  <img src={avatar} alt="用户头像" className="w-full h-full rounded-full" />
+                  <img
+                    src={user.avatar || avatar}
+                    alt="用户头像"
+                    className="w-full h-full rounded-full"
+                  />
                 </div>
-                <div className="userName text-sm">张三上刷</div>
+                <div className="userName text-sm">{user.name}</div>
               </div>
             </Popover>,
-
-            <div className='messageTextMain'>
-              <MessageOutlined key="MessageOutlined" className="dragger" onClick={gotoMessage} />,
-
-              {
-                noReadmessageData > 0 && <div className='messageText'></div>
-
-              }
+            <div className="messageTextMain">
+              <MessageOutlined key="MessageOutlined" className="dragger" onClick={gotoMessage} />
+              {noReadmessageData > 0 && <div className="messageText"></div>}
             </div>,
 
             <div
@@ -296,6 +307,3 @@ function Home(): JSX.Element {
 }
 
 export default Home
-function dispatch(arg0: any) {
-  throw new Error('Function not implemented.')
-}

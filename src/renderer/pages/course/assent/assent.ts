@@ -1,32 +1,14 @@
 // 文件相关方法
-import { uploadFile } from '@renderer/api/teacher'
-import { message } from 'antd'
-import wordIcon from '@renderer/assets/img/wordIcon.png'
-import pdfIcon from '@renderer/assets/img/pdfIcon.png'
-import unknown from '@renderer/assets/img/unknown.png'
-import dir from '@renderer/assets/img/dir.png'
-import xlsx from '@renderer/assets/img/xlsx.png'
 
-// 上传文件
-export const uploadFileCourse = (params: {
-  fileName: string
-  filePath: string
-  lessonId: number
-  parentId: number
-}) => {
-  uploadFile(params)
-    .then((res) => {
-      if (res) {
-        message.success('上传成功')
-      }
-    })
-    .catch((err) => {
-      message.error(err.errMsg)
-    })
-}
-export const getFileType = (item: DataType) => {
-  if (item.isDir === 1) return dir
-  const extension = item.docRef?.split('.').pop() || ''
-  return iconMap[extension] || unknown
-}
 
+export function getFileInfo(filename: string) {
+  const lastDotIndex = filename.lastIndexOf('.');
+  // 获取后缀
+  const extension = lastDotIndex !== -1 ? filename.slice(lastDotIndex + 1) : '';
+  // 获取没有后缀的文件名
+  const name = lastDotIndex !== -1 ? filename.slice(0, lastDotIndex) : filename;
+  return {
+    extension,
+    name,
+  };
+}
