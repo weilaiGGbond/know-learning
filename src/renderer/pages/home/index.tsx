@@ -21,7 +21,10 @@ import { getUserInfo, logout } from '@renderer/api/login'
 import { setNewConnect } from '@renderer/store/reducers/socket'
 import userMessage from '@renderer/hook/message/user'
 import useWebSocket from '@renderer/hook/socketConnet'
+import { useDispatch } from 'react-redux'
+import { setUserownName } from '@renderer/store/reducers/person'
 function Home(): JSX.Element {
+  const dispatch = useDispatch()
   const [user, setUser] = useState({
     avatar: avatar,
     stuClass: null,
@@ -50,6 +53,7 @@ function Home(): JSX.Element {
   useEffect(() => {
     getUserInfo().then((res) => {
       setUser((prev) => ({ ...prev, ...res.data }))
+      dispatch(setUserownName(res.data.username))
     })
   }, [])
   const content = (
@@ -94,7 +98,7 @@ function Home(): JSX.Element {
     })
   }
 
-  const { noReadmessageData,setRead } = userMessage()
+  const { noReadmessageData, setRead } = userMessage()
   const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
     url: `ws://81.70.144.36:8080/ws/audit`,
     onOpen: () => {
