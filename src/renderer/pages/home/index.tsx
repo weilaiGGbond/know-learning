@@ -76,8 +76,6 @@ function Home(): JSX.Element {
     }
   }
   const maxSizeMethods = () => {
-    console.log(1111111111)
-
     window.api.maximizeWindow()
   }
 

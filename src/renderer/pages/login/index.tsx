@@ -12,7 +12,7 @@ import NailBar from '@renderer/components/layout/nailBar'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { login } from '@renderer/api/login'
-import { setToken } from '@renderer/store/reducers/person'
+import { setToken,setUserownName} from '@renderer/store/reducers/person'
 import { setTokenAuth, learnStorage } from '@renderer/utils/auth'
 import { setNewConnect } from '@renderer/store/reducers/socket'
 const Login = (): JSX.Element => {
@@ -42,7 +42,7 @@ const Login = (): JSX.Element => {
         await learnStorage.set('role', res.data.role)
         dispatch(setToken(res.data.token))
         dispatch(setNewConnect(res.data.token))
-        debugger
+    
         //连接websocket
         // 关闭登录
         window.api.openWindow()

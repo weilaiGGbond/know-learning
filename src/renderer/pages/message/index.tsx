@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 import '@renderer/assets/styles/message/index.scss'
 import emptyMessage from '@renderer/assets/img/emptyMessage.png'
 
@@ -6,10 +6,22 @@ import ListMessage from '@renderer/components/message/listMessage'
 import MessagePeople from '@renderer/components/message/messPeople'
 import { Route, Routes } from 'react-router-dom'
 import { useCourse } from '../course'
+import chatMethods from '@renderer/hook/chat/chat'
 const ChatContext = createContext({
-  lessonId: 0
+  chatMessage:{
+    coverUrl:'',
+    lessonName:'',
+    name:'',
+  }
 })
 const Message = (): JSX.Element => {
+  const {getLessonMessage,lessonMessage}=chatMethods();
+
+useEffect(()=>{
+  console.log('getLessonMessage');
+  
+  getLessonMessage()
+},[])
   const contact = {
     id: 1,
     name: '张三',
@@ -17,7 +29,6 @@ const Message = (): JSX.Element => {
   }
   // const { lessonId } = useCourse();
   return (
-    <ChatContext.Provider value={{lessonId:0}}>
       <div className="h-full">
         <div className="message h-full">
           <div className="message__main srollBar">
@@ -37,9 +48,7 @@ const Message = (): JSX.Element => {
           </div>
         </div>
       </div>
-    </ChatContext.Provider>
   )
 
 }
-export const chatConten=()=>useContext(ChatContext)
 export default Message

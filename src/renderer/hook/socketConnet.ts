@@ -41,7 +41,7 @@ const useWebSocket = (
   const connect = async () => {
     const dataToken = await getToken();
     setIsConnected(false)
-    const socket = new WebSocket(url,[`${dataToken}`])
+    const socket = new WebSocket(url, [`${dataToken}`])
     socket.onopen = () => {
       setIsConnected(true)
       setReconnectAttempt(0)
@@ -80,8 +80,8 @@ const useWebSocket = (
   }, [])
   const sendMessage = (message: any) => {
     if (isConnected && socketRef.current) {
-      console.log('发送消息');
-      socketRef.current.send(JSON.stringify(message))
+      console.log('发送消息',message);
+      socketRef.current.send(message)
     } else {
       console.log('没连接');
     }
