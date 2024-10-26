@@ -11,12 +11,6 @@ interface DirType {
   name: string
 }
 
-const iconMap = {
-  doc: wordIcon,
-  pdf: pdfIcon,
-  xlsx: xlsx
-}
-
 interface FormStateType {
   docTitle: string
   pageNum: number
