@@ -6,6 +6,7 @@ import chatMethods from '@renderer/hook/chat/chat'
 import ChatTop from '../chat/chatTop'
 import useWebSocket from '@renderer/hook/socketConnet'
 import ChatFooter from '../chat/chatFooter'
+import ChatConten from '../chat/chatConten'
 const { Text } = Typography
 
 interface Message {
@@ -46,16 +47,15 @@ const ChatContext = createContext<ChatContextType>({
 
 })
 const MessagePeople = ({ contact }: ChatWindowProps) => {
-  const { getLessonMessage, lessonMessage,getChatMessage,chatMessage } = chatMethods();
+  const { getLessonMessage, lessonMessage,getChatMessage,getNewMessage,chatMessage,page,handleScroll } = chatMethods();
   const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
     url: `ws://81.70.144.36:8080/ws/les`,
   })
   useEffect(() => {
     getLessonMessage()
+    getNewMessage()
+
   }, [])
-  useEffect(()=>{
-    getChatMessage()
-  },[])
 
   return (
     <ChatContext.Provider value={{ chatMessage: lessonMessage, WebSocket: webSocket, sendMessage: sendMessage }}>
@@ -63,8 +63,12 @@ const MessagePeople = ({ contact }: ChatWindowProps) => {
         {contact ? (
           <>
             <ChatTop />
-            <ChatContext chatMessage={chatMessage}/>
-            <ChatFooter />
+            <ChatConten chatMessage={chatMessage}
+             loadMore={getChatMessage}
+             page={page}
+         
+             />
+            <ChatFooter lastMessage={lastMessage} chatMessage={chatMessage}  loadMore={getChatMessage} handleScroll={handleScroll}/>
           </>
 
         ) : (

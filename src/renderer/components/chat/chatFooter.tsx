@@ -4,18 +4,18 @@ import { Button, Input, message } from "antd";
 import { Footer } from "antd/es/layout/layout";
 import { chatConten } from "../message/messPeople";
 import { useCourse } from "@renderer/pages/course";
+import { useEffect } from "react";
 
-const ChatFooter = () => {
+const ChatFooter = (msg) => {
     const { WebSocket, sendMessage } = chatConten();
     const { inputMessage, setInputMessage } = chatMethods();
     const { lessonId } = useCourse()
-
+    const {lastMessage,chatMessage,loadMore}=msg
     const handleSendMessage = () => {        
         if (WebSocket && WebSocket.readyState === WebSocket.OPEN) {
             if (inputMessage.trim() == '') {
                 message.error('请输入消息内容');
             } else {
-
                 sendMessage(JSON.stringify({
                     type: 0,
                     msg: inputMessage,
@@ -26,7 +26,10 @@ const ChatFooter = () => {
             message.error('请先检查网络连接');
         }
     };
+    useEffect(()=>{
+        loadMore(true)
 
+    },[lastMessage])
     return (
         <Footer
             style={{ padding: '16px', background: '#fff', borderTop: '1px solid #f0f0f0' }}
