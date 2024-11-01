@@ -9,6 +9,9 @@ import { CreateLesson } from './teacher/createLesson'
 import { TeacherCourse } from './teacher/TeacherCourse'
 // import { Route, Routes } from 'react-router-dom'
 import { StudentCourse } from './student/StudentCourse'
+
+import '@renderer/assets/styles/message/index.scss'
+import AIsendAll from '@renderer/components/AI/AIchatAll'
 type SearchProps = GetProps<typeof Input.Search>
 const { Search } = Input
 
@@ -35,19 +38,19 @@ function Asset(): JSX.Element {
       const tabs =
         role == 1
           ? [
-              {
-                tab: '教学课程',
-                key: '1',
-                children: <TeacherCourse />
-              }
-            ]
+            {
+              tab: '教学课程',
+              key: '1',
+              children: <TeacherCourse />
+            }
+          ]
           : [
-              {
-                tab: '学习课程',
-                key: '2',
-                children: <StudentCourse />
-              }
-            ]
+            {
+              tab: '学习课程',
+              key: '2',
+              children: <StudentCourse />
+            }
+          ]
       setTabList(tabs)
     }
   }, [role])
@@ -76,7 +79,10 @@ function Asset(): JSX.Element {
             回收站
           </Button>
         }
-      ></PageContainer>
+      >
+        <AIsendAll />
+
+      </PageContainer>
     </div>
   )
 }

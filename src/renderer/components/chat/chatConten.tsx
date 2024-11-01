@@ -16,7 +16,7 @@ interface messageChatmain {
 const ChatConten = ((chat) => {
     const username = useSelector((state) => state.personReducer.username);
     const { Text } = Typography;
-    const { chatMessage, loadMore, page,handleScroll } = chat; // 确保 loadMore 函数传入
+    const { chatMessage, loadMore, page,handleScroll,getChatMessage } = chat; // 确保 loadMore 函数传入
 
   
 
@@ -34,7 +34,7 @@ const ChatConten = ((chat) => {
                     display: 'flex',
                     flexDirection: 'column-reverse' // 使列表从底部开始
                 }}
-                onScroll={handleScroll} // 添加 onScroll 事件
+                onScroll={getChatMessage} // 添加 onScroll 事件
             >
                 <List
                     dataSource={chatMessage}

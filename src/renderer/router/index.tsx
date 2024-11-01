@@ -13,6 +13,7 @@ import AssetList from '@renderer/pages/course/assent'
 import NoticeSystem from '@renderer/pages/notice/index'
 import TeacherSystem from '@renderer/pages/message/teacher'
 import StudentSystem from '@renderer/pages/message/student'
+import AIsend from '@renderer/components/AIsend/AIsend'
 // import MessagePeople from '@renderer/components/message/messPeople'
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: '/studentSys',
         element: <StudentSystem />
+      },
+      {
+        path: '/aisend',
+        element: <AIsend />
       }
     ]
   },

@@ -47,7 +47,7 @@ const ChatContext = createContext<ChatContextType>({
 
 })
 const MessagePeople = ({ contact }: ChatWindowProps) => {
-  const { getLessonMessage, lessonMessage,getChatMessage,getNewMessage,chatMessage,page,handleScroll } = chatMethods();
+  const { getLessonMessage, lessonMessage, getChatMessage, getNewMessage, chatMessage, page, handleScroll } = chatMethods();
   const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
     url: `ws://81.70.144.36:8080/ws/les`,
   })
@@ -64,11 +64,11 @@ const MessagePeople = ({ contact }: ChatWindowProps) => {
           <>
             <ChatTop />
             <ChatConten chatMessage={chatMessage}
-             loadMore={getChatMessage}
-             page={page}
-         
-             />
-            <ChatFooter lastMessage={lastMessage} chatMessage={chatMessage}  loadMore={getChatMessage} handleScroll={handleScroll}/>
+              loadMore={getChatMessage}
+              page={page}
+
+            />
+            <ChatFooter lastMessage={lastMessage} chatMessage={chatMessage} loadMore={getChatMessage} handleScroll={handleScroll} />
           </>
 
         ) : (
