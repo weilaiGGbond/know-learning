@@ -12,73 +12,70 @@ import { Content, Footer } from 'antd/es/layout/layout'
 import Util from '@renderer/utils/util';
 import { useSelector } from 'react-redux'
 import { SendOutlined } from '@ant-design/icons'
+import { getTokenAuth } from '@renderer/utils/auth'
 const { Text } = Typography
 
-interface Message {
-    id: number
-    text: string
-    sender: 'user' | 'contact'
-    timestamp: string
-}
-
-interface Contact {
-    id: number
-    name: string
-    avatar: string
-}
 interface messageChatmain {
-    messageId: number,
-    messageText: string,
-    name: string,
-    createTime: number,
-    username: string,
-}
-
-interface ChatContextType {
-    chatMessage: {
-        coverUrl: string;
-        lessonName: string;
-        name: string;
-    };
-    WebSocket: WebSocket | null;
-    sendMessage: (message: string) => void;
+    text: string
+    user: boolean
 }
 
 const AIsend = () => {
-    const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
-        url: `ws://81.70.144.36:8080/ws/model`,
-        onMessage: (message) => {
-            const data = JSON.parse(message.data)
-            console.log(data);
-
-            // setAIchatList((prevList) => [...prevList, data])
-        },
-        onOpen: () => {
-            console.log('WebSocket 连接已打开')
-        },
-        onError: (error) => {
-            console.error('WebSocket 连接错误:', error)
-        },
-        onClose: () => {
-            console.log('WebSocket 连接已关闭')
-        }
+    const [token, setToken] = useState('')
+    const getToken = (async () => {
+        const tokendata = await getTokenAuth() as string
+        setToken(tokendata)
     })
-    const [AIchatList, setAIchatList] = useState([])
+    useEffect(() => {
+        getToken()
+    }, [])
+    let result = ''
+    const [AIchatList, setAIchatList] = useState<messageChatmain[]>([])
     const username = useSelector((state) => state.personReducer.username);
     const [inputMessage, setInputMessage] = useState('')
     const handleSendMessage = (() => {
-        if (webSocket && webSocket.readyState === webSocket.OPEN) {
-            if (inputMessage.trim() == '') {
-                message.error('请输入消息内容');
-            } else {
-                sendMessage(JSON.stringify({
-                    type: 0,
-                    msg: inputMessage,
-                    lessonId: 1
-                }))
-            }
-        } else {
-            message.error('请先检查网络连接');
+        let messageTimeout: any;
+        if (inputMessage.trim() == '') {
+            message.error('请输入消息')
+            return
+        }
+        let webSocket = new WebSocket(`ws://81.70.144.36:8080/ws/model`, [`${token}`])
+        webSocket.onopen = () => {
+            console.log('WebSocket 连接已打开');
+            webSocket.send(JSON.stringify(inputMessage))
+            setAIchatList((prevList) => [...prevList, {
+                user: true,
+                text: inputMessage,
+            }])
+        }
+
+        webSocket.onmessage = (data) => {
+            const messageData = data.data;
+            result += messageData;
+            clearTimeout(messageTimeout);
+            messageTimeout = setTimeout(() => {
+                console.log(result);
+                
+                setAIchatList((prevList) => [...prevList, {
+                    user: false,
+                    text: result,
+                }]);
+                console.log(AIchatList,'1111');
+                
+                result = ''; 
+            }, 300);
+        };
+        webSocket.onerror = (error) => {
+            console.error('WebSocket 连接错误:', error)
+        }
+        webSocket.onclose = () => {
+            setAIchatList((prevList) => [...prevList, {
+                user: true,
+                text: result,
+            }])
+
+            console.log('WebSocket 连接已关闭')
+
         }
     })
 
@@ -110,7 +107,7 @@ const AIsend = () => {
                                 <div>
                                     <List.Item
                                         style={{
-                                            justifyContent: message.username === username ? 'flex-end' : 'flex-start'
+                                            justifyContent: message.user ? 'flex-end' : 'flex-start'
                                         }}
                                     >
                                         <div
@@ -118,16 +115,16 @@ const AIsend = () => {
                                                 maxWidth: '70%',
                                                 padding: '8px 12px',
                                                 borderRadius: '8px',
-                                                background: message.username === username ? '#d6eae9' : '#f0f2f5',
-                                                color: message.username === username ? '#fff' : 'rgba(0, 0, 0, 0.85)'
+                                                background:  message.user ? '#d6eae9' : '#f0f2f5',
+                                                color:  message.user ? '#fff' : 'rgba(0, 0, 0, 0.85)'
                                             }}
                                         >
-                                            <Text>{message.messageText}</Text>
+                                            <Text>{message.text}</Text>
                                         </div>
                                     </List.Item>
                                     <div style={{ textAlign: 'center' }}>
                                         <Text type="secondary" style={{ fontSize: '12px', opacity: 0.7 }}>
-                                            {Util.timeAgo(message.createTime)}
+                                            {/* {Util.timeAgo(message.createTime)} */}
                                         </Text>
                                     </div>
                                 </div>

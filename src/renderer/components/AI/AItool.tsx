@@ -58,7 +58,6 @@ const AItool = forwardRef<FatherRef, AItoolProps>((props, ref) => {
             socket.send(JSON.stringify(params));
         }
         socket.onmessage = (data) => {
-
             let responseData = JSON.parse(data.data)
             console.log(responseData, '8888');
 
