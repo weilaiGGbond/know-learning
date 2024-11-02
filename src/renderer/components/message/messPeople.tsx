@@ -31,7 +31,7 @@ interface ChatContextType {
     lessonName: string;
     name: string;
   };
-  WebSocket: WebSocket | null;
+  WebSocket:  WebSocket | null | undefined;
   sendMessage: (message: string) => void;
 }
 const ChatContext = createContext<ChatContextType>({

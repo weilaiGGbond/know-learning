@@ -31,7 +31,6 @@ const AIsend = () => {
     }, [])
     let result = ''
     const [AIchatList, setAIchatList] = useState<messageChatmain[]>([])
-    const username = useSelector((state) => state.personReducer.username);
     const [inputMessage, setInputMessage] = useState('')
     const handleSendMessage = (() => {
         let messageTimeout: any;
