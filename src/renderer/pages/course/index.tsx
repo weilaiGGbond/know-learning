@@ -5,12 +5,14 @@ import {
   ExceptionOutlined,
   FileProtectOutlined,
   FileTextOutlined,
+  MehOutlined,
   SignatureOutlined,
   TwitchOutlined
 } from '@ant-design/icons'
 import { Menu } from 'antd'
 import AssetList from './assent'
 import MessagePeople from '@renderer/components/message/messPeople'
+import AIsend from '@renderer/components/AIsend/AIsend'
 const CourseContext = createContext({
   lessonId: 0
 })
@@ -21,17 +23,19 @@ const contact = {
   avatar: 'URL_ADDRESS'
 }
 const items = [
-  {
-    key: '1',
-    icon: <TwitchOutlined />,
-    label: '聊天',
-    component: <MessagePeople contact={contact} />
-  },
+  // {
+  //   key: '1',
+  //   icon: <TwitchOutlined />,
+  //   label: '聊天',
+  //   component: <MessagePeople contact={contact} />
+  // },
   { key: '2', icon: <FileProtectOutlined />, label: '考试' },
   { key: '3', icon: <FileTextOutlined />, label: '作业' },
   { key: '4', icon: <SignatureOutlined />, label: '课堂笔记' },
   { key: '5', icon: <BookOutlined />, label: '资料', component: <AssetList /> },
-  { key: '6', icon: <ExceptionOutlined />, label: '错题集', component: <div>错题集内容</div> }
+  { key: '6', icon: <ExceptionOutlined />, label: '错题集', component: <div>错题集内容</div> },
+  { key: '7', icon: <MehOutlined />, label: 'AI', component: <AIsend /> }
+
 ]
 
 const Course = (): JSX.Element => {

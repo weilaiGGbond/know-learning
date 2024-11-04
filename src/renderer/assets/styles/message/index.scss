@@ -34,13 +34,15 @@
         &-right {
             width: 80%;
             height: 100%;
-            &-iconmessage{
+
+            &-iconmessage {
                 width: 40%;
                 margin: 0 auto;
                 text-align: center;
                 color: rgb(183, 182, 182);
+
                 // height: 40%;
-                img{
+                img {
                     width: 100%;
                     height: 100%;
                 }
@@ -64,86 +66,123 @@
         right: 0;
         transition: opacity 0.3s ease, transform 0.3s ease; // 添加过渡效果
         opacity: 0;
-        transform: scale(0.8); 
+        transform: scale(0.8);
     }
 }
 
 .hoverIcon:hover {
     cursor: pointer;
+
     .hoverIcon__icon {
-        display: block; 
-        opacity: 1; 
-        transform: scale(1); 
+        display: block;
+        opacity: 1;
+        transform: scale(1);
     }
 }
-.rightDraw{
+
+.rightDraw {
     padding-top: 20px;
 }
-.drawBtnShare{
+
+.drawBtnShare {
     float: right;
 }
-.peopleTitle{
+
+.peopleTitle {
     float: right;
 }
-.grouplistMain{
+
+.grouplistMain {
     padding: 12px;
     border-radius: 6px;
     border: 1px dashed #1677ff;
 }
-.ant-descriptions-header{
+
+.ant-descriptions-header {
     padding-bottom: 10px;
     border-bottom: 1px dashed #1677ff;
 }
-.groupList{
+
+.groupList {
     display: flex;
-    &__avater{
+
+    &__avater {
         margin-left: 10px;
     }
 }
-.listMain{
+
+.listMain {
     padding-top: 10px;
     padding-bottom: 10px;
     display: flex;
-    .listMainTitle{
+
+    .listMainTitle {
         width: 30%;
         margin-left: 20px;
-        .listMainText{
+
+        .listMainText {
             font-size: 16px;
         }
     }
-    .listMainTeacher{
-        width: 40%; 
+
+    .listMainTeacher {
+        width: 40%;
     }
 }
-.systemMainSroll{
+
+.systemMainSroll {
     max-height: 82vh;
     overflow-y: scroll;
+
     &::-webkit-scrollbar {
         width: 6px;
-      }
-    
-      &::-webkit-scrollbar-thumb {
+    }
+
+    &::-webkit-scrollbar-thumb {
         background-color: #d5e3ed;
         border-radius: 10px;
-      }
+    }
 }
-.textNonedata{
+
+.textNonedata {
     text-align: center;
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: white;
 }
-.messageTextMain{
+
+.messageTextMain {
     position: relative;
-    .messageText{
+
+    .messageText {
         position: absolute;
-       background-color: rgba(247, 40, 40, 0.764);
-       color: rgba(247, 40, 40, 0.764);
+        background-color: rgba(247, 40, 40, 0.764);
+        color: rgba(247, 40, 40, 0.764);
         transform: scale(0.5);
         top: 34%;
         border-radius: 50%;
         right: 8%;
         width: 10px;
         height: 10px;
+    }
+}
+
+.clickAI {
+    cursor: pointer;
+    width: 80px;
+    height: 80px;
+    background-color: rgba(255, 255, 255, 0.2);
+    position: fixed;
+    bottom: 10%;
+    right: 5%;
+    border-radius: 50%;
+    border: 1px dashed #a0cceb;
+
+    img {
+        width: 60%;
+        height: 60%;
+        top: 20%;
+        left: 20%;
+        position: absolute;
     }
 }
