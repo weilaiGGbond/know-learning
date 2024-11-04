@@ -55,7 +55,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
-    "electron": "^31.0.2",
+    "electron": "^33.0.2",
     "electron-builder": "^24.13.3",
     "electron-vite": "^2.3.0",
     "eslint": "^8.57.0",
@@ -66,7 +66,7 @@
     "react-dom": "^18.3.1",
     "sass-embedded": "^1.79.3",
     "tailwindcss": "^3.4.12",
-    "typescript": "^5.5.2",
+    "typescript": "^5.6.3",
     "vite": "^5.3.1"
   }
 }
