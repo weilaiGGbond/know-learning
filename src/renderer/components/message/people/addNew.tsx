@@ -1,7 +1,6 @@
-import { Avatar, Badge, Button, Input, List, Modal, QRCode, QRCodeProps, Radio, Space, Spin } from 'antd';
-import React, { useCallback, useState } from 'react'
-import icon from '@renderer/assets/img/image.png'
-import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleOutlined, ReloadOutlined } from '@ant-design/icons';
+import { Button, Input, Modal, QRCode, QRCodeProps, Space, Spin } from 'antd';
+import {useState } from 'react'
+import {  CloseCircleFilled, ReloadOutlined } from '@ant-design/icons';
 import { getInvite } from '@renderer/api/teacher/index'
 import { QRStatus } from 'antd/es/qr-code/interface';
 interface responseInvite{

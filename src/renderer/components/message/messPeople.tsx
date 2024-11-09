@@ -18,12 +18,12 @@ interface ChatWindowProps {
 }
 interface ChatContextType {
   chatMessage: {
-    coverUrl: string
-    lessonName: string
-    name: string
-  }
-  WebSocket: WebSocket | null | undefined
-  sendMessage: (message: string) => void
+    coverUrl: string;
+    lessonName: string;
+    name: string;
+  };
+  WebSocket:  WebSocket | null | undefined;
+  sendMessage: (message: string) => void;
 }
 
 const ChatContext = createContext<ChatContextType>({

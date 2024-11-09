@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { DrawerProps, RadioChangeEvent } from 'antd';
-import { Button, Drawer, Radio, Space } from 'antd';
+import { Drawer } from 'antd';
 import AIchat from './AIchat';
 import AIfont from '@renderer/assets/img/AIstart.png'
 const AIsendAll = () => {

@@ -1,9 +1,7 @@
-import { Divider, List, Skeleton, Typography } from "antd";
+import { List, Typography } from "antd";
 import { Content } from "antd/es/layout/layout";
-import InfiniteScroll from "react-infinite-scroll-component";
 import Util from '@renderer/utils/util';
 import { useSelector } from "react-redux";
-import { useCallback } from "react";
 
 interface messageChatmain {
     messageId: number,
@@ -14,11 +12,11 @@ interface messageChatmain {
 }
 
 const ChatConten = ((chat) => {
-    const username = useSelector((state) => state.personReducer.username);
+    const username = useSelector((state: any) => state.personReducer.username);
     const { Text } = Typography;
-    const { chatMessage, loadMore, page,handleScroll,getChatMessage } = chat; // 确保 loadMore 函数传入
+    const { chatMessage, getChatMessage } = chat; // 确保 loadMore 函数传入
 
-  
+
 
     return (
         <Content
