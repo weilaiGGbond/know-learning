@@ -1,12 +1,12 @@
 import { PhoneOutlined, UserOutlined, VideoCameraOutlined } from "@ant-design/icons"
-import { chatConten } from '@renderer/components/message/messPeople'
+import { useChatContext } from '@renderer/components/message/messPeople'
 import MainPeople from "@renderer/components/message/people/mianPeople"
 
 import { Avatar, Button, Space } from "antd"
 import { Header } from "antd/es/layout/layout"
 import AIsendPhoto from '@renderer/assets/img/image.png'
 const AIsendTop = () => {
-    const { chatMessage } = chatConten()
+    const { chatMessage } = useChatContext()
     return (
         <div>
             <Header

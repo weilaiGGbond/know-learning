@@ -5,8 +5,6 @@ import Login from '@renderer/pages/login'
 import Asset from '@renderer/pages/assets'
 import Test from '@renderer/pages/test/index'
 import MemorandumIndex from '@renderer/pages/memorandum/index'
-import Message from '@renderer/pages/message'
-import MessagePeople from '@renderer/components/message/messPeople'
 import Course from '@renderer/pages/course'
 import PersonCenter from '@renderer/pages/user'
 import AssetList from '@renderer/pages/course/assent'
@@ -15,7 +13,8 @@ import TeacherSystem from '@renderer/pages/message/teacher'
 import StudentSystem from '@renderer/pages/message/student'
 import AIsend from '@renderer/components/AIsend/AIsend'
 // import MessagePeople from '@renderer/components/message/messPeople'
-const router = createBrowserRouter([
+// 类型注释 router
+const router: any = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
@@ -39,10 +38,6 @@ const router = createBrowserRouter([
           {
             path: 'assetList',
             element: <AssetList />
-          },
-          {
-            path: 'message',
-            element: <Message />
           }
         ]
       },

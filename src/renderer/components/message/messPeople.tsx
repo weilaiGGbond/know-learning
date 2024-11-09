@@ -1,20 +1,11 @@
-'use client'
-
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { Layout, List, Input, Button, Avatar, Typography, Space } from 'antd'
+import { createContext, useContext, useEffect } from 'react'
+import { Layout, Typography } from 'antd'
 import chatMethods from '@renderer/hook/chat/chat'
 import ChatTop from '../chat/chatTop'
 import useWebSocket from '@renderer/hook/socketConnet'
 import ChatFooter from '../chat/chatFooter'
 import ChatConten from '../chat/chatConten'
 const { Text } = Typography
-
-interface Message {
-  id: number
-  text: string
-  sender: 'user' | 'contact'
-  timestamp: string
-}
 
 interface Contact {
   id: number
@@ -27,50 +18,61 @@ interface ChatWindowProps {
 }
 interface ChatContextType {
   chatMessage: {
-    coverUrl: string;
-    lessonName: string;
-    name: string;
-  };
-  WebSocket: WebSocket | null;
-  sendMessage: (message: string) => void;
+    coverUrl: string
+    lessonName: string
+    name: string
+  }
+  WebSocket: WebSocket | null | undefined
+  sendMessage: (message: string) => void
 }
+
 const ChatContext = createContext<ChatContextType>({
   chatMessage: {
     coverUrl: '',
     lessonName: '',
-    name: '',
+    name: ''
   },
   WebSocket: null,
-  sendMessage: (message: string) => void {
-
-  }
-
+  sendMessage: () => {}
 })
+
 const MessagePeople = ({ contact }: ChatWindowProps) => {
-  const { getLessonMessage, lessonMessage, getChatMessage, getNewMessage, chatMessage, page, handleScroll } = chatMethods();
+  const {
+    getLessonMessage,
+    lessonMessage,
+    getChatMessage,
+    getNewMessage,
+    chatMessage,
+    page,
+    handleScroll
+  } = chatMethods()
   const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
-    url: `ws://81.70.144.36:8080/ws/les`,
+    url: `ws://81.70.144.36:8080/ws/les`
   })
   useEffect(() => {
-    getLessonMessage()
-    getNewMessage()
-
-  }, [])
+    if (isConnected) {
+      // 连接成功后进行操作
+      getLessonMessage()
+      getNewMessage()
+    }
+  }, [isConnected]) // 只有在连接成功时执行
 
   return (
-    <ChatContext.Provider value={{ chatMessage: lessonMessage, WebSocket: webSocket, sendMessage: sendMessage }}>
+    <ChatContext.Provider
+      value={{ chatMessage: lessonMessage, WebSocket: webSocket, sendMessage: sendMessage }}
+    >
       <Layout className="h-full">
         {contact ? (
           <>
             <ChatTop />
-            <ChatConten chatMessage={chatMessage}
+            <ChatConten chatMessage={chatMessage} loadMore={getChatMessage} page={page} />
+            <ChatFooter
+              lastMessage={lastMessage}
+              chatMessage={chatMessage}
               loadMore={getChatMessage}
-              page={page}
-
+              handleScroll={handleScroll}
             />
-            <ChatFooter lastMessage={lastMessage} chatMessage={chatMessage} loadMore={getChatMessage} handleScroll={handleScroll} />
           </>
-
         ) : (
           <div
             style={{
@@ -87,5 +89,7 @@ const MessagePeople = ({ contact }: ChatWindowProps) => {
     </ChatContext.Provider>
   )
 }
+
 export default MessagePeople
-export const chatConten = () => useContext(ChatContext)
+
+export const useChatContext = () => useContext(ChatContext)
