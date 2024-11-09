@@ -1,16 +1,9 @@
 'use client'
 
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { Layout, List, Input, Button, Avatar, Typography, Space, message } from 'antd'
-import chatMethods from '@renderer/hook/chat/chat'
-import ChatTop from '../chat/chatTop'
-import useWebSocket from '@renderer/hook/socketConnet'
-import ChatFooter from '../chat/chatFooter'
-import ChatConten from '../chat/chatConten'
+import { useEffect, useState } from 'react'
+import { Layout, List, Input, Button, Typography, message } from 'antd'
 import AIsendTop from './AIsendTop'
 import { Content, Footer } from 'antd/es/layout/layout'
-import Util from '@renderer/utils/util';
-import { useSelector } from 'react-redux'
 import { SendOutlined } from '@ant-design/icons'
 import { getTokenAuth } from '@renderer/utils/auth'
 const { Text } = Typography

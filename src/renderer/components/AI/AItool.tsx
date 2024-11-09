@@ -1,6 +1,6 @@
 import { requestObj } from "@renderer/utils/config";
 import { getWebsocketUrl } from "@renderer/utils/getWebsocket";
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 interface AItoolProps {
     isText?: boolean,
     responeHooled?: (result: string) => void,
