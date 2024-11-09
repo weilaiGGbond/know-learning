@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import Home from '@renderer/pages/home'
 import Login from '@renderer/pages/login'
 import Asset from '@renderer/pages/assets'
-import Test from '@renderer/pages/test/index'
+import Test from '@renderer/pages/test/student/index'
 import MemorandumIndex from '@renderer/pages/memorandum/index'
 import Course from '@renderer/pages/course'
 import PersonCenter from '@renderer/pages/user'
@@ -64,6 +64,10 @@ const router: any = createBrowserRouter([
       {
         path: '/aisend',
         element: <AIsend />
+      },
+      {
+        path: '/studenttest',
+        element: <Test />
       }
     ]
   },

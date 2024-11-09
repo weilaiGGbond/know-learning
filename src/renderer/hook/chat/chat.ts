@@ -31,6 +31,9 @@ const chatMethods = () => {
             const data = await lessonMessageMethods(lessonId) as unknown as MessageData;
             if (data.code === 20000) {
                 setLessonMessage(data.data);
+                console.log(data.data,'222');
+                
+                
             }
         } catch (error) {
             console.log(error);

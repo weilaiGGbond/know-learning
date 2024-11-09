@@ -2,12 +2,10 @@ import { CrownFilled, SmileFilled, TabletFilled } from '@ant-design/icons'
 import Asset from '../assets'
 import PersonCenter from '../user'
 import Course from '../course'
-import NoticeSystem from '../notice'
-import Test from '../test'
-import MemorandumIndex from '../memorandum'
 import TeacherSystem from '../message/teacher'
 import StudentSystem from '../message/student'
 import AIsend from '@renderer/components/AIsend/AIsend'
+import Test from '../test/student'
 interface RouteItem {
   path: string
   name?: string
@@ -62,6 +60,11 @@ const route: RouteItem[] = [
 
     path: 'aisend',
     component: AIsend
+  },
+  {
+
+    path: 'studenttest',
+    component: Test
   },
 ]
 const displayRoute: DisplayRoute[] = [

@@ -4,6 +4,7 @@ import '@renderer/assets/styles/test/index.scss'
 import PreTest from '@renderer/components/test/preTest'
 
 const Test = (): JSX.Element => {
+    const status=1
     return (
         <div>
             <PreTest typeTitle='考试'>

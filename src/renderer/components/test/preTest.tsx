@@ -9,6 +9,10 @@ const PreTest = (props): JSX.Element => {
     const gotoMemorandum = () => {
         navigate('/memorandum')
     }
+    const confirmTest = () => {
+
+    }
+
     const { typeTitle, children } = props
     return (
         <div className='testMain'>
@@ -48,7 +52,7 @@ const PreTest = (props): JSX.Element => {
                 </div>
             </div>
             {children}
-            <div className='testMain__link'>
+            <div className='testMain__link' onClick={confirmTest}>
                 <div className='testMain__link-main'>
                     <img src={icon} alt="" />
                     <div>
