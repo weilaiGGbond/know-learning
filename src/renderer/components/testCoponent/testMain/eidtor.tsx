@@ -14,7 +14,7 @@ function MyEditor() {
     // 模拟 ajax 请求，异步设置 html
     useEffect(() => {
         setTimeout(() => {
-            setHtml('<p>hello world</p>')
+            setHtml('hello world')
         }, 1500)
     }, [])
 
