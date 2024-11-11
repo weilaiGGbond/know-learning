@@ -1,6 +1,6 @@
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Button, Descriptions } from 'antd'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export default function GroupList() {
     const [size] = useState<'default' | 'middle' | 'small'>('default');

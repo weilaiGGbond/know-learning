@@ -10,7 +10,7 @@ const ChatFooter = (msg) => {
     const { WebSocket, sendMessage } = useChatContext();
     const { inputMessage, setInputMessage } = chatMethods();
     const { lessonId } = useCourse()
-    const {lastMessage,chatMessage,loadMore}=msg
+    const {lastMessage,loadMore}=msg
     const handleSendMessage = () => {        
         if (WebSocket && WebSocket.readyState === WebSocket.OPEN) {
             if (inputMessage.trim() == '') {

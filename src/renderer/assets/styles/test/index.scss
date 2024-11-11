@@ -1,15 +1,16 @@
-.testMain{
+.testMain {
     background-color: #f2f4f7;
     padding-bottom: 10px;
     padding-top: 10px;
     height: 95vh;
     border-radius: 6px;
-    &__center{
+
+    &__center {
         width: 95%;
         margin: 0 auto;
         background-color: white;
-       
-        &-title{
+
+        &-title {
             width: 100%;
             border-bottom: 1px dashed rgb(229, 229, 230);
             justify-content: space-between;
@@ -18,49 +19,59 @@
             font-size: 17px;
             display: flex;
             letter-spacing: 2px;
-            &-main{
+
+            &-main {
                 font-size: 14px;
                 color: rgb(128, 128, 128);
                 margin-left: 8px;
             }
         }
     }
-    &__conten{
+
+    &__conten {
         background-color: white;
         width: 95%;
         margin: 0 auto;
         padding: 8px 15px;
         font-size: 14px;
         color: rgb(164, 159, 159);
-        &-title{
+
+        &-title {
             display: flex;
             align-items: center;
-            &-color{
+
+            &-color {
                 color: rgb(39, 38, 38);
             }
-            &-subtitle{
+
+            &-subtitle {
                 margin-left: 10px;
             }
-            &-delete{
+
+            &-delete {
                 margin-left: 15px;
                 color: royalblue;
             }
         }
     }
-    &__mainConten{
+
+    &__mainConten {
         color: rgb(28, 28, 28);
-        &-show{
+
+        &-show {
             margin-top: 5px;
         }
     }
-    &__link{
+
+    &__link {
         background-color: white;
         width: 95%;
         margin: 0 auto;
         padding: 8px 15px;
         font-size: 14px;
         color: rgb(164, 159, 159);
-        &-main{
+
+        &-main {
             width: 98%;
             background-color: #f5f7fc;
             margin: 0 auto;
@@ -68,12 +79,22 @@
             padding: 6px 8px;
             display: flex;
             align-items: center;
-            img{
+
+            img {
                 width: 80px;
             }
-            &-homework{
+
+            &-homework {
                 margin-left: 10px;
             }
         }
     }
+}
+
+.testMainshow {
+    background-color: white;
+    border-radius: 6px;
+    width: 95%;
+    margin: 0 auto;
+    min-height: 85vh;
 }

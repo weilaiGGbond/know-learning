@@ -13,6 +13,8 @@ import { Menu } from 'antd'
 import AssetList from './assent'
 import AIsend from '@renderer/components/AIsend/AIsend'
 import MessagePeople from '@renderer/components/message/messPeople'
+import Test from '../test/student/index'
+import StudentTestList from '../test/student/testList'
 
 const CourseContext = createContext({
   lessonId: 0
@@ -57,6 +59,8 @@ const Course = (): JSX.Element => {
         return <MessagePeople contact={contact} />
       case 'Mistakes':
         return <div>错题集内容</div>
+        case "Exam":
+          return <StudentTestList/>
       default:
         return null
     }

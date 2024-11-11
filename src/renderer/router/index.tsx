@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import Home from '@renderer/pages/home'
 import Login from '@renderer/pages/login'
 import Asset from '@renderer/pages/assets'
-import Test from '@renderer/pages/test/index'
+import Test from '@renderer/pages/test/student/index'
 import MemorandumIndex from '@renderer/pages/memorandum/index'
 import Course from '@renderer/pages/course'
 import PersonCenter from '@renderer/pages/user'
@@ -12,6 +12,8 @@ import NoticeSystem from '@renderer/pages/notice/index'
 import TeacherSystem from '@renderer/pages/message/teacher'
 import StudentSystem from '@renderer/pages/message/student'
 import AIsend from '@renderer/components/AIsend/AIsend'
+import TestMain from '@renderer/components/test/testMain'
+import TestFinsh from '@renderer/pages/test/student/testFinsh'
 // import MessagePeople from '@renderer/components/message/messPeople'
 // 类型注释 router
 const router: any = createBrowserRouter([
@@ -64,6 +66,18 @@ const router: any = createBrowserRouter([
       {
         path: '/aisend',
         element: <AIsend />
+      },
+      {
+        path: '/studenttest',
+        element: <Test />
+      },
+      {
+        path: '/testMain',
+        element: <TestMain />
+      },
+      {
+        path: '/testFinsh',
+        element: <TestFinsh />
       }
     ]
   },
