@@ -1,9 +1,13 @@
-import React from 'react'
+import Component from "./testMainShow"
+import ExamPaper from "./testshow"
 
-const TestMain=():JSX.Element=>{
+
+const TestMain = (): JSX.Element => {
+ 
+
   return (
     <div>
-        
+      <Component/>
     </div>
   )
 }

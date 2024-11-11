@@ -6,6 +6,8 @@ import TeacherSystem from '../message/teacher'
 import StudentSystem from '../message/student'
 import AIsend from '@renderer/components/AIsend/AIsend'
 import Test from '../test/student'
+import TestFinsh from '../test/student/testFinsh'
+import TestMain from '@renderer/components/test/testMain'
 interface RouteItem {
   path: string
   name?: string
@@ -65,6 +67,16 @@ const route: RouteItem[] = [
 
     path: 'studenttest',
     component: Test
+  },
+  {
+
+    path: 'testFinsh',
+    component: TestFinsh
+  },
+  {
+
+    path: 'testMain',
+    component: TestMain
   },
 ]
 const displayRoute: DisplayRoute[] = [

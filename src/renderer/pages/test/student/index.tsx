@@ -4,10 +4,10 @@ import '@renderer/assets/styles/test/index.scss'
 import PreTest from '@renderer/components/test/preTest'
 
 const Test = (): JSX.Element => {
-    const status=1
+    const status = 2
     return (
         <div>
-            <PreTest typeTitle='考试'>
+            <PreTest typeTitle='考试' status={status}>
                 <div className='testMain__conten'>
                     <div className='testMain__mainConten'>
                         <p className='testMain__mainConten-show'>
@@ -24,7 +24,6 @@ const Test = (): JSX.Element => {
                         </p>
                         <p className='testMain__mainConten-show'>
                             <span>大家注意学习时间</span>
-
                         </p>
                     </div>
                 </div>
