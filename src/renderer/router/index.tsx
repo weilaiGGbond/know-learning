@@ -14,6 +14,7 @@ import StudentSystem from '@renderer/pages/message/student'
 import AIsend from '@renderer/components/AIsend/AIsend'
 import TestMain from '@renderer/components/test/testMain'
 import TestFinsh from '@renderer/pages/test/student/testFinsh'
+import AddNewTest from '@renderer/pages/test/teacher/addNewTest'
 // import MessagePeople from '@renderer/components/message/messPeople'
 // 类型注释 router
 const router: any = createBrowserRouter([
@@ -78,6 +79,10 @@ const router: any = createBrowserRouter([
       {
         path: '/testFinsh',
         element: <TestFinsh />
+      },
+      {
+        path: '/addNewTest',
+        element: <AddNewTest />
       }
     ]
   },

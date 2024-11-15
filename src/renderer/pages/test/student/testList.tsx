@@ -1,6 +1,6 @@
 import { Avatar, Breadcrumb, Button, Divider, Flex, Input, List, Modal, Skeleton } from "antd"
 import { getLessonChat, lessonMessageMethods } from "@renderer/api/student/chat";
-import { SearchOutlined } from "@ant-design/icons";
+import { EditOutlined, SearchOutlined } from "@ant-design/icons";
 import chatMethods from "@renderer/hook/chat/chat";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,15 +20,19 @@ const StudentTestList = () => {
         content:
             '未完成',
     }))
-
+    const gotoNewTest=()=>{
+        navigate(`/addNewTest`)
+    }
     return (
         <div className="flex flex-col flex-grow h-full">
             <div className="flex w-full justify-between py-8 h-11 items-center border-b border-gray-300">
                 <p className="CourseName pl-6 text-base font-bold text-[#131B26] sm:hidden xs:hidden lg:block">
                     {lessonMessage?.lessonName}
-
                 </p>
                 <div className="flex items-center m-6">
+                    <Button icon={<EditOutlined />} onClick={gotoNewTest}>
+                        发布考试
+                    </Button>
                     <Input
                         style={{ borderRadius: 4, marginInlineEnd: 12 }}
                         prefix={<SearchOutlined style={{ color: 'rgba(0, 0, 0, 0.15)' }} />}
