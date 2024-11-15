@@ -20,8 +20,8 @@ const StudentTestList = () => {
         content:
             '未完成',
     }))
-    const gotoNewTest=()=>{
-        navigate(`/addNewTest`)
+    const gotoNewTest = () => {
+        navigate(`/questionBank`)
     }
     return (
         <div className="flex flex-col flex-grow h-full">

@@ -9,6 +9,7 @@ import Test from '../test/student'
 import TestFinsh from '../test/student/testFinsh'
 import TestMain from '@renderer/components/test/testMain'
 import AddNewTest from '../test/teacher/addNewTest'
+import QuestionBank from '../test/teacher/questionBank/bank'
 interface RouteItem {
   path: string
   name?: string
@@ -50,7 +51,7 @@ const route: RouteItem[] = [
     path: 'course/:id',
     component: Course
   },
-  {  
+  {
     path: 'studentSys',
     component: StudentSystem
   },
@@ -84,6 +85,13 @@ const route: RouteItem[] = [
     path: 'addNewTest',
 
     component: AddNewTest
+  },
+  {
+
+    path: 'questionBank',
+
+
+    component: QuestionBank
   },
 ]
 const displayRoute: DisplayRoute[] = [
