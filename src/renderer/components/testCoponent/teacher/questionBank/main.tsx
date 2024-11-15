@@ -1,99 +1,119 @@
 import { ProList } from '@ant-design/pro-components';
-import { Button, Checkbox, Input, Pagination } from 'antd';
+import QuestionListHook from '@renderer/hook/questionbank/questionList';
+import { Avatar, Button, Checkbox, Input, List, Pagination, Select } from 'antd';
 import type { Key } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const dataSource = [
-    {
-        title: '语雀的天空',
-        avatar:
-            'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-    },
-    {
-        title: 'Ant Design',
-        avatar:
-            'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-    },
-    {
-        title: '蚂蚁金服体验科技',
-        avatar:
-            'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-    },
-    {
-        title: 'TechUI',
-        avatar:
-            'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-    },
-];
+interface QuestionListProps {
+    questionId: string;
+    questionContent: string;
+    questionSubject: string;
+    questionType: number;
+    questionLevel: number;
+    createTime: string;
+}
+
+const GetType = ({ levelvalue, setLevelValue }): JSX.Element => {
+    const options = [
+        { value: 0, label: '简单' },
+        { value: 1, label: '中等' },
+        { value: 2, label: '困难' },
+    ];
+
+    const onChange = (value: number) => {
+        setLevelValue(value);
+    };
+
+    return (
+        <Select
+            showSearch
+            placeholder="选择难度"
+            style={{ width: 120 }}
+            options={options}
+            onChange={onChange}
+            value={levelvalue}
+        />
+    );
+};
+
+const GetLevel = ({ typevalue, setTypeValue }): JSX.Element => {
+    const options = [
+        { value: 0, label: '单选' },
+        { value: 1, label: '多选' },
+        { value: 2, label: '判断' },
+        { value: 3, label: '简答' },
+    ];
+
+    const onChange = (value: number) => {
+        setTypeValue(value);
+    };
+
+    return (
+        <Select
+            showSearch
+            placeholder="选择题目类型"
+            style={{ width: 120 }}
+            options={options}
+            onChange={onChange}
+            value={typevalue}
+        />
+    );
+};
 
 const QuestionListMain = () => {
-    const { Search } = Input;
+    const { typeAll, page, total, questionList } = QuestionListHook();
+    const subject = "JAVA";
+    const [levelvalue, setLevelValue] = useState<number | undefined>();
+    const [typevalue, setTypeValue] = useState<number | undefined>();
     const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
-    const onSearch = (value: string) => {
-        console.log('search:', value);
-    }
+
+    useEffect(() => {
+        typeAll(levelvalue, page, 10, subject, typevalue);
+    }, [levelvalue, typevalue, page, subject]); // 添加依赖项
+
     const rowSelection = {
         selectedRowKeys,
         onChange: (keys: Key[]) => setSelectedRowKeys(keys),
     };
 
     const toggleSelectAll = () => {
-        if (selectedRowKeys.length === dataSource.length) {
+        if (selectedRowKeys.length === questionList.length) {
             setSelectedRowKeys([]);
         } else {
-            setSelectedRowKeys(dataSource.map(item => item.title));
+            setSelectedRowKeys(questionList.map(item => item.questionId)); // 使用 questionId 作为唯一标识
         }
     };
 
     return (
-        <ProList<{ title: string }>
-            toolBarRender={() => {
-                return [
-                    <Search placeholder="按题目内容搜索" onSearch={onSearch} style={{ width: 200 }} />
-                ];
-            }}
+        <ProList<QuestionListProps>
+            toolBarRender={() => [
+                <>
+                    <GetType levelvalue={levelvalue} setLevelValue={setLevelValue} />
+                    <GetLevel typevalue={typevalue} setTypeValue={setTypeValue} />
+                    <Button type="primary">重置</Button>
+                </>
+            ]}
             metas={{
-                title: {},
-                description: {
-                    render: () => {
-                        return 'Ant Design, a design language for background applications, is refined by Ant UED Team';
-                    },
+                title: {
+                    render: (text, item) => item.questionContent, 
                 },
-                avatar: {},
-                extra: {
-                    render: () => (
-                        <div
-                            style={{
-                                minWidth: 200,
-                                flex: 1,
-                                display: 'flex',
-                                justifyContent: 'flex-end',
-                            }}
-                        >
-                            <div
-                                style={{
-                                    width: '200px',
-                                }}
-                            >
-                                {/* 这里可以添加额外的内容 */}
-                            </div>
-                        </div>
-                    ),
+                description: {
+                    render: (text, item) => `类型: ${item.questionType}, 难度: ${item.questionLevel}`,
+                },
+                avatar: {
+                    render: (text, item) => <Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${item.questionId}`} />, // 使用 questionId 生成头像
                 },
             }}
-            rowKey="title"
+            rowKey="questionId" // 使用 questionId 作为唯一标识
             headerTitle={
-                <Checkbox onChange={toggleSelectAll} checked={selectedRowKeys.length === dataSource.length}>
+                <Checkbox onChange={toggleSelectAll} checked={selectedRowKeys.length === questionList.length}>
                     全选
                 </Checkbox>
             }
             rowSelection={rowSelection}
-            dataSource={dataSource}
-            footer={
-                <Pagination defaultCurrent={1} total={50} align="end"/>
-            }
+            dataSource={questionList}
+            footer={<Pagination defaultCurrent={page} total={total} align="end" />}
         />
-        
     );
 };
 

@@ -64,7 +64,6 @@ export default function Component() {
         }
     }, [currentQuestionId]);
 
-
     const handlePrevQuestion = () => {
         if (currentQuestionId > 1) {
             setcurrentQuestionId(currentQuestionId - 1)
@@ -76,7 +75,6 @@ export default function Component() {
             setcurrentQuestionId(currentQuestionId + 1)
         }
     };
-
     return (
         <Layout>
             <div className="flex p-6 testMainshow">
