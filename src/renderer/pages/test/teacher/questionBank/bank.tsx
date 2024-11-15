@@ -1,6 +1,7 @@
 import { EditOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import ReturnNailbar from '@renderer/components/layout/returnNail';
+import QuestionListMain from '@renderer/components/testCoponent/teacher/questionBank/main';
 import { Button, Dropdown } from 'antd';
 const QuestionBank = () => {
   return (
@@ -15,7 +16,7 @@ const QuestionBank = () => {
           paddingInlinePageContainerContent: 60,
         }}
         header={{
-          title: '',
+          title: '当前题库',
           ghost: true,
           breadcrumb:
             <ReturnNailbar children={
@@ -54,7 +55,8 @@ const QuestionBank = () => {
           ],
         }}
       >
-        <ProTable search={false} />
+        <QuestionListMain />
+
       </PageContainer>
     </div>
   )
