@@ -9,11 +9,13 @@
 .ant-layout-header {
   -webkit-app-region: drag;
 }
+
 .ant-layout-header .ant-menu-title-content,
 .ant-layout-header .ant-menu-overflow-item,
 .ant-layout-header .dragger {
   -webkit-app-region: no-drag;
 }
+
 .ant-layout-header .ant-pro-global-header-collapsed-button {
   -webkit-app-region: no-drag;
 }
@@ -34,7 +36,12 @@
 .srollBar::-webkit-scrollbar {
   width: 6px;
 }
+
 .srollBar::-webkit-scrollbar-thumb {
   background-color: #d5e3ed;
   border-radius: 10px;
-}/*# sourceMappingURL=common.css.map */
+}
+
+.signIn .ant-pro-page-container .ant-pro-page-container-warp-page-header .ant-page-header-heading {
+  display: none;
+}

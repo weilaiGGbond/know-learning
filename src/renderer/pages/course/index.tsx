@@ -7,13 +7,15 @@ import {
   FileTextOutlined,
   MehOutlined,
   SignatureOutlined,
-  TwitchOutlined
+  TwitchOutlined,
+  EnvironmentOutlined
 } from '@ant-design/icons'
 import { Menu } from 'antd'
 import AssetList from './assent'
 import AIsend from '@renderer/components/AIsend/AIsend'
 import MessagePeople from '@renderer/components/message/messPeople'
 import Test from '../test/student/index'
+import SingIn from './signin'
 import StudentTestList from '../test/student/testList'
 
 const CourseContext = createContext({
@@ -33,7 +35,8 @@ const items = [
   { key: '4', icon: <SignatureOutlined />, label: '课堂笔记', componentType: 'Notes' },
   { key: '5', icon: <BookOutlined />, label: '资料', componentType: 'AssetList' },
   { key: '6', icon: <ExceptionOutlined />, label: '错题集', componentType: 'Mistakes' },
-  { key: '7', icon: <MehOutlined />, label: 'AI', componentType: 'AIsend' }
+  { key: '7', icon: <EnvironmentOutlined />, label: '位置签到', componentType: 'SignIn' },
+  { key: '8', icon: <MehOutlined />, label: 'AI', componentType: 'AIsend' }
 ]
 
 const Course = (): JSX.Element => {
@@ -59,8 +62,10 @@ const Course = (): JSX.Element => {
         return <MessagePeople contact={contact} />
       case 'Mistakes':
         return <div>错题集内容</div>
-        case "Exam":
-          return <StudentTestList/>
+      case 'Exam':
+        return <StudentTestList />
+      case 'SignIn':
+        return <SingIn />
       default:
         return null
     }
