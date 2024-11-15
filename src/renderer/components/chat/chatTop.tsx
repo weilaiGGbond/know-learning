@@ -7,59 +7,7 @@ import { Avatar, Button, Modal, Space } from 'antd'
 import { Header } from 'antd/es/layout/layout'
 import { useState } from 'react'
 // 获取当前位置的地图
-// const LocationMap = () => {
-//   const [open, setOpen] = useState<boolean>(false)
-//   const [loading, setLoading] = useState<boolean>(true)
 
-//   const showLoading = () => {
-//     // 获取位置
-
-//     setOpen(true)
-//     setLoading(true)
-
-//     // Simple loading mock. You should add cleanup logic in real world.
-//     setTimeout(() => {
-//       setLoading(false)
-//     }, 2000)
-//   }
-
-//   return (
-//     <>
-//       <Button type="primary" onClick={showLoading} icon={<EnvironmentOutlined />}>
-//         位置签到
-//       </Button>
-//       <Modal
-//         className=""
-//         title={<p>获取当前位置</p>}
-//         footer={
-//           <>
-//             <Button type="primary" onClick={showLoading}>
-//               重新获取
-//             </Button>
-//             <Button type="primary" onClick={showLoading}>
-//               签到
-//             </Button>
-//           </>
-//         }
-//         loading={loading}
-//         open={open}
-//         onCancel={() => setOpen(false)}
-//       >
-//         <p></p>
-//         <div className="w-full h-[300px] overflow-hidden">
-//           <Map
-//             ak="RUv0Dzsh6WlQiAg3Js6i76iu7cte1rGB" // 百度地图 API 密钥
-//             center={{ lng: 116.404, lat: 39.915 }} // 设置地图中心
-//             zoom="15" // 设置地图缩放
-//             style={{ width: '100%', height: '500px' }}
-//           >
-//             <Marker position={{ lng: 116.404, lat: 39.915 }} /> {/* 添加一个标记 */}
-//           </Map>
-//         </div>
-//       </Modal>
-//     </>
-//   )
-// }
 
 const ChatTop = () => {
   const { chatMessage } = useChatContext()

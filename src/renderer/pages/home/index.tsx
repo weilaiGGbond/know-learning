@@ -94,7 +94,7 @@ function Home(): JSX.Element {
     })
   }
 
-  const { noReadmessageData,setRead } = userMessage()
+  const { noReadmessageData, setRead } = userMessage()
   const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
     url: `ws://81.70.144.36:8080/ws/audit`,
     onOpen: () => {
@@ -243,11 +243,10 @@ function Home(): JSX.Element {
                 <div className="userName text-sm">{user.name}</div>
               </div>
             </Popover>,
-            <div className="messageTextMain">
+            <>
               <MessageOutlined key="MessageOutlined" className="dragger" onClick={gotoMessage} />
               {noReadmessageData > 0 && <div className="messageText"></div>}
-            </div>,
-
+            </>,
             <div
               className="h-6 w-[1.5px] bg-[#ccc] mx-2"
               style={{ pointerEvents: 'none', paddingInline: 0 }}
