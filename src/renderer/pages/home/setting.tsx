@@ -8,6 +8,7 @@ import AIsend from '@renderer/components/AIsend/AIsend'
 import Test from '../test/student'
 import TestFinsh from '../test/student/testFinsh'
 import TestMain from '@renderer/components/test/testMain'
+import AddNewTest from '../test/teacher/addNewTest'
 interface RouteItem {
   path: string
   name?: string
@@ -77,6 +78,12 @@ const route: RouteItem[] = [
 
     path: 'testMain',
     component: TestMain
+  },
+  {
+
+    path: 'addNewTest',
+
+    component: AddNewTest
   },
 ]
 const displayRoute: DisplayRoute[] = [
