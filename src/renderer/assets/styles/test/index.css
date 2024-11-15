@@ -5,62 +5,74 @@
   height: 95vh;
   border-radius: 6px;
 }
+
 .testMain__center {
   width: 95%;
   margin: 0 auto;
   background-color: white;
 }
+
 .testMain__center-title {
   width: 100%;
-  border-bottom: 1px dashed rgb(229, 229, 230);
+  border-bottom: 1px dashed #e5e5e6;
   justify-content: space-between;
   padding: 8px 15px;
-  color: rgb(28, 28, 28);
+  color: #1c1c1c;
   font-size: 17px;
   display: flex;
   letter-spacing: 2px;
 }
+
 .testMain__center-title-main {
   font-size: 14px;
-  color: rgb(128, 128, 128);
+  color: gray;
   margin-left: 8px;
 }
+
 .testMain__conten {
   background-color: white;
   width: 95%;
   margin: 0 auto;
   padding: 8px 15px;
   font-size: 14px;
-  color: rgb(164, 159, 159);
+  color: #a49f9f;
 }
+
 .testMain__conten-title {
   display: flex;
   align-items: center;
 }
+
 .testMain__conten-title-color {
-  color: rgb(39, 38, 38);
+  color: #272626;
 }
+
 .testMain__conten-title-subtitle {
   margin-left: 10px;
 }
+
 .testMain__conten-title-delete {
   margin-left: 15px;
   color: royalblue;
 }
+
 .testMain__mainConten {
-  color: rgb(28, 28, 28);
+  color: #1c1c1c;
 }
+
 .testMain__mainConten-show {
   margin-top: 5px;
 }
+
 .testMain__link {
   background-color: white;
   width: 95%;
   margin: 0 auto;
   padding: 8px 15px;
   font-size: 14px;
-  color: rgb(164, 159, 159);
+  color: #a49f9f;
 }
+
 .testMain__link-main {
   width: 98%;
   background-color: #f5f7fc;
@@ -70,9 +82,19 @@
   display: flex;
   align-items: center;
 }
+
 .testMain__link-main img {
   width: 80px;
 }
+
 .testMain__link-main-homework {
   margin-left: 10px;
-}/*# sourceMappingURL=index.css.map */
+}
+
+.testMainshow {
+  background-color: white;
+  border-radius: 6px;
+  width: 95%;
+  margin: 0 auto;
+  min-height: 85vh;
+}

@@ -247,11 +247,10 @@ function Home(): JSX.Element {
                 <div className="userName text-sm">{user.name}</div>
               </div>
             </Popover>,
-            <div className="messageTextMain">
+            <>
               <MessageOutlined key="MessageOutlined" className="dragger" onClick={gotoMessage} />
               {noReadmessageData > 0 && <div className="messageText"></div>}
-            </div>,
-
+            </>,
             <div
               className="h-6 w-[1.5px] bg-[#ccc] mx-2"
               style={{ pointerEvents: 'none', paddingInline: 0 }}

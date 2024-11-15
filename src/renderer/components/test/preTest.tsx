@@ -1,15 +1,37 @@
 import NailBar from '@renderer/components/layout/nailBar'
-import React from 'react'
+import React, { useState } from 'react'
 import '@renderer/assets/styles/test/index.scss'
-import { Button } from 'antd'
+import { Button, Modal } from 'antd'
 import icon from '@renderer/assets/icon.png'
 import { useNavigate } from 'react-router-dom'
+import TestLience from '../testCoponent/tesLience'
 const PreTest = (props): JSX.Element => {
+    const { confirm } = Modal;
     const navigate = useNavigate()
     const gotoMemorandum = () => {
         navigate('/memorandum')
     }
-    const { typeTitle, children } = props
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const confirmTest = () => {
+        //status 1 考试中 2 已完成
+        confirm({
+            title: '确定考试',
+            content: '确定参与考试？',
+            onOk() {
+                console.log('OK');
+                if (status == 1) {
+                    setIsModalVisible(true)
+                } else {
+                    navigate('/testFinsh')
+                }
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    }
+
+    const { typeTitle, children, status } = props
     return (
         <div className='testMain'>
             <div className='testMain__center'>
@@ -18,7 +40,6 @@ const PreTest = (props): JSX.Element => {
                         <span>
                             <strong>
                                 {typeTitle}:
-
                                 <span className='testMain__center-title-main'>
                                     <strong>
                                         通信原理第四章作业
@@ -48,7 +69,7 @@ const PreTest = (props): JSX.Element => {
                 </div>
             </div>
             {children}
-            <div className='testMain__link'>
+            <div className='testMain__link' onClick={confirmTest}>
                 <div className='testMain__link-main'>
                     <img src={icon} alt="" />
                     <div>
@@ -59,6 +80,7 @@ const PreTest = (props): JSX.Element => {
                 </div>
 
             </div>
+            <TestLience isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} />
         </div>
     )
 }

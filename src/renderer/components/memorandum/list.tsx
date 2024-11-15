@@ -1,4 +1,3 @@
-import React from 'react'
 import { List, Avatar, Button } from 'antd';
 import icon from '@renderer/assets/img/image.png'
 const MemoranList = () => {

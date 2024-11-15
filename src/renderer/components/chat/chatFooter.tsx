@@ -2,15 +2,15 @@ import { SendOutlined } from "@ant-design/icons";
 import chatMethods from "@renderer/hook/chat/chat";
 import { Button, Input, message } from "antd";
 import { Footer } from "antd/es/layout/layout";
-import { chatConten } from "../message/messPeople";
+import { useChatContext } from "../message/messPeople";
 import { useCourse } from "@renderer/pages/course";
 import { useEffect } from "react";
 
 const ChatFooter = (msg) => {
-    const { WebSocket, sendMessage } = chatConten();
+    const { WebSocket, sendMessage } = useChatContext();
     const { inputMessage, setInputMessage } = chatMethods();
     const { lessonId } = useCourse()
-    const {lastMessage,chatMessage,loadMore}=msg
+    const {lastMessage,loadMore}=msg
     const handleSendMessage = () => {        
         if (WebSocket && WebSocket.readyState === WebSocket.OPEN) {
             if (inputMessage.trim() == '') {

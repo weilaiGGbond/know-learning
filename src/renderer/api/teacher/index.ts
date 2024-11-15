@@ -77,3 +77,20 @@ export const uploadFile = (param: {
     params: data
   })
 }
+
+// 教师发布签到
+export const publishSign = (param: {
+  lessonId: number
+  latitude: string
+  longitude: string
+  distance: number
+  keepTime: number
+}) => {
+  let data = { lessonId: 0, latitude: '', longitude: '', distance: 50, keepTime: 10 }
+  data = { ...data, ...param }
+  return myAxios({
+    url: '/sign/pubSign',
+    method: 'post',
+    params: data
+  })
+}

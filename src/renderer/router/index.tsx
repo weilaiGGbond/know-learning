@@ -3,10 +3,8 @@ import { createBrowserRouter } from 'react-router-dom'
 import Home from '@renderer/pages/home'
 import Login from '@renderer/pages/login'
 import Asset from '@renderer/pages/assets'
-import Test from '@renderer/pages/test/index'
+import Test from '@renderer/pages/test/student/index'
 import MemorandumIndex from '@renderer/pages/memorandum/index'
-import Message from '@renderer/pages/message'
-import MessagePeople from '@renderer/components/message/messPeople'
 import Course from '@renderer/pages/course'
 import PersonCenter from '@renderer/pages/user'
 import AssetList from '@renderer/pages/course/assent'
@@ -14,8 +12,13 @@ import NoticeSystem from '@renderer/pages/notice/index'
 import TeacherSystem from '@renderer/pages/message/teacher'
 import StudentSystem from '@renderer/pages/message/student'
 import AIsend from '@renderer/components/AIsend/AIsend'
+import TestMain from '@renderer/components/test/testMain'
+import TestFinsh from '@renderer/pages/test/student/testFinsh'
+import AddNewTest from '@renderer/pages/test/teacher/addNewTest'
+import QuestionBank from '@renderer/pages/test/teacher/questionBank/bank'
 // import MessagePeople from '@renderer/components/message/messPeople'
-const router = createBrowserRouter([
+// 类型注释 router
+const router: any = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
@@ -39,10 +42,6 @@ const router = createBrowserRouter([
           {
             path: 'assetList',
             element: <AssetList />
-          },
-          {
-            path: 'message',
-            element: <Message />
           }
         ]
       },
@@ -69,6 +68,26 @@ const router = createBrowserRouter([
       {
         path: '/aisend',
         element: <AIsend />
+      },
+      {
+        path: '/studenttest',
+        element: <Test />
+      },
+      {
+        path: '/testMain',
+        element: <TestMain />
+      },
+      {
+        path: '/testFinsh',
+        element: <TestFinsh />
+      },
+      {
+        path: '/addNewTest',
+        element: <AddNewTest />
+      },  
+       {
+        path: '/questionBank',
+        element: <QuestionBank />
       }
     ]
   },

@@ -8,3 +8,14 @@ export const studentCourses = (param: { name: string; pageNum: number; pageSize:
     params: data
   })
 }
+
+// 学生签到
+export const studentSign = (param: { latitude: string; longitude: string; signId: number }) => {
+  let data = { latitude: '', longitude: '', signId: 0 }
+  data = { ...data, ...param }
+  return myAxios({
+    url: '/sign/click',
+    method: 'post',
+    params: data
+  })
+}

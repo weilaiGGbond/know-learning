@@ -4,7 +4,7 @@ import { Drawer, Button, Radio, DrawerProps, Space, Avatar, Descriptions, RadioC
 import { EllipsisOutlined } from '@ant-design/icons';
 import '@renderer/assets/styles/message/index.scss'
 import AddNew from './addNew';
-import { chatConten } from '@renderer/components/message/messPeople'
+import { useChatContext } from '@renderer/components/message/messPeople'
 import GroupList from '../group/groupList';
 import { learnStorage } from '@renderer/utils/auth';
 export default function MianPeople() {
@@ -18,7 +18,7 @@ export default function MianPeople() {
         setOpen(false);
     };
     const [size, setSize] = useState<'default' | 'middle' | 'small'>('default');
-    const { chatMessage } = chatConten()
+    const { chatMessage } = useChatContext()
     let role;
     const getRole = (async () => {
         role = await learnStorage.getItem('role')
