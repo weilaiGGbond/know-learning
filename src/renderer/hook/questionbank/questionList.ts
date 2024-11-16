@@ -6,7 +6,7 @@ interface QuestionListProps {
     questionSubject: string,
     questionType: number,
     questionLevel: number,
-    createTime: string,
+    createTime: number,
 }
 interface QuestionRes {
     code: number,
@@ -45,7 +45,7 @@ const QuestionListHook = () => {
         typeAll,
         questionList,
         total,
-
+        setPage
 
     }
 

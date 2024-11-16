@@ -16,6 +16,8 @@ import TestMain from '@renderer/components/test/testMain'
 import TestFinsh from '@renderer/pages/test/student/testFinsh'
 import AddNewTest from '@renderer/pages/test/teacher/addNewTest'
 import QuestionBank from '@renderer/pages/test/teacher/questionBank/bank'
+import PreView from '@renderer/pages/test/teacher/testpaper/preview'
+import PreViewPaper from '@renderer/pages/test/teacher/testpaper/preview'
 // import MessagePeople from '@renderer/components/message/messPeople'
 // 类型注释 router
 const router: any = createBrowserRouter([
@@ -84,10 +86,20 @@ const router: any = createBrowserRouter([
       {
         path: '/addNewTest',
         element: <AddNewTest />
-      },  
-       {
+      },
+      {
         path: '/questionBank',
-        element: <QuestionBank />
+        element: <QuestionBank />,
+        // children: [
+        //   {
+        //     path: 'preview',
+        //     element: <PreViewPaper />
+        //   }
+        // ]
+      },
+      {
+        path: '/preview',
+        element: <PreViewPaper />
       }
     ]
   },

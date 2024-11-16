@@ -10,6 +10,8 @@ import TestFinsh from '../test/student/testFinsh'
 import TestMain from '@renderer/components/test/testMain'
 import AddNewTest from '../test/teacher/addNewTest'
 import QuestionBank from '../test/teacher/questionBank/bank'
+import PreViewPaper from '../test/teacher/testpaper/preview'
+
 interface RouteItem {
   path: string
   name?: string
@@ -89,10 +91,19 @@ const route: RouteItem[] = [
   {
 
     path: 'questionBank',
+    component: QuestionBank,
+    // routes: [
+    //   {
+    //     path: 'preview',
+    //     component: PreViewPaper
 
-
-    component: QuestionBank
+    //   }
+    // ]
   },
+  {
+    path: 'preview',
+    component: PreViewPaper
+  }
 ]
 const displayRoute: DisplayRoute[] = [
   {
