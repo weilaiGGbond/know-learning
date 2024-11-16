@@ -49,12 +49,6 @@ export default function ExamPaperPre() {
     return () => clearInterval(timer)
   }, [])
 
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60)
-    const remainingSeconds = seconds % 60
-    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`
-  }
-
   const handleAnswerChange = (questionId: number, answer: string | string[]) => {
     setAnswers((prevAnswers) => ({
       ...prevAnswers,
@@ -182,14 +176,8 @@ export default function ExamPaperPre() {
         </Menu>
       </Sider>
       <Layout>
-        <Header style={{ background: '#fff', padding: '0 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Title level={4} style={{ margin: 0 }}>考试进行中</Title>
-          <Space>
-            <ClockCircleOutlined />
-            <span>剩余时间: {formatTime(remainingTime)}</span>
-          </Space>
-        </Header>
-        <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280, overflow: 'auto' }}>
+  
+        <Content style={{ margin: '', padding: 24, background: '#fff', minHeight: 280, overflow: 'auto' }}>
           {renderQuestions()}
           <Button type="primary" style={{ marginTop: 16 }} onClick={handleSubmit}>
             提交答案

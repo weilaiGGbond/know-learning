@@ -8,3 +8,10 @@ export const getQuestionList = (pageList) => {
 
     })
 }
+export const getAllBankList = () => {
+    return myAxios({
+        url: `/repo/repoSelf?pageNum=1&pageSize=1000`,
+        method: 'get',
+
+    })
+}

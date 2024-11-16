@@ -3,11 +3,12 @@ import { persistReducer } from 'redux-persist'
 import personReducer from './person'
 import websocketStore from './socket'
 import electronStorage from '../electron-store'
-
+import PaperSlice from './paper'
 // 组合 reducer
 const rootReducer = combineReducers({
   personReducer: personReducer,
-  websocketStore:websocketStore
+  websocketStore: websocketStore,
+  PaperSliceReducer: PaperSlice
 })
 // 定义 persist 配置
 const persistConfig = {

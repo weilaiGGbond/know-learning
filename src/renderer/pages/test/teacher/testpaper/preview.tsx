@@ -7,7 +7,7 @@ import { Button, Dropdown } from 'antd';
 import ExamPaperPre from "@renderer/components/testCoponent/paper/prepaper";
 const PreViewPaper = () => {
     const gotoContinue = () => {
-        
+
     }
     return (
         <div>
@@ -26,11 +26,7 @@ const PreViewPaper = () => {
                         ghost: true,
                         breadcrumb:
                             <ReturnNailbar children={
-                                <div>
-                                    <Button onClick={gotoContinue} type="link">
-                                        继续答题
-                                    </Button>
-                                </div>
+                                null
                             } />,
                     }}
                 >

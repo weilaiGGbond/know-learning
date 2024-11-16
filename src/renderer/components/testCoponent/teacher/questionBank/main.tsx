@@ -1,12 +1,14 @@
 import { ProList } from '@ant-design/pro-components';
 import QuestionListHook from '@renderer/hook/questionbank/questionList';
-import { Button, Checkbox, Select, Pagination, Space, Tag } from 'antd';
+import { Button, Checkbox, Select, Pagination, Space, Tag, Input } from 'antd';
 import type { Key } from 'react';
 import Utils from '@renderer/utils/util'
 const { timeAgo } = Utils
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedQuestionIds } from '@renderer/store/reducers/paper';
+const { Search } = Input;
 interface QuestionListProps {
     questionId: string;
     questionContent: string;
@@ -66,26 +68,32 @@ const QuestionListMain = () => {
     const gotoPreview = () => {
         navigate('/preview', { state: { questionId: selectedRowKeys } })
     }
-    const { typeAll, page, total, questionList, setPage } = QuestionListHook();
-    const subject = "JAVA";
+    const { typeAll, page, total, questionList, setPage, subject, setSubject } = QuestionListHook();
+
     const [levelvalue, setLevelValue] = useState<number | undefined>();
     const [typevalue, setTypeValue] = useState<number | undefined>();
-    const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
+    const dispatch = useDispatch();
+    const selectedRowKeys = useSelector((state: any) => state.PaperSliceReducer.selectedQuestionIds);
+
 
     useEffect(() => {
         typeAll(levelvalue, page, 10, subject, typevalue);
-    }, [levelvalue, typevalue, page]);
+    }, [levelvalue, typevalue, page, subject]);
 
     const rowSelection = {
         selectedRowKeys,
-        onChange: (keys: Key[]) => setSelectedRowKeys(keys),
+        onChange: (keys: Key[]) => {
+            dispatch(setSelectedQuestionIds(keys));
+        },
     };
-
+    const onSearch = (value) => {
+        setSubject(value)
+    }
     const toggleSelectAll = () => {
         if (selectedRowKeys.length === questionList.length) {
-            setSelectedRowKeys([]);
+            dispatch(setSelectedQuestionIds([]));
         } else {
-            setSelectedRowKeys(questionList.map(item => item.questionId));
+            dispatch(setSelectedQuestionIds(questionList.map(item => item.questionId)))
         }
     };
     const typeMapping = {
@@ -103,6 +111,7 @@ const QuestionListMain = () => {
     const resetLevel = () => {
         setLevelValue(undefined);
         setTypeValue(undefined);
+        setSubject(undefined)
     }
 
     return (
@@ -112,6 +121,7 @@ const QuestionListMain = () => {
 
                     <Space direction="vertical" style={{ width: '100%' }}>
                         <Space>
+                            <Search placeholder="输入学科名称" onSearch={onSearch} style={{ width: 200 }} />
                             <GetType levelvalue={levelvalue} setLevelValue={setLevelValue} />
                             <GetLevel typevalue={typevalue} setTypeValue={setTypeValue} />
                             <Button type="primary" onClick={resetLevel}>重置</Button>
@@ -135,7 +145,7 @@ const QuestionListMain = () => {
                     render: (text, item) => item.questionContent,
                 },
                 description: {
-                    render: (text, item) => `创建时间: ${timeAgo(item.createTime)}`,
+                    render: (text, item) => `创建时间: ${timeAgo(item.createTime)} ${item.questionId}`,
 
                 },
                 subTitle: {
@@ -148,6 +158,8 @@ const QuestionListMain = () => {
                         );
                     },
                 },
+
+
                 actions: {
                     render: (text, row, index, action) => [
                         <a
