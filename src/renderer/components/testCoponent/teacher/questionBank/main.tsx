@@ -125,17 +125,14 @@ const QuestionListMain = () => {
                             <GetType levelvalue={levelvalue} setLevelValue={setLevelValue} />
                             <GetLevel typevalue={typevalue} setTypeValue={setTypeValue} />
                             <Button type="primary" onClick={resetLevel}>重置</Button>
-                        </Space>
-                        {
-                            selectedRowKeys.length > 0 && <>
-                                <Space>
-                                    <Button type='link' style={{ color: 'red' }} onClick={() => {
-                                        console.log(selectedRowKeys)
-                                    }}>删除</Button>
+                            {
+                                selectedRowKeys.length > 0 && <>
                                     <Button type='link' style={{ color: '#1677ff' }} onClick={gotoPreview}>添加到试卷</Button>
-                                </Space>
-                            </>
-                        }
+
+                                </>
+                            }
+                        </Space>
+
                     </Space>
                 </>
             ]}

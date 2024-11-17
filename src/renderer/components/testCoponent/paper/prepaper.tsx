@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Layout, Menu, Typography, Card, Radio, Checkbox, Input, Space, Button, message } from 'antd'
 import { ClockCircleOutlined } from '@ant-design/icons'
+import PaperLeftNail from './leftNail'
 
 const { Header, Sider, Content } = Layout
 const { Title, Paragraph } = Typography
@@ -11,43 +12,40 @@ interface Question {
   id: number
   type: 'single' | 'multiple' | 'essay'
   content: string
-  options?: string[]
+  options?: string[],
+  sorce: number,
 }
 
-const mockQuestions: Question[] = [
-  { id: 1, type: 'single', content: "1 + 1 = ?", options: ["1", "2", "3", "4"] },
-  { id: 2, type: 'single', content: "2 * 3 = ?", options: ["3", "4", "5", "6"] },
-  { id: 3, type: 'multiple', content: "以下哪些是质数？", options: ["2", "3", "4", "5"] },
-  { id: 4, type: 'multiple', content: "以下哪些是偶数？", options: ["1", "2", "3", "4"] },
-  { id: 5, type: 'essay', content: "简述牛顿第二定律。" },
-  { id: 6, type: 'essay', content: "解释光合作用的过程。" },
-]
+const examData = {
+  name: "2023年度综合能力测试",
+  duration: 7200, // 2小时，以秒为单位
+  singleChoice: [
+    { id: 1, question: "单选题1的内容", options: ["A", "B", "C", "D"], score: 5, type: 'singleChoice' },
+    { id: 2, question: "单选题2的内容", options: ["A", "B", "C", "D"], score: 5, type: 'singleChoice' },
+
+  ],
+  multipleChoice: [
+    { id: 3, question: "多选题1的内容", options: ["A", "B", "C", "D"], score: 10, type: 'multipleChoice' },
+    { id: 4, question: "多选题2的内容", options: ["A", "B", "C", "D"], score: 10, type: 'multipleChoice' },
+  ],
+  essay: [
+    { id: 5, question: "简答题1的内容", score: 20, type: 'essay' },
+    { id: 6, question: "简答题2的内容", score: 20, type: 'essay' },
+    { id: 7, question: "简答题2的内容", score: 20, type: 'essay' },
+  ],
+};
 
 export default function ExamPaperPre() {
   const [answers, setAnswers] = useState<{ [key: number]: string | string[] }>({})
-  const [remainingTime, setRemainingTime] = useState(3600) // 1 hour in seconds
-  const questionRefs = useRef<{ [key: number]: React.RefObject<HTMLDivElement> }>({})
-
-  useEffect(() => {
-    mockQuestions.forEach(question => {
-      questionRefs.current[question.id] = React.createRef<HTMLDivElement>()
-    })
-  }, [])
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRemainingTime((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(timer)
-          message.warning('考试时间已结束！')
-          return 0
-        }
-        return prevTime - 1
-      })
-    }, 1000)
-
-    return () => clearInterval(timer)
-  }, [])
+  const questionRefs = useRef<{ [key: number]: React.RefObject<HTMLDivElement> }>({});
+  const mockQuestions = [
+    ...examData.singleChoice,
+    ...examData.multipleChoice,
+    ...examData.essay,
+  ];
+  mockQuestions.forEach(question => {
+    questionRefs.current[question.id] = React.createRef<HTMLDivElement>();
+  });
 
   const handleAnswerChange = (questionId: number, answer: string | string[]) => {
     setAnswers((prevAnswers) => ({
@@ -63,7 +61,11 @@ export default function ExamPaperPre() {
   }
 
   const scrollToQuestion = (questionId: number) => {
+    console.log(`滚动到问题 ${questionId}`);
+
     questionRefs.current[questionId]?.current?.scrollIntoView({ behavior: 'smooth' })
+    console.log(questionRefs);
+
   }
 
   const renderQuestionContent = (question: Question) => {
@@ -117,14 +119,10 @@ export default function ExamPaperPre() {
 
   const renderQuestions = () => {
     const questionsByType: { [key: string]: Question[] } = {
-      single: [],
-      multiple: [],
-      essay: [],
+      single:examData.singleChoice,
+      multiple:examData.multipleChoice,
+      essay:examData.essay,
     }
-
-    mockQuestions.forEach(question => {
-      questionsByType[question.type].push(question)
-    })
 
     return Object.entries(questionsByType).map(([type, questions]) => (
       <div key={type}>
@@ -147,40 +145,18 @@ export default function ExamPaperPre() {
       </div>
     ))
   }
-
+  const [currentQuestionId, setcurrentQuestionId] = useState(1)
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider width={200} theme="light">
-        <Menu mode="inline" style={{ height: '100%', borderRight: 0 }}>
-          <Menu.ItemGroup key="single" title="单选题">
-            {mockQuestions.filter(q => q.type === 'single').map(q => (
-              <Menu.Item key={q.id} onClick={() => scrollToQuestion(q.id)}>
-                题目 {q.id}
-              </Menu.Item>
-            ))}
-          </Menu.ItemGroup>
-          <Menu.ItemGroup key="multiple" title="多选题">
-            {mockQuestions.filter(q => q.type === 'multiple').map(q => (
-              <Menu.Item key={q.id} onClick={() => scrollToQuestion(q.id)}>
-                题目 {q.id}
-              </Menu.Item>
-            ))}
-          </Menu.ItemGroup>
-          <Menu.ItemGroup key="essay" title="简答题">
-            {mockQuestions.filter(q => q.type === 'essay').map(q => (
-              <Menu.Item key={q.id} onClick={() => scrollToQuestion(q.id)}>
-                题目 {q.id}
-              </Menu.Item>
-            ))}
-          </Menu.ItemGroup>
-        </Menu>
+    <Layout style={{ minHeight: '80vh' }}>
+      <Sider width={200} style={{ padding: '8px' }} theme="light">
+        <PaperLeftNail examData={examData} currentQuestionId={currentQuestionId} onSelect={scrollToQuestion} />
       </Sider>
       <Layout>
-  
+
         <Content style={{ margin: '', padding: 24, background: '#fff', minHeight: 280, overflow: 'auto' }}>
           {renderQuestions()}
           <Button type="primary" style={{ marginTop: 16 }} onClick={handleSubmit}>
-            提交答案
+            完成试题创建
           </Button>
         </Content>
       </Layout>

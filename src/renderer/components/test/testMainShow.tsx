@@ -42,7 +42,6 @@ const allQuestions = 7
 // 主组件
 export default function Component() {
     const [currentType, setCurrentType] = useState('singleChoice');
-
     const [currentQuestionId, setcurrentQuestionId] = useState(1)
     const [currentQuestion, setCurrentQuestion] = useState<Question | undefined>(examData.singleChoice[0]);
     const getCurrentQuestion = (id: number): Question | undefined => {
