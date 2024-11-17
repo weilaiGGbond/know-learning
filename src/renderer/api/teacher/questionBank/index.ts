@@ -15,3 +15,10 @@ export const getAllBankList = () => {
 
     })
 }
+//通过id查询试题
+export const getQuestionById = (id:string) => {
+    return myAxios({
+        url: `/qu/getDetail?questionId=${id}`,
+        method: 'get',
+    })
+}
