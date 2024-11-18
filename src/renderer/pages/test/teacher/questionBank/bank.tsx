@@ -47,7 +47,7 @@ const QuestionBank = () => {
     1: '中等',
     2: '困难',
   };
-  <SingleChoiceQuestion question={questionData} />
+  <SingleChoiceQuestion question={questionData} questionRefs={undefined} />
   return (
     <div style={{ background: '#F5F7FA' }}>
       <PageContainer

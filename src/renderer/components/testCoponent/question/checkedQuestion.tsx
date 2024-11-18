@@ -11,17 +11,7 @@ interface Answer {
     ansContent: string
 }
 
-interface Question {
-    questionId: number
-    questionContent: string
-    questionSubject: string
-    questionType: number // 0: single choice, 1: multiple choice, 2: true/false
-    questionLevel: number
-    createTime: number
-    ansList: Answer[]
-}
-
-export default function QuestionComponent({ question, teacher = true, selectedAnswers = [] }) {
+export default function QuestionComponent({ question, questionRefs , teacher = true, selectedAnswers = [] }) {
     const [selectedAnswer, setSelectedAnswer] = useState<number[]>(selectedAnswers)
     useEffect(() => {
         if (teacher) {
@@ -45,9 +35,10 @@ export default function QuestionComponent({ question, teacher = true, selectedAn
             });
         }
     }
-
+    console.log(question, '888');
     return (
         <div style={{ maxWidth: '800px', background: 'white', margin: '10px auto', borderRadius: '6px', padding: '20px' }}>
+
             <Title level={3}>问题 {typeMapping[question.questionType]}</Title>
             <Paragraph strong>{question.questionContent}</Paragraph>
             {
@@ -66,6 +57,7 @@ export default function QuestionComponent({ question, teacher = true, selectedAn
                                 width: '100%',
                                 borderColor: isChecked ? '#1890ff' : undefined,
                             }}
+                            ref={questionRefs.current[question.id]}
                         >
                             <Radio
                                 value={answer.ansId}
@@ -94,19 +86,7 @@ export default function QuestionComponent({ question, teacher = true, selectedAn
                     );
                 })}
             </Space>
-            {
-                teacher === true ? (
-                    <div style={{ marginTop: '20px' }}>
-                        <Text type="secondary">科目: {question.questionSubject}</Text>
-                        <br />
-                        <Text type="secondary">难度: {levelMapping[question.questionLevel]}</Text>
-                        <br />
-                        <Text type="secondary">
-                            创建时间: {new Date(question.createTime).toLocaleString()}
-                        </Text>
-                    </div>
-                ) : null
-            }
+
         </div>
     )
 }

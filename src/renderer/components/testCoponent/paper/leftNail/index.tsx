@@ -2,16 +2,17 @@
 import { Button } from "antd";
 import QuestionTypeMenu from "../../testMain/typeTitle"
 import QuestionNumbers from "../../testMain/number";
-const PaperLeftNail = ({ examData,currentQuestionId,onSelect}) => {
+const PaperLeftNail = ({ examData, bigList, judgeList, multiList, radioList, currentQuestionId, onSelect }) => {
+   
     return (
 
         <>
             {
-                examData.singleChoice.length != 0 ?
+                radioList.length != 0 ?
                     <>
                         <QuestionTypeMenu currentType='singleChoice' />
                         < QuestionNumbers
-                            questions={examData.singleChoice}
+                            questions={radioList}
                             currentQuestionId={
                                 currentQuestionId
                             }
@@ -19,12 +20,13 @@ const PaperLeftNail = ({ examData,currentQuestionId,onSelect}) => {
                         />
                     </> : <></>
             }
+       
             {
-                examData.multipleChoice.length != 0 ?
+                multiList.length != 0 ?
                     <>
                         <QuestionTypeMenu currentType='multipleChoice' />
                         < QuestionNumbers
-                            questions={examData.multipleChoice}
+                            questions={multiList}
                             currentQuestionId={
                                 currentQuestionId
                             }
@@ -33,11 +35,24 @@ const PaperLeftNail = ({ examData,currentQuestionId,onSelect}) => {
                     </> : <></>
             }
             {
-                examData.essay.length != 0 ?
+                judgeList.length != 0 ?
+                    <>
+                        <QuestionTypeMenu currentType='judge' />
+                        < QuestionNumbers
+                            questions={judgeList}
+                            currentQuestionId={
+                                currentQuestionId
+                            }
+                            onSelect={onSelect}
+                        />
+                    </> : <></>
+            }
+            {
+                bigList.length != 0 ?
                     <>
                         <QuestionTypeMenu currentType='essay' />
                         < QuestionNumbers
-                            questions={examData.essay}
+                            questions={bigList}
                             currentQuestionId={
                                 currentQuestionId
                             }

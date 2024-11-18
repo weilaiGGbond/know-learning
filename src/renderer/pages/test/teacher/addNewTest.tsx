@@ -38,17 +38,7 @@ const AddNewTest = () => {
                         />
                     </Form.Item>
 
-                    <Form.Item
-                        name="totalScore"
-                        label="总分"
-                        rules={[{ required: true, message: '请输入考试总分' }]}
-                    >
-                        <InputNumber
-                            min={0}
-                            placeholder="请输入考试总分"
-                            style={{ width: '100%' }}
-                        />
-                    </Form.Item>
+
 
                     <Form.Item
                         name="passingScore"

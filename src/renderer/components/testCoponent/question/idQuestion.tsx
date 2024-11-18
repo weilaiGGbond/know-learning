@@ -94,7 +94,6 @@ export default function IDQuestion({ id, teacher = true, selectedAnswers = [] })
                                 <Radio
                                     value={answer.ansId}
                                     checked={isChecked}
-                                    onChange={() => handleSelectAnswer(answer.ansId)}
                                 >
                                     {answer.ansContent}
                                 </Radio>

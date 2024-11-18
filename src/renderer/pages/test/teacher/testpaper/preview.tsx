@@ -6,9 +6,6 @@ import QuestionListMain from '@renderer/components/testCoponent/teacher/question
 import { Button, Dropdown } from 'antd';
 import ExamPaperPre from "@renderer/components/testCoponent/paper/prepaper";
 const PreViewPaper = () => {
-    const gotoContinue = () => {
-
-    }
     return (
         <div>
             <div
