@@ -1,6 +1,6 @@
 import { PageContainer } from '@ant-design/pro-components'
 import example from '@renderer/assets/example.webp'
-import { Button, Descriptions, DescriptionsProps, Flex } from 'antd'
+import { Button, Descriptions, DescriptionsProps } from 'antd'
 // 个人中心
 const items: DescriptionsProps['items'] = [
   {

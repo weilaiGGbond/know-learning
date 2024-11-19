@@ -7,8 +7,6 @@ import { Avatar, Button, Modal, Space } from 'antd'
 import { Header } from 'antd/es/layout/layout'
 import { useState } from 'react'
 // 获取当前位置的地图
-
-
 const ChatTop = () => {
   const { chatMessage } = useChatContext()
   const [open, setOpen] = useState<boolean>(false)
