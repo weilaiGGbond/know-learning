@@ -1,5 +1,3 @@
-import moment from "moment";
-
 const timeAgo = (timestamp: number) => {
     const now = Date.now();
     const seconds = Math.floor((now - timestamp) / 1000);

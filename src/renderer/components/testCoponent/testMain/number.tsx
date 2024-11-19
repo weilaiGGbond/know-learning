@@ -1,8 +1,8 @@
 import { Button } from "antd";
 
-const QuestionNumbers = ({ questions, currentQuestionId, onSelect }) => {
+const QuestionNumbers = ({ questions, currentQuestionId, onSelect, id = true }) => {
     console.log(questions);
-    
+
     return (
         <div className="flex flex-wrap gap-2 mt-4">
 
@@ -13,7 +13,9 @@ const QuestionNumbers = ({ questions, currentQuestionId, onSelect }) => {
                     onClick={() => onSelect(q.id)}
                     className="w-10 h-10"
                 >
-                    {q.id}
+                    {
+                        id == true ? q.id : q.index
+                    }
                 </Button>
             ))}
         </div>

@@ -6,10 +6,10 @@ import QuestionTypeMenu from '../testCoponent/testMain/typeTitle';
 import QuestionContent from '../testCoponent/testMain/question';
 import QuestionNumbers from '../testCoponent/testMain/number';
 import '@renderer/assets/styles/test/index.scss'
-
-
-
-const { Content } = Layout;
+import StudentPaperHook from '@renderer/hook/paper/student';
+import { useLocation } from 'react-router-dom';
+import PaperLeftNail from '../testCoponent/paper/leftNail';
+const { Content, Sider } = Layout;
 const { Title, Text } = Typography;
 const { TextArea } = Input;
 type Question = {
@@ -41,6 +41,20 @@ const examData = {
 const allQuestions = 7
 // 主组件
 export default function Component() {
+    const location = useLocation();
+    const { examId, lessonId } = location.state || {}; // 使用默认值以防没有传递状态
+    //先获取当前paperId
+    const { getPaperId,
+        bigList,
+        judgeList,
+        multiList,
+        radioList,
+        title,
+        allList
+    } = StudentPaperHook()
+    useEffect(() => {
+        getPaperId(examId, lessonId)
+    }, [])
     const [currentType, setCurrentType] = useState('singleChoice');
     const [currentQuestionId, setcurrentQuestionId] = useState(1)
     const [currentQuestion, setCurrentQuestion] = useState<Question | undefined>(examData.singleChoice[0]);
@@ -53,6 +67,7 @@ export default function Component() {
 
         return allQuestions.find(question => question.id === id);
     };
+
     useEffect(() => {
         const nowQuestion = getCurrentQuestion(currentQuestionId);
         if (nowQuestion) {
@@ -77,7 +92,7 @@ export default function Component() {
     return (
         <Layout>
             <div className="flex p-6 testMainshow">
-                <div className="w-1/4 pr-6 border-r">
+                {/* <div className="w-1/4 pr-6 border-r">
                     {
                         examData.singleChoice.length != 0 ?
                             <>
@@ -117,7 +132,14 @@ export default function Component() {
                                 />
                             </> : <></>
                     }
-                </div>
+                </div> */}
+                <Sider width={200} style={{ padding: '8px' }} theme="light">
+                    <PaperLeftNail examData={allList}
+                        bigList={bigList}
+                        judgeList={judgeList} multiList={multiList}
+                        radioList={radioList}
+                        currentQuestionId={currentQuestionId} onSelect={setcurrentQuestionId} id={false}/>
+                </Sider>
                 <Content className="w-3/4 pl-6">
                     <Title level={2} className="mb-4">{examData.name}</Title>
                     {

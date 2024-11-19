@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom"
 
 const { Title, Paragraph } = Typography
 
-const TestLience = ({ isModalVisible, setIsModalVisible }) => {
+const TestLience = ({ isModalVisible, setIsModalVisible,examId }) => {
     const navigate = useNavigate()
     const handleOk = () => {
         setIsModalVisible(false)
     }
     const gotoTestMain = () => {
         setIsModalVisible(false)
-        navigate('/testMain')
+        navigate('/testMain', { state: {examId:examId,lessonId:1} })
     }
 
 

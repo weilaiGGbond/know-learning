@@ -9,10 +9,9 @@ const Test = (): JSX.Element => {
     // const status = 2
     const location = useLocation();
     const { status, exam, name } = location.state || {};
-
     return (
         <>
-            <PreTest typeTitle='考试' status={status} title={exam.examName}>
+            <PreTest typeTitle='考试' status={status} title={exam.examName} examId={exam.examId}>
 
                 <div className='testMain__conten'>
 
