@@ -1,7 +1,7 @@
 // 签到
-import React from 'react'
 import { LineChartOutlined, SendOutlined } from '@ant-design/icons'
 import { PageContainer } from '@ant-design/pro-components'
+import CreatQuestion from '@renderer/components/testCoponent/teacher/create/createQuestion'
 
 const items = [
   {
@@ -18,7 +18,7 @@ const items = [
   }
 ]
 
-const SingIn: React.FC = () => {
+function SingIn(): JSX.Element {
   return (
     <div className="signIn">
       <PageContainer
@@ -30,7 +30,7 @@ const SingIn: React.FC = () => {
           </p>
         }
       >
-        1111
+        <CreatQuestion />
       </PageContainer>
     </div>
   )

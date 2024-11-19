@@ -42,8 +42,49 @@
     border-radius: 10px;
   }
 }
+.noSrollBar {
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #d5e3ed;
+    border-radius: 10px;
+  }
+}
 .signIn {
   .ant-pro-page-container .ant-pro-page-container-warp-page-header .ant-page-header-heading {
     display: none;
+  }
+}
+
+.createQuestion {
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-body {
+    padding: 10px 15px;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head {
+    padding: 0 20px;
+    min-height: 30px;
+  }
+  .ql-toolbar.ql-snow {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+  }
+
+  .ql-container.ql-snow {
+    min-height: 220px;
+  }
+  .ql-editor .ql-blank {
+    min-height: 220px;
+  }
+  .BCE {
+    .ql-container.ql-snow {
+      min-height: 250px;
+    }
+    .ql-editor .ql-blank {
+      min-height: 250px;
+    }
   }
 }
