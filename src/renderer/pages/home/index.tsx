@@ -16,12 +16,15 @@ import tps from '@renderer/assets/tps.png'
 import { props } from './setting'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import '@renderer/assets/styles/layout/nailbar.scss'
-import { getTokenAuth, learnStorage } from '@renderer/utils/auth'
+import { learnStorage } from '@renderer/utils/auth'
 import { getUserInfo, logout } from '@renderer/api/login'
 import { setNewConnect } from '@renderer/store/reducers/socket'
 import userMessage from '@renderer/hook/message/user'
 import useWebSocket from '@renderer/hook/socketConnet'
+import { useDispatch } from 'react-redux'
+import { setUserownName } from '@renderer/store/reducers/person'
 function Home(): JSX.Element {
+  const dispatch = useDispatch()
   const [user, setUser] = useState({
     avatar: avatar,
     stuClass: null,
@@ -50,6 +53,7 @@ function Home(): JSX.Element {
   useEffect(() => {
     getUserInfo().then((res) => {
       setUser((prev) => ({ ...prev, ...res.data }))
+      dispatch(setUserownName(res.data.username))
     })
   }, [])
   const content = (
