@@ -1,10 +1,11 @@
 import NailBar from '@renderer/components/layout/nailBar'
 import React, { useState } from 'react'
 import '@renderer/assets/styles/test/index.scss'
-import { Button, Modal } from 'antd'
+import { Button, message, Modal } from 'antd'
 import icon from '@renderer/assets/icon.png'
 import { useNavigate } from 'react-router-dom'
 import TestLience from '../testCoponent/tesLience'
+import ReturnNailbar from '../layout/returnNail'
 const PreTest = (props): JSX.Element => {
     const { confirm } = Modal;
     const navigate = useNavigate()
@@ -13,7 +14,7 @@ const PreTest = (props): JSX.Element => {
     }
     const [isModalVisible, setIsModalVisible] = useState(false);
     const confirmTest = () => {
-        //status 1 考试中 2 已完成
+        //status 1 考试中 2 已完成 0 未开始
         confirm({
             title: '确定考试',
             content: '确定参与考试？',
@@ -21,8 +22,10 @@ const PreTest = (props): JSX.Element => {
                 console.log('OK');
                 if (status == 1) {
                     setIsModalVisible(true)
-                } else {
+                } else if (status == 2) {
                     navigate('/testFinsh')
+                } else {
+                    message.error('考试未开始')
                 }
             },
             onCancel() {
@@ -31,10 +34,16 @@ const PreTest = (props): JSX.Element => {
         });
     }
 
-    const { typeTitle, children, status } = props
+    const { typeTitle, children, status, title } = props
     return (
         <div className='testMain'>
             <div className='testMain__center'>
+
+                <div style={{ padding: '10px' }}>
+                    <ReturnNailbar />
+                </div>
+
+
                 <div className='testMain__center-title'>
                     <strong>
                         <span>
@@ -42,7 +51,7 @@ const PreTest = (props): JSX.Element => {
                                 {typeTitle}:
                                 <span className='testMain__center-title-main'>
                                     <strong>
-                                        通信原理第四章作业
+                                        {title}
                                     </strong>
                                 </span>
 
@@ -61,7 +70,6 @@ const PreTest = (props): JSX.Element => {
                         {typeTitle}通知
                     </span>
                     <span className='testMain__conten-title-subtitle'>
-                        9-27 16:00 至 9-28 16:00
                     </span>
                     <span className='testMain__conten-title-delete'>
                         删除
@@ -74,7 +82,7 @@ const PreTest = (props): JSX.Element => {
                     <img src={icon} alt="" />
                     <div>
                         <span className='testMain__link-main-homework'>
-                            第五章作业
+                            {title}
                         </span>
                     </div>
                 </div>

@@ -1,28 +1,71 @@
-import { Avatar, Breadcrumb, Button, Divider, Flex, Input, List, Modal, Skeleton } from "antd"
-import { getLessonChat, lessonMessageMethods } from "@renderer/api/student/chat";
-import { EditOutlined, SearchOutlined } from "@ant-design/icons";
+import { Button, Input, List, Typography } from "antd"
+import { EditOutlined } from "@ant-design/icons";
 import chatMethods from "@renderer/hook/chat/chat";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import PapperListHook from "@renderer/hook/paper/list";
+import Utils from "@renderer/utils/util"
+import moment from "moment";
+import { AlignEndVertical } from "lucide-react";
 const StudentTestList = () => {
+    const { timeAgo, turnDate } = Utils
+    const { Text } = Typography;
+    const { Search } = Input;
     const { getLessonMessage, lessonMessage } = chatMethods();
+    const { page, total, examName, setExamName, paperList, getPageList, setPage } = PapperListHook()
     useEffect(() => {
-
         getLessonMessage()
+        getPageList()
+
     }, [])
+    useEffect(() => {
+        getPageList()
+    }, [page, examName])
     const navigate = useNavigate()
-    const data = Array.from({ length: 23 }).map((_, i) => ({
-        href: 'https://ant.design',
-        title: "第四章测试",
-        avatar: `https://api.dicebear.com/7.x/miniavs/svg?seed=${i}`,
-        description:
-            '时间：2048-10-18 - 2024-10-18',
-        content:
-            '未完成',
-    }))
+
     const gotoNewTest = () => {
         navigate(`/questionBank`)
     }
+    const onSearch = (value) => {
+        setExamName(value)
+    }
+    const getStatus = (startTime, endTime) => {
+        const now = moment();
+        if (now.isBefore(startTime)) {
+            return (
+                <>
+                    <Text type="success">考试未开始</Text>
+                    <Text type="secondary"> 考试时间：{turnDate(startTime, endTime)}</Text>
+                </>
+            );
+        } else if (now.isAfter(endTime)) {
+            return (
+                <>
+                    <Text type="danger">考试已结束</Text>
+                    <Text type="secondary"> 考试时间：{turnDate(startTime, endTime)}</Text>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <>
+                        <Text type="warning">考试进行中</Text>
+                        <Text type="secondary"> 考试时间：{turnDate(startTime, endTime)}</Text>
+                    </>
+                </>
+            )
+        }
+    };
+    const getStatusNow = (startTime, endTime) => {
+        const now = moment();
+        if (now.isBefore(startTime)) {
+            return 0
+        } else if (now.isAfter(endTime)) {
+            return 2
+        } else {
+            return 1
+        }
+    };
     return (
         <div className="flex flex-col flex-grow h-full">
             <div className="flex w-full justify-between py-8 h-11 items-center border-b border-gray-300">
@@ -33,16 +76,7 @@ const StudentTestList = () => {
                     <Button icon={<EditOutlined />} onClick={gotoNewTest}>
                         发布考试
                     </Button>
-                    <Input
-                        style={{ borderRadius: 4, marginInlineEnd: 12 }}
-                        prefix={<SearchOutlined style={{ color: 'rgba(0, 0, 0, 0.15)' }} />}
-                        placeholder="搜索考试"
-                    />
-
-                    <Button type="primary" className="bg-[#1677FF]">
-                        确定
-                    </Button>
-
+                    <Search placeholder="搜索考试" onSearch={onSearch} style={{ width: 200 }} />
                 </div>
             </div>
             <div className="overflow-y-auto srollBar px-5 pb-5 flex-1" id="scrollableDiv">
@@ -51,18 +85,18 @@ const StudentTestList = () => {
                     size="large"
                     pagination={{
                         onChange: (page) => {
-                            console.log(page);
+                            setPage(page)
                         },
-                        pageSize: 3,
+                        pageSize: 10,
+                        total: total
                     }}
-                    dataSource={data}
+                    dataSource={paperList}
 
                     renderItem={(item) => (
                         <List.Item
-                            key={item.title}
+                            key={item.examId}
                             onClick={() => {
-                                navigate(`/studenttest`)
-
+                                navigate('/studenttest', { state: { exam: item, status: getStatusNow(item.startTime, item.endTime), name: lessonMessage } });
                             }
                             }
 
@@ -75,10 +109,13 @@ const StudentTestList = () => {
                             }
                         >
                             <List.Item.Meta
-                                title={item.title}
-                                description={item.description}
+                                title={item.examName}
+                                description={`创建时间 ${timeAgo(item.createTime)}`}
                             />
-                            {item.content}
+                            {
+                                getStatus(item.startTime, item.endTime)
+                            }
+
                         </List.Item>
                     )}
                 />

@@ -150,7 +150,7 @@ const QuestionListMain = () => {
                         render: (text, item) => item.questionContent,
                     },
                     description: {
-                        render: (text, item) => `创建时间: ${timeAgo(item.createTime)} ${item.questionId}`,
+                        render: (text, item) => `创建时间: ${timeAgo(item.createTime)}`,
 
                     },
                     subTitle: {

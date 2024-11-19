@@ -6,3 +6,19 @@ export const getPreviewListMethods = (idsString) => {
         method: 'get',
     });
 };
+//创建试卷
+export const createPaperMethods = (data) => {
+    return myAxios({
+        url: `/exam/add`,
+        method: 'post',
+        data: data,
+    });
+};
+//获取所有的考试
+export const getExamMethods = (params) => {
+    return myAxios({
+        url: `/exam/query`,
+        method: 'get',
+        params: params,
+    });
+};

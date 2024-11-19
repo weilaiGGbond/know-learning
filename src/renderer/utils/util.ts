@@ -1,4 +1,6 @@
-const timeAgo=(timestamp:number)=> {
+import moment from "moment";
+
+const timeAgo = (timestamp: number) => {
     const now = Date.now();
     const seconds = Math.floor((now - timestamp) / 1000);
     const minutes = Math.floor(seconds / 60);
@@ -21,6 +23,38 @@ const timeAgo=(timestamp:number)=> {
         return `${years}年前`;
     }
 }
+//返回区间
+const turnDate = (startTime: string, endTime: string): string => {
+    const formatDate = (dateStr: string): string => {
+        const date = new Date(dateStr);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        return `${year}年${month}月${day}日`;
+    };
+
+    const formattedStartTime = formatDate(startTime);
+    const formattedEndTime = formatDate(endTime);
+
+    return `${formattedStartTime} - ${formattedEndTime}`;
+};
+//返回单个时间
+const getTImeStarandEnd = (endTime) => {
+    console.log(endTime, '转化');
+    const formatDate = (dateStr: string): string => {
+        const date = new Date(dateStr);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        return `${year}年${month}月${day}日`;
+    };
+    const formattedEndTime = formatDate(endTime);
+
+    return `${formattedEndTime}`;
+
+}
 export default {
-    timeAgo
+    timeAgo,
+    turnDate,
+    getTImeStarandEnd
 }

@@ -61,6 +61,7 @@ const PreviewHook = () => {
         multiList,
         radioList,
         allList,
+        selectedRowKeys
 
     };
 };
