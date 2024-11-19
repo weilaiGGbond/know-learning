@@ -45,8 +45,7 @@ const TestLience = ({ isModalVisible, setIsModalVisible }) => {
                 ]}
                 width={600}
             >
-                <Title level={4}>考试时间</Title>
-                <Paragraph>{examTime}</Paragraph>
+               
                 <Title level={4}>考试须知</Title>
                 <List
                     dataSource={examInstructions}
