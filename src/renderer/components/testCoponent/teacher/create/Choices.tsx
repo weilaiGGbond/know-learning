@@ -52,9 +52,8 @@ function ChoiceItem({
   }
   return (
     <div
-      className={`flex gap-3 border bg-white p-3 justify-between cursor-pointer rounded items-center ${
-        items.isRight === 1 ? 'text-green-600 border-green-600' : ''
-      }`}
+      className={`flex gap-3 border bg-white p-3 justify-between cursor-pointer rounded items-center ${items.isRight === 1 ? 'text-green-600 border-green-600' : ''
+        }`}
       onClick={() => onClick(index)}
     >
       <div className="flex gap-3 items-center">
