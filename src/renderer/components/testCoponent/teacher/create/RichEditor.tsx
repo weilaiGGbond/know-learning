@@ -6,31 +6,32 @@ interface RichTextEditorProps {
   onChange: (value: any) => void
   placeholder?: string
   getJSON: any
-  isJson: boolean
 }
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
-  isJson,
-  getJSON,
   value,
   onChange,
-  placeholder
+  placeholder,
+  getJSON
 }) => {
   const editorRef = useRef<ReactQuill>(null)
+
+  // 实时更新 JSON 数据
   const handleJSON = () => {
     if (editorRef.current) {
       const quill = editorRef.current.getEditor()
       const delta = quill.getContents()
-      console.log(JSON.stringify(delta, null, 2))
       return JSON.stringify(delta, null, 2)
-    } else {
-      return {}
     }
+    return '{}'
   }
-  useEffect(() => {
-    const json = handleJSON()
-    getJSON(json)
-  }, [isJson])
+
+  // 每次内容变化时调用
+  const handleChange = (content: string) => {
+    onChange(content) // 更新内容到父组件
+    const json = handleJSON() // 获取最新 JSON
+    getJSON(json) // 通知父组件 JSON 数据
+  }
 
   const modules = {
     toolbar: [
@@ -52,7 +53,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     <ReactQuill
       ref={editorRef}
       value={value}
-      onChange={onChange}
+      onChange={handleChange} // 绑定更新逻辑
       className="bg-white max-h-[300px] overflow-y-auto noSrollBar"
       placeholder={placeholder || '请输入内容'}
       theme="snow"

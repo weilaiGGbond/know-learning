@@ -3,17 +3,17 @@ import { Button, Flex, Form, Modal, Select, Splitter, Input, message } from 'ant
 import ChoiceItem from './Choices'
 import { createOption } from './create'
 import RichTextEditor from './RichEditor'
+import { uploadQuestion } from '@renderer/api/teacher/questionBank'
 interface Choice {
   ansContent: string
   isRight: number
 }
 interface quillRich {
   value: string
-  json: any
+  json: string
 }
 function CreateQuestion(): JSX.Element {
   // 选择选项的自定义处理函数
-  const [isJson, setIsJson] = useState<boolean>(false)
   const [choices, setChoices] = useState<Choice[]>([
     {
       ansContent: '选项',
@@ -34,8 +34,8 @@ function CreateQuestion(): JSX.Element {
   ])
   const [enableEditor, setenableEditor] = useState<{ itemContent: quillRich; analysis: quillRich }>(
     {
-      itemContent: { value: '', json: null },
-      analysis: { value: '', json: null }
+      itemContent: { value: '', json: '' },
+      analysis: { value: '', json: '' }
     }
   )
   // 编辑题目的富文本
@@ -87,34 +87,49 @@ function CreateQuestion(): JSX.Element {
       })
     }
   }
-  const handleJSON = (type: string, value: any) => {
-    console.log(value, 111111111111111)
+  const [difficulty, setDifficulty] = useState<string>('0')
+  const handleDifficult = (value: string) => {
+    setDifficulty(value)
+  }
+  const [bankName, setbankName] = useState<string>('')
+  const handlebankName = (e: any) => {
+    setbankName(e.target.value)
+  }
+  const handleJSON = (type: string, value: string) => {
     setenableEditor((prev) => ({
       ...prev,
-      [type]: { ...prev[type], json: value }
+      [type]: { ...prev[type], json: value } // 直接更新 JSON 数据
     }))
   }
+
   const [open, setOpen] = useState(false)
-  const [confirmLoading, setConfirmLoading] = useState(false)
 
   const showModal = () => {
     setOpen(true)
   }
 
-  const handleOk = () => {
-    setIsJson(true)
-    // 解析
-    console.log(enableEditor)
+  const handleOk = async () => {
+    const data = {
+      // questionAnalysis: enableEditor.analysis.json,
+      // questionContent: enableEditor.itemContent.json,
+      questionAnalysis: '11111',
+      questionContent: '11111',
+      questionSubject: bankName,
+      questionLevel: Number(difficulty),
+      questionType: Number(questionType),
+      ansList: choices
+    }
 
-    // 题目
-    console.log(choices)
-
-    // 选项
-    setConfirmLoading(true)
-    setTimeout(() => {
+    try {
+      const response = await uploadQuestion(data)
+      console.log('提交成功:', response)
+      message.success('题目添加成功！')
+    } catch (error) {
+      console.error('提交失败:', error)
+      message.error('题目添加失败！')
+    } finally {
       setOpen(false)
-      setConfirmLoading(false)
-    }, 2000)
+    }
   }
 
   const handleCancel = () => {
@@ -126,103 +141,97 @@ function CreateQuestion(): JSX.Element {
       <Button type="primary" onClick={showModal}>
         添加题目
       </Button>
-      <Modal
-        width={900}
-        open={open}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-      >
+      <Modal width={900} open={open} onOk={handleOk} onCancel={handleCancel}>
         <div className="createQuestion ">
-          <Form name="questionForm">
-            <Flex gap={20}>
-              <Form.Item label="选择题型">
-                <Select
-                  style={{ width: '120px' }}
-                  defaultValue={'0'}
-                  onChange={handleChange}
-                  options={[
-                    { value: '0', label: '单选' },
-                    { value: '1', label: '多选' },
-                    { value: '2', label: '判断' },
-                    { value: '3', label: '简答' }
-                  ]}
-                />
-              </Form.Item>
-              <Form.Item label="题目难度" name="difficulty">
-                <Select
-                  style={{ width: '120px' }}
-                  defaultValue={'0'}
-                  onChange={handleChange}
-                  options={[
-                    { value: '0', label: '简单' },
-                    { value: '1', label: '中等' },
-                    { value: '2', label: '困难' }
-                  ]}
-                />
-              </Form.Item>
-              <Form.Item label="题库名称">
-                <Input placeholder="要添加的题库名称/新建题库..." style={{ width: '240px' }} />
-              </Form.Item>
-            </Flex>
-            <div className="max-h-96 overflow-auto srollBar">
-              <Splitter className="h-[650px] bg-slate-100 p-2" layout="vertical">
-                <Splitter.Panel defaultSize="50%" min="50%" max="50%">
-                  <Splitter layout="horizontal" className="pr-2">
-                    <Splitter.Panel defaultSize="55%" min="50%" max="60%" className="noSrollBar">
+          <Flex gap={20}>
+            <Form.Item label="选择题型">
+              <Select
+                style={{ width: '120px' }}
+                defaultValue={'0'}
+                onChange={handleChange}
+                options={[
+                  { value: '0', label: '单选' },
+                  { value: '1', label: '多选' },
+                  { value: '2', label: '判断' },
+                  { value: '3', label: '简答' }
+                ]}
+              />
+            </Form.Item>
+            <Form.Item label="题目难度" name="difficulty">
+              <Select
+                style={{ width: '120px' }}
+                defaultValue={'0'}
+                onChange={handleDifficult}
+                options={[
+                  { value: '0', label: '简单' },
+                  { value: '1', label: '中等' },
+                  { value: '2', label: '困难' }
+                ]}
+              />
+            </Form.Item>
+            <Form.Item label="题库名称">
+              <Input
+                placeholder="要添加的题库名称/新建题库..."
+                onChange={handlebankName}
+                style={{ width: '240px' }}
+              />
+            </Form.Item>
+          </Flex>
+          <div className="max-h-96 overflow-auto srollBar">
+            <Splitter className="h-[650px] bg-slate-100 p-2" layout="vertical">
+              <Splitter.Panel defaultSize="50%" min="50%" max="50%">
+                <Splitter layout="horizontal" className="pr-2">
+                  <Splitter.Panel defaultSize="55%" min="50%" max="60%" className="noSrollBar">
+                    <div>
+                      <div className="max-h-[310px] relative overflow-hidden">
+                        <div className="relative">
+                          <RichTextEditor
+                            value={enableEditor.itemContent.value}
+                            onChange={(value) => handleEditor('itemContent', value)}
+                            getJSON={(value) => handleJSON('itemContent', value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </Splitter.Panel>
+                  {choices.length && (
+                    <Splitter.Panel collapsible className="noSrollBar">
                       <div>
-                        <div className="max-h-[310px] relative overflow-hidden">
-                          <div className="relative">
-                            <RichTextEditor
-                              value={enableEditor.itemContent.value}
-                              onChange={(value) => handleEditor('itemContent', value)}
-                              getJSON={(value) => handleJSON('itemContent', value)}
-                              isJson={isJson}
-                            />
+                        <div className="max-h-[350px] pl-2">
+                          <div className="chioces flex flex-col gap-2 justify-between max-h-[350px]">
+                            {choices.map((items, index) => (
+                              <ChoiceItem
+                                key={index}
+                                questionType={questionType}
+                                items={items}
+                                index={index}
+                                onClick={handleCardClick}
+                                onEdit={handleCardEdit}
+                                onAdd={handleAdd}
+                              />
+                            ))}
                           </div>
                         </div>
                       </div>
                     </Splitter.Panel>
-                    {choices.length && (
-                      <Splitter.Panel collapsible className="noSrollBar">
-                        <div>
-                          <div className="max-h-[350px] pl-2">
-                            <div className="chioces flex flex-col gap-2 justify-between max-h-[350px]">
-                              {choices.map((items, index) => (
-                                <ChoiceItem
-                                  key={index}
-                                  questionType={questionType}
-                                  items={items}
-                                  index={index}
-                                  onClick={handleCardClick}
-                                  onEdit={handleCardEdit}
-                                  onAdd={handleAdd}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </Splitter.Panel>
-                    )}
-                  </Splitter>
-                </Splitter.Panel>
-                <Splitter.Panel>
-                  <div>
-                    <div className="max-h-[300px] pt-2 relative overflow-hidden">
-                      <div className="relative BCE">
-                        <RichTextEditor
-                          value={enableEditor.analysis.value}
-                          onChange={(value) => handleEditor('analysis', value)}
-                          getJSON={(value) => handleJSON('analysis', value)}
-                          isJson={isJson}
-                        />
-                      </div>
+                  )}
+                </Splitter>
+              </Splitter.Panel>
+              <Splitter.Panel>
+                <div>
+                  <div className="max-h-[300px] pt-2 relative overflow-hidden">
+                    <div className="relative BCE">
+                      <RichTextEditor
+                        value={enableEditor.analysis.value}
+                        onChange={(value) => handleEditor('analysis', value)}
+                        getJSON={(value) => handleJSON('analysis', value)}
+                      />
                     </div>
                   </div>
-                </Splitter.Panel>
-              </Splitter>
-            </div>
-          </Form>
+                </div>
+              </Splitter.Panel>
+            </Splitter>
+          </div>
         </div>
       </Modal>
     </>
