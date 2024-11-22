@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Typography, Button, Radio, Checkbox, Input, Progress } from 'antd';
-import { ClockCircleOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { Layout, Typography, Button, Radio, Checkbox, Input, Progress, Modal, message } from 'antd';
+import { ClockCircleOutlined, EditOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 import CountdownTimer from '../testCoponent/testMain/time';
 import QuestionTypeMenu from '../testCoponent/testMain/typeTitle';
 import QuestionContent from '../testCoponent/testMain/question';
 import QuestionNumbers from '../testCoponent/testMain/number';
 import '@renderer/assets/styles/test/index.scss'
-
-
-
-const { Content } = Layout;
+import StudentPaperHook from '@renderer/hook/paper/student';
+import { useLocation, useNavigate } from 'react-router-dom';
+import PaperLeftNail from '../testCoponent/paper/leftNail';
+import QuestionStudentAnswer from '../testCoponent/testMain/questionAnswer';
+const { Content, Sider } = Layout;
 const { Title, Text } = Typography;
 const { TextArea } = Input;
 type Question = {
@@ -41,6 +42,28 @@ const examData = {
 const allQuestions = 7
 // 主组件
 export default function Component() {
+    const location = useLocation();
+    const { confirm } = Modal
+    const { examId, lessonId,duration } = location.state || {};
+    const navigate = useNavigate()
+    //先获取当前paperId
+    const { getPaperId,
+        bigList,
+        judgeList,
+        multiList,
+        radioList,
+        title,
+        paperId,
+        allList,
+        sumbitAnswer,
+        changeStatus,
+        answerAll
+    } = StudentPaperHook()
+    useEffect(() => {
+        getPaperId(examId, lessonId)
+    }, [])
+    const [currentQuestionIdget, setcurrentQuestionIdget] = useState<undefined | number>()
+
     const [currentType, setCurrentType] = useState('singleChoice');
     const [currentQuestionId, setcurrentQuestionId] = useState(1)
     const [currentQuestion, setCurrentQuestion] = useState<Question | undefined>(examData.singleChoice[0]);
@@ -53,6 +76,14 @@ export default function Component() {
 
         return allQuestions.find(question => question.id === id);
     };
+    //通过index去获取当前id
+    useEffect(() => {
+        allList.find((item) => {
+            if (item.index === currentQuestionId) {
+                setcurrentQuestionIdget(item.questionId)
+            }
+        })
+    }, [currentQuestionId, allList])
     useEffect(() => {
         const nowQuestion = getCurrentQuestion(currentQuestionId);
         if (nowQuestion) {
@@ -69,64 +100,76 @@ export default function Component() {
         }
     };
 
-    const handleNextQuestion = () => {
-        if (currentQuestionId < allQuestions) {
-            setcurrentQuestionId(currentQuestionId + 1)
+    const handleNextQuestion = async () => {
+        const flag = sumbitAnswer(paperId, currentQuestionIdget)
+        if (await flag) {
+            if (currentQuestionId < allList.length) {
+                setcurrentQuestionId(currentQuestionId + 1)
+            }
+            //并且把当前数据变成
+            changeStatus(currentQuestionIdget)
         }
     };
+
+    //answer变化后 更新数据
+    const submit = async () => {
+        try {
+            const flag = await sumbitAnswer(paperId, currentQuestionIdget);
+            if (flag) {
+                // 变数据
+                changeStatus(currentQuestionIdget);
+
+                // 跳转确定
+                if (!answerAll()) {
+                    // 没写完
+                    confirm({
+                        title: '提示',
+                        content: '您还有题目没作答?',
+                        onOk() {
+                            message.success('提交成功,一秒后返回主页面');
+                            navigate('/testMain');
+                        },
+                        onCancel() { }
+                    });
+                } else {
+                    // 写完了
+                    confirm({
+                        title: '提示',
+                        content: '确定要提交吗?',
+                        onOk() {
+                            message.success('提交成功,一秒后返回主页面');
+                            navigate('/testMain');
+                        },
+                        onCancel() { }
+                    });
+                }
+            }
+        } catch (error) {
+            console.error('提交出错:', error);
+            message.error('提交失败，请重试');
+        }
+    };
+
+    //判断数据是不是
     return (
         <Layout>
             <div className="flex p-6 testMainshow">
-                <div className="w-1/4 pr-6 border-r">
-                    {
-                        examData.singleChoice.length != 0 ?
-                            <>
-                                <QuestionTypeMenu currentType='singleChoice' />
-                                < QuestionNumbers
-                                    questions={examData.singleChoice}
-                                    currentQuestionId={
-                                        currentQuestionId
-                                    }
-                                    onSelect={setcurrentQuestionId}
-                                />
-                            </> : <></>
-                    }
-                    {
-                        examData.multipleChoice.length != 0 ?
-                            <>
-                                <QuestionTypeMenu currentType='multipleChoice' />
-                                < QuestionNumbers
-                                    questions={examData.multipleChoice}
-                                    currentQuestionId={
-                                        currentQuestionId
-                                    }
-                                    onSelect={setcurrentQuestionId}
-                                />
-                            </> : <></>
-                    }
-                    {
-                        examData.essay.length != 0 ?
-                            <>
-                                <QuestionTypeMenu currentType='essay' />
-                                < QuestionNumbers
-                                    questions={examData.essay}
-                                    currentQuestionId={
-                                        currentQuestionId
-                                    }
-                                    onSelect={setcurrentQuestionId}
-                                />
-                            </> : <></>
-                    }
-                </div>
+                <Sider width={200} style={{ padding: '8px' }} theme="light">
+                    {currentQuestionId} {currentQuestionIdget}
+                    <PaperLeftNail examData={allList}
+                        bigList={bigList}
+                        judgeList={judgeList} multiList={multiList}
+                        radioList={radioList}
+                        currentQuestionId={currentQuestionId} onSelect={setcurrentQuestionId} id={false} />
+                </Sider>
                 <Content className="w-3/4 pl-6">
-                    <Title level={2} className="mb-4">{examData.name}</Title>
-                    {
-                        currentQuestionId === allQuestions ?
-                            <Button type='primary' >提交</Button> : <></>
-                    }
-                    <CountdownTimer duration={examData.duration} />
+                    <Title level={2} className="mb-4">{title}</Title>
 
-                    <QuestionContent question={currentQuestion} type={currentType} />
+                    <CountdownTimer duration={duration} />
+
+                    <QuestionStudentAnswer currentID={currentQuestionId}
+                        id={currentQuestionIdget} paperId={paperId} />
+
                     <div className="flex justify-between mt-6">
                         <Button
                             onClick={handlePrevQuestion}
@@ -135,13 +178,20 @@ export default function Component() {
                         >
                             上一题
                         </Button>
-                        <Button
-                            onClick={handleNextQuestion}
-                            disabled={currentQuestionId === allQuestions}
-                            icon={<RightOutlined />}
-                        >
-                            下一题
-                        </Button>
+                        {currentQuestionId !== allList.length ?
+                            <Button
+                                onClick={handleNextQuestion}
+                                icon={<RightOutlined />}
+                            >
+                                下一题
+                            </Button> : <></>
+
+                        }
+
+                        {
+                            currentQuestionId === allList.length ?
+                                <Button icon={<EditOutlined />} onClick={submit} >提交</Button> : <></>
+                        }
                     </div>
                 </Content>
             </div>

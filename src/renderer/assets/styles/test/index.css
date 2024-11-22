@@ -103,3 +103,14 @@
   display: flex;
   justify-content: space-between;
 }
+
+.checkout {
+  position: relative;
+}
+
+.checkout .checkoutIcon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  color: #84e4a6;
+}

@@ -2,8 +2,8 @@
 import { Button } from "antd";
 import QuestionTypeMenu from "../../testMain/typeTitle"
 import QuestionNumbers from "../../testMain/number";
-const PaperLeftNail = ({ examData, bigList, judgeList, multiList, radioList, currentQuestionId, onSelect }) => {
-   
+const PaperLeftNail = ({ examData, bigList, judgeList, multiList, radioList, currentQuestionId, onSelect, id = true }) => {
+
     return (
 
         <>
@@ -17,10 +17,11 @@ const PaperLeftNail = ({ examData, bigList, judgeList, multiList, radioList, cur
                                 currentQuestionId
                             }
                             onSelect={onSelect}
+                            id={id}
                         />
                     </> : <></>
             }
-       
+
             {
                 multiList.length != 0 ?
                     <>
@@ -31,6 +32,7 @@ const PaperLeftNail = ({ examData, bigList, judgeList, multiList, radioList, cur
                                 currentQuestionId
                             }
                             onSelect={onSelect}
+                            id={id}
                         />
                     </> : <></>
             }
@@ -44,6 +46,8 @@ const PaperLeftNail = ({ examData, bigList, judgeList, multiList, radioList, cur
                                 currentQuestionId
                             }
                             onSelect={onSelect}
+                            id={id}
+
                         />
                     </> : <></>
             }
@@ -57,6 +61,7 @@ const PaperLeftNail = ({ examData, bigList, judgeList, multiList, radioList, cur
                                 currentQuestionId
                             }
                             onSelect={onSelect}
+                            id={id}
                         />
                     </> : <></>
             }

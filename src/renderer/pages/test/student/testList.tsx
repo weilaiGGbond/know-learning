@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PapperListHook from "@renderer/hook/paper/list";
 import Utils from "@renderer/utils/util"
-import moment from "moment";
+import moment, { duration } from "moment";
 import { AlignEndVertical } from "lucide-react";
 const StudentTestList = () => {
     const { timeAgo, turnDate } = Utils
@@ -96,7 +96,7 @@ const StudentTestList = () => {
                         <List.Item
                             key={item.examId}
                             onClick={() => {
-                                navigate('/studenttest', { state: { exam: item, status: getStatusNow(item.startTime, item.endTime), name: lessonMessage } });
+                                navigate('/studenttest', { state: { exam: item, status: getStatusNow(item.startTime, item.endTime), name: lessonMessage,duration:item.keepTime } });
                             }
                             }
 

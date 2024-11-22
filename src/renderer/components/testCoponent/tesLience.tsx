@@ -5,18 +5,16 @@ import { useNavigate } from "react-router-dom"
 
 const { Title, Paragraph } = Typography
 
-const TestLience = ({ isModalVisible, setIsModalVisible }) => {
+const TestLience = ({ isModalVisible, setIsModalVisible,examId,duration }) => {
     const navigate = useNavigate()
     const handleOk = () => {
         setIsModalVisible(false)
     }
     const gotoTestMain = () => {
         setIsModalVisible(false)
-        navigate('/testMain')
+        navigate('/testMain', { state: {examId:examId,lessonId:1,duration} })
     }
 
-
-    const examTime = "2024年6月15日 14:00-16:00"
     const examInstructions = [
         "请提前15分钟进入考场，并关闭所有通讯设备。",
         "考试期间不得使用任何未经允许的参考资料。",
