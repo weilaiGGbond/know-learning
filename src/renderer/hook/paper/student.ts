@@ -137,6 +137,7 @@ const StudentPaperHook = () => {
             }
         }
     }
+    //改数据
     const changeStatus = (id) => {
         const question = allList.find(item => item.questionId === id);
 
@@ -149,7 +150,7 @@ const StudentPaperHook = () => {
                         return { ...item, answer: 1 };
                     }
                     return item;
-                });
+                })
                 setRadioList(updatedRadioList);
             } else if (questionType === 1) {
                 const updatedMultiList = multiList.map(item => {
@@ -164,6 +165,7 @@ const StudentPaperHook = () => {
                     if (item.questionId === id) {
                         return { ...item, answer: 1 };
                     }
+
                     return item;
                 });
                 setJudgeList(updatedJudgeList);
@@ -186,6 +188,20 @@ const StudentPaperHook = () => {
             setAllList(updatedAllList);
         }
     };
+    //判断是不是全答题了
+    const answerAll = () => {
+        const allAnswered =
+            bigList.every(item => item.answered === 1) &&
+            judgeList.every(item => item.answered === 1) &&
+            multiList.every(item => item.answered === 1) &&
+            radioList.every(item => item.answered === 1);
+
+        if (allAnswered) {
+          return true
+        } else {
+           return false
+        }
+    }
 
 
     return {
@@ -199,7 +215,8 @@ const StudentPaperHook = () => {
         title,
         allList, getPaperquestion, PaperQuestion, updateStudentAnswer,
         sumbitAnswer,
-        changeStatus
+        changeStatus,answerAll
+        
     }
 }
 export default StudentPaperHook

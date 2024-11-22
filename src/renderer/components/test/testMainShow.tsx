@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Typography, Button, Radio, Checkbox, Input, Progress } from 'antd';
+import { Layout, Typography, Button, Radio, Checkbox, Input, Progress, Modal, message } from 'antd';
 import { ClockCircleOutlined, EditOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 import CountdownTimer from '../testCoponent/testMain/time';
 import QuestionTypeMenu from '../testCoponent/testMain/typeTitle';
@@ -7,7 +7,7 @@ import QuestionContent from '../testCoponent/testMain/question';
 import QuestionNumbers from '../testCoponent/testMain/number';
 import '@renderer/assets/styles/test/index.scss'
 import StudentPaperHook from '@renderer/hook/paper/student';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PaperLeftNail from '../testCoponent/paper/leftNail';
 import QuestionStudentAnswer from '../testCoponent/testMain/questionAnswer';
 const { Content, Sider } = Layout;
@@ -43,7 +43,9 @@ const allQuestions = 7
 // 主组件
 export default function Component() {
     const location = useLocation();
-    const { examId, lessonId } = location.state || {};
+    const { confirm } = Modal
+    const { examId, lessonId,duration } = location.state || {};
+    const navigate = useNavigate()
     //先获取当前paperId
     const { getPaperId,
         bigList,
@@ -54,7 +56,8 @@ export default function Component() {
         paperId,
         allList,
         sumbitAnswer,
-        changeStatus
+        changeStatus,
+        answerAll
     } = StudentPaperHook()
     useEffect(() => {
         getPaperId(examId, lessonId)
@@ -109,7 +112,45 @@ export default function Component() {
     };
 
     //answer变化后 更新数据
+    const submit = async () => {
+        try {
+            const flag = await sumbitAnswer(paperId, currentQuestionIdget);
+            if (flag) {
+                // 变数据
+                changeStatus(currentQuestionIdget);
 
+                // 跳转确定
+                if (!answerAll()) {
+                    // 没写完
+                    confirm({
+                        title: '提示',
+                        content: '您还有题目没作答?',
+                        onOk() {
+                            message.success('提交成功,一秒后返回主页面');
+                            navigate('/testMain');
+                        },
+                        onCancel() { }
+                    });
+                } else {
+                    // 写完了
+                    confirm({
+                        title: '提示',
+                        content: '确定要提交吗?',
+                        onOk() {
+                            message.success('提交成功,一秒后返回主页面');
+                            navigate('/testMain');
+                        },
+                        onCancel() { }
+                    });
+                }
+            }
+        } catch (error) {
+            console.error('提交出错:', error);
+            message.error('提交失败，请重试');
+        }
+    };
+
+    //判断数据是不是
     return (
         <Layout>
             <div className="flex p-6 testMainshow">
@@ -122,12 +163,9 @@ export default function Component() {
                         currentQuestionId={currentQuestionId} onSelect={setcurrentQuestionId} id={false} />
                 </Sider>
                 <Content className="w-3/4 pl-6">
-                    <Title level={2} className="mb-4">{examData.name}</Title>
-                    {
-                        currentQuestionId === allQuestions ?
-                            <Button type='primary' >提交</Button> : <></>
-                    }
-                    <CountdownTimer duration={examData.duration} />
+                    <Title level={2} className="mb-4">{title}</Title>
+
+                    <CountdownTimer duration={duration} />
 
                     <QuestionStudentAnswer currentID={currentQuestionId}
                         id={currentQuestionIdget} paperId={paperId} />
@@ -152,7 +190,7 @@ export default function Component() {
 
                         {
                             currentQuestionId === allList.length ?
-                                <Button icon={<EditOutlined />} >提交</Button> : <></>
+                                <Button icon={<EditOutlined />} onClick={submit} >提交</Button> : <></>
                         }
                     </div>
                 </Content>

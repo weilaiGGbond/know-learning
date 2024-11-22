@@ -34,7 +34,7 @@ const PreTest = (props): JSX.Element => {
         });
     }
 
-    const { typeTitle, children, status, title,examId } = props
+    const { typeTitle, children, status, title,examId,duration } = props
     return (
         <div className='testMain'>
             <div className='testMain__center'>
@@ -89,7 +89,8 @@ const PreTest = (props): JSX.Element => {
 
             </div>
             <TestLience isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}
-            examId={examId}
+            examId={examId} duration={duration}
+
             />
         </div>
     )

@@ -19,12 +19,11 @@ export const getPaperQuestionIdMethods = (paperId, questionID) => {
   })
 }
 export const sumbitAnswerMethods = (paperId, questionId,answer) => {
-  const questionIdArr=JSON.stringify(answer)
   return myAxios({
     url: '/paper/fillAns',
     method: 'post',
     data:{
-      answer:questionIdArr,
+      answer:`${answer}`,
       paperId,
       questionId
     }

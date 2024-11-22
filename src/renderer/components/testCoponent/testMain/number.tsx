@@ -2,8 +2,6 @@ import { CheckOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import "@renderer/assets/styles/test/index.scss";
 const QuestionNumbers = ({ questions, currentQuestionId, onSelect, id = true }) => {
-    console.log(questions, '222222222');
-
     return (
         <div className="flex flex-wrap gap-2 mt-4">
             {questions.map((q) => (
@@ -25,7 +23,7 @@ const QuestionNumbers = ({ questions, currentQuestionId, onSelect, id = true }) 
                             {id ? q.id : q.index}
                         </Button>
                         {
-                            questions.answered == 1 ?
+                            q.answered == 1 ?
                                 <>
                                     < div className="checkoutIcon">
                                         <CheckOutlined />
