@@ -32,7 +32,7 @@ export default function IDQuestion({ id, teacher = true, selectedAnswers = [] })
     useEffect(() => {
         getNowIDquestion()
         console.log(id);
-        
+
     }, [id])
     const getNowIDquestion = async () => {
         const nowdata = await getQuestionById(id) as unknown as QuestionRes
@@ -73,7 +73,9 @@ export default function IDQuestion({ id, teacher = true, selectedAnswers = [] })
 
             <div style={{ maxWidth: '800px', background: 'white', margin: '10px auto', borderRadius: '6px', padding: '20px' }}>
                 <Title level={3}>问题 {typeMapping[question.questionType]}</Title>
-                <Paragraph strong>{question.questionContent}</Paragraph>
+                <Paragraph strong>
+                    <span dangerouslySetInnerHTML={{ __html: question.questionContent }} />
+                </Paragraph>
                 {
                     teacher !== true && selectedAnswer.length === 0 ?
                         <Text style={{ color: '#fd384c' }}>题目还未作答</Text>
