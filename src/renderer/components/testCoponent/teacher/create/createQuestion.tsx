@@ -110,10 +110,8 @@ function CreateQuestion(): JSX.Element {
 
   const handleOk = async () => {
     const data = {
-      // questionAnalysis: enableEditor.analysis.json,
-      // questionContent: enableEditor.itemContent.json,
-      questionAnalysis: '11111',
-      questionContent: '11111',
+      questionAnalysis: enableEditor.analysis.value,
+      questionContent: enableEditor.itemContent.value,
       questionSubject: bankName,
       questionLevel: Number(difficulty),
       questionType: Number(questionType),

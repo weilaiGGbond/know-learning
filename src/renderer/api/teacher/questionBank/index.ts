@@ -35,6 +35,10 @@ export const uploadQuestion = (data: question) => {
     const dataList = data.ansList;
     const { questionAnalysis, questionContent, questionLevel, questionType, questionSubject } = data;
     const params = { questionAnalysis, questionContent, questionLevel, questionType, questionSubject };
+    console.log(typeof data.questionAnalysis);
+
+    console.log(data);
+
     return myAxios({
         url: `/qu/add`,
         method: 'post',
