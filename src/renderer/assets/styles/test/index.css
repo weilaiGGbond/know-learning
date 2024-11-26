@@ -5,74 +5,62 @@
   height: 95vh;
   border-radius: 6px;
 }
-
 .testMain__center {
   width: 95%;
   margin: 0 auto;
   background-color: white;
 }
-
 .testMain__center-title {
   width: 100%;
-  border-bottom: 1px dashed #e5e5e6;
+  border-bottom: 1px dashed rgb(229, 229, 230);
   justify-content: space-between;
   padding: 8px 15px;
-  color: #1c1c1c;
+  color: rgb(28, 28, 28);
   font-size: 17px;
   display: flex;
   letter-spacing: 2px;
 }
-
 .testMain__center-title-main {
   font-size: 14px;
-  color: gray;
+  color: rgb(128, 128, 128);
   margin-left: 8px;
 }
-
 .testMain__conten {
   background-color: white;
   width: 95%;
   margin: 0 auto;
   padding: 8px 15px;
   font-size: 14px;
-  color: #a49f9f;
+  color: rgb(164, 159, 159);
 }
-
 .testMain__conten-title {
   display: flex;
   align-items: center;
 }
-
 .testMain__conten-title-color {
-  color: #272626;
+  color: rgb(39, 38, 38);
 }
-
 .testMain__conten-title-subtitle {
   margin-left: 10px;
 }
-
 .testMain__conten-title-delete {
   margin-left: 15px;
   color: royalblue;
 }
-
 .testMain__mainConten {
-  color: #1c1c1c;
+  color: rgb(28, 28, 28);
 }
-
 .testMain__mainConten-show {
   margin-top: 5px;
 }
-
 .testMain__link {
   background-color: white;
   width: 95%;
   margin: 0 auto;
   padding: 8px 15px;
   font-size: 14px;
-  color: #a49f9f;
+  color: rgb(164, 159, 159);
 }
-
 .testMain__link-main {
   width: 98%;
   background-color: #f5f7fc;
@@ -82,11 +70,9 @@
   display: flex;
   align-items: center;
 }
-
 .testMain__link-main img {
   width: 80px;
 }
-
 .testMain__link-main-homework {
   margin-left: 10px;
 }
@@ -107,10 +93,9 @@
 .checkout {
   position: relative;
 }
-
 .checkout .checkoutIcon {
   position: absolute;
   right: 0;
   top: 50%;
-  color: #84e4a6;
-}
+  color: rgba(73, 179, 110, 0.8784313725);
+}/*# sourceMappingURL=index.css.map */

@@ -125,52 +125,51 @@ const QuestionListMain = () => {
 
             <ProList<QuestionListProps>
                 toolBarRender={() => [
-                    <>
-
-                        <Space direction="vertical" style={{ width: '100%' }}>
-                            <Space>
-                                <Search placeholder="输入学科名称" onSearch={onSearch} style={{ width: 200 }} />
-                                <GetType levelvalue={levelvalue} setLevelValue={setLevelValue} />
-                                <GetLevel typevalue={typevalue} setTypeValue={setTypeValue} />
-                                <Button type="primary" onClick={resetLevel}>重置</Button>
-                                {
-                                    selectedRowKeys.length > 0 && <>
-                                        <Button type='link' style={{ color: '#1677ff' }} onClick={gotoPreview}>添加到试卷</Button>
-
-                                    </>
-                                }
-                            </Space>
-
+                    <Space direction="vertical" style={{ width: '100%' }}>
+                        <Space>
+                            <Search
+                                placeholder="输入学科名称"
+                                onSearch={onSearch}
+                                style={{ width: 200 }}
+                            />
+                            <GetType levelvalue={levelvalue} setLevelValue={setLevelValue} />
+                            <GetLevel typevalue={typevalue} setTypeValue={setTypeValue} />
+                            <Button type="primary" onClick={resetLevel}>重置</Button>
+                            {selectedRowKeys.length > 0 && (
+                                <Button
+                                    type='link'
+                                    style={{ color: '#1677ff' }}
+                                    onClick={gotoPreview}
+                                >
+                                    添加到试卷
+                                </Button>
+                            )}
                         </Space>
-                    </>
+                    </Space>
                 ]}
-
                 metas={{
                     title: {
-                        render: (text, item) => item.questionContent,
+                        render: (text, item) => (
+                            <span dangerouslySetInnerHTML={{ __html: item.questionContent }} />
+                        ),
                     },
                     description: {
                         render: (text, item) => `创建时间: ${timeAgo(item.createTime)}`,
-
                     },
                     subTitle: {
-                        render: (text, item) => {
-                            return (
-                                <Space size={0}>
-                                    <Tag color="blue">{typeMapping[item.questionType]}</Tag>
-                                    <Tag color="#5BD8A6">{levelMapping[item.questionLevel]}</Tag>
-                                </Space>
-                            );
-                        },
+                        render: (text, item) => (
+                            <Space size={0}>
+                                <Tag color="blue">{typeMapping[item.questionType]}</Tag>
+                                <Tag color="#5BD8A6">{levelMapping[item.questionLevel]}</Tag>
+                            </Space>
+                        ),
                     },
-
-
                     actions: {
                         render: (text, row, index, action) => [
                             <a
                                 onClick={() => {
-                                    showModal()
-                                    setNowId(row.questionId)
+                                    showModal();
+                                    setNowId(row.questionId);
                                 }}
                                 key="link"
                             >
@@ -178,22 +177,28 @@ const QuestionListMain = () => {
                             </a>,
                         ],
                     },
-
                 }}
                 rowKey="questionId"
                 headerTitle={
-                    <Checkbox onChange={toggleSelectAll} checked={selectedRowKeys.length === questionList.length}>
+                    <Checkbox
+                        onChange={toggleSelectAll}
+                        checked={selectedRowKeys.length === questionList.length}
+                    >
                         全选
                     </Checkbox>
                 }
                 rowSelection={rowSelection}
                 dataSource={questionList}
-                footer={<Pagination defaultCurrent={page} total={total} align="end" onChange={(page) => {
-                    setPage(page)
-
-                }}
-                />}
+                footer={
+                    <Pagination
+                        defaultCurrent={page}
+                        total={total}
+                        align="end"
+                        onChange={(page) => setPage(page)}
+                    />
+                }
             />
+
             <Modal title="题目详情" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <IDQuestion id={nowId} />
             </Modal>

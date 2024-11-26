@@ -24,7 +24,7 @@ interface QuestionByIdProps {
 interface QuestionIdProps {
     questionContent: string | object,
     ansList: [],
-    answer: null | Answer[],
+    answer: null | string,
     questionType: number
 }
 interface Answer {
@@ -38,6 +38,7 @@ interface checkList {
     questionId: number,
     questionType: number,
     answered: number,
+    paperQuId: number,
     //ansewerd ：0 未答题 1 已答题    
 }
 
@@ -91,14 +92,19 @@ const StudentPaperHook = () => {
             setPaperQuestion(data.data)
             //更新answer并将其存入store
             //判断一下类型
-            if (data.data.questionType == 3) {
-                if (selectedStudentIds.length > 0) {
-                    dispatch(setSelectedStudentAnswers(data.data.answer))
-                }
-            } else {
+            if (data.data.questionType == 1) {
+                //多选判断
                 if (data.data.answer === null) {
-                    console.log('我是空数组');
                     dispatch(setSelectedStudentAnswers([]))
+                } else {
+                    const selectedIdsArray = data.data.answer.split(',').map(Number);
+                    dispatch(setSelectedStudentAnswers(selectedIdsArray))
+                }
+
+            } else {
+                //单选判断
+                if (data.data.answer === null) {
+                    dispatch(setSelectedStudentAnswers(''))
                 } else {
                     dispatch(setSelectedStudentAnswers(data.data.answer))
                 }
@@ -118,16 +124,22 @@ const StudentPaperHook = () => {
             dispatch(setSelectedStudentAnswers([ansewerd]))
         } else if (type == 3) {
             //填空
-            // dispatch(setSelectedStudentAnswers(ansewerd))
+            dispatch(setSelectedStudentAnswers(ansewerd))
 
         }
     };
     //提交当前学生答案
     const sumbitAnswer = async (paperId, questionID) => {
-        if (selectedStudentIds.length == 0 || selectedStudentIds == null) {
+        if (selectedStudentIds.length == 0 || selectedStudentIds == null || selectedStudentIds == '') {
             message.warning('请先答题')
             return
         } else {
+            let studentIdsString = '';
+            if (Array.isArray(selectedStudentIds)) {
+                studentIdsString = selectedStudentIds.join(',');
+            } else {
+                studentIdsString = selectedStudentIds;
+            }
             const data = await sumbitAnswerMethods(paperId, questionID, selectedStudentIds) as unknown as Props
             if (data.code == 20000) {
                 return true
@@ -195,11 +207,11 @@ const StudentPaperHook = () => {
             judgeList.every(item => item.answered === 1) &&
             multiList.every(item => item.answered === 1) &&
             radioList.every(item => item.answered === 1);
-
+        
         if (allAnswered) {
-          return true
+            return true
         } else {
-           return false
+            return false
         }
     }
 
@@ -215,9 +227,10 @@ const StudentPaperHook = () => {
         title,
         allList, getPaperquestion, PaperQuestion, updateStudentAnswer,
         sumbitAnswer,
-        changeStatus,answerAll
-        
+        changeStatus, answerAll
+
     }
 }
+
 export default StudentPaperHook
 

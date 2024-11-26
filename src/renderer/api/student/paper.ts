@@ -25,7 +25,14 @@ export const sumbitAnswerMethods = (paperId, questionId,answer) => {
     data:{
       answer:`${answer}`,
       paperId,
-      questionId
+      paperQuId:questionId
     }
+  })
+}
+//提交试卷
+export const sumbitPaper = (paperId) => {
+  return myAxios({
+    url:`/paper/handPaper?paperId=${paperId}`,
+    method: 'post',
   })
 }

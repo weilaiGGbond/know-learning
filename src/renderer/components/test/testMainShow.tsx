@@ -10,6 +10,7 @@ import StudentPaperHook from '@renderer/hook/paper/student';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PaperLeftNail from '../testCoponent/paper/leftNail';
 import QuestionStudentAnswer from '../testCoponent/testMain/questionAnswer';
+import { sumbitPaper } from '@renderer/api/student/paper';
 const { Content, Sider } = Layout;
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -44,7 +45,7 @@ const allQuestions = 7
 export default function Component() {
     const location = useLocation();
     const { confirm } = Modal
-    const { examId, lessonId,duration } = location.state || {};
+    const { examId, lessonId, duration } = location.state || {};
     const navigate = useNavigate()
     //先获取当前paperId
     const { getPaperId,
@@ -63,7 +64,7 @@ export default function Component() {
         getPaperId(examId, lessonId)
     }, [])
     const [currentQuestionIdget, setcurrentQuestionIdget] = useState<undefined | number>()
-
+    const [nowpaperQuid, setnowpaperQuid] = useState<number>()
     const [currentType, setCurrentType] = useState('singleChoice');
     const [currentQuestionId, setcurrentQuestionId] = useState(1)
     const [currentQuestion, setCurrentQuestion] = useState<Question | undefined>(examData.singleChoice[0]);
@@ -79,8 +80,12 @@ export default function Component() {
     //通过index去获取当前id
     useEffect(() => {
         allList.find((item) => {
+            console.log(item, '14444');
+
             if (item.index === currentQuestionId) {
                 setcurrentQuestionIdget(item.questionId)
+                setnowpaperQuid(item.paperQuId)
+
             }
         })
     }, [currentQuestionId, allList])
@@ -101,7 +106,7 @@ export default function Component() {
     };
 
     const handleNextQuestion = async () => {
-        const flag = sumbitAnswer(paperId, currentQuestionIdget)
+        const flag = sumbitAnswer(paperId, nowpaperQuid)
         if (await flag) {
             if (currentQuestionId < allList.length) {
                 setcurrentQuestionId(currentQuestionId + 1)
@@ -114,20 +119,24 @@ export default function Component() {
     //answer变化后 更新数据
     const submit = async () => {
         try {
-            const flag = await sumbitAnswer(paperId, currentQuestionIdget);
+            const flag = await sumbitAnswer(paperId, nowpaperQuid);
             if (flag) {
                 // 变数据
                 changeStatus(currentQuestionIdget);
-
+                console.log(answerAll());
+                
                 // 跳转确定
                 if (!answerAll()) {
                     // 没写完
                     confirm({
                         title: '提示',
                         content: '您还有题目没作答?',
-                        onOk() {
-                            message.success('提交成功,一秒后返回主页面');
-                            navigate('/testMain');
+                        async onOk() {
+                            const data = await sumbitPaper(paperId) as any
+                            if (data.code == 20000) {
+                                // message.success('提交成功,一秒后返回主页面');
+                                navigate(-2)
+                            }
                         },
                         onCancel() { }
                     });
@@ -136,9 +145,12 @@ export default function Component() {
                     confirm({
                         title: '提示',
                         content: '确定要提交吗?',
-                        onOk() {
-                            message.success('提交成功,一秒后返回主页面');
-                            navigate('/testMain');
+                        async onOk() {
+                            const data = await sumbitPaper(paperId) as any
+                            if (data.code == 20000) {
+                                // message.success('提交成功,一秒后返回主页面');
+                                navigate(-2)
+                            }
                         },
                         onCancel() { }
                     });

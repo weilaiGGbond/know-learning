@@ -14,19 +14,25 @@ function ChoiceAnswer({
     index,
     questionType,
 }) {
-    const { updateStudentAnswer } = StudentPaperHook();
-    const selectedStudentIds = useSelector((state: any) => state.PaperSliceReducer.studentAnswers)||[];
-    console.log(selectedStudentIds,'我是数组');
-    
-    if (selectedStudentIds === undefined || null) {
-        updateStudentAnswer(questionType, [])
-    }
+    //多选1 则进入这个判断
 
- 
-    const isAnswered = selectedStudentIds.includes(items.ansId)
+    const { updateStudentAnswer } = StudentPaperHook();
+    const selectedStudentIds = useSelector((state: any) => state.PaperSliceReducer.studentAnswers)
+    const [isAnswered, setIsAnswered] = useState(false)
+    useEffect(()=>{
+        if (questionType == 1) {
+            const flag = selectedStudentIds.includes(items.ansId)
+            setIsAnswered(flag)
+        } else {
+            let answerflag=false
+            if (selectedStudentIds == items.ansId) {
+                answerflag=true
+            }
+            setIsAnswered(answerflag)
+        }
+    },[questionType,selectedStudentIds])
     const changeAnswerShow = (questionType, ansId) => {
         updateStudentAnswer(questionType, ansId)
-
     }
     return (
         <div

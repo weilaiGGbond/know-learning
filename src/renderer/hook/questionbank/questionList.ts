@@ -1,5 +1,5 @@
 import { getAllBankList, getQuestionList } from "@renderer/api/teacher/questionBank";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 interface QuestionListProps {
     questionId: string,
     questionContent: string,
@@ -11,6 +11,7 @@ interface QuestionListProps {
 interface QuestionRes {
     code: number,
     data: {
+        total: SetStateAction<number>;
         records: QuestionListProps[],
 
     },
@@ -48,7 +49,8 @@ const QuestionListHook = () => {
             type: type !== undefined ? type : undefined
         }) as unknown as QuestionRes;
     if (data.code === 20000) {
-        setTotal(data.total);
+        console.log(data,'21111' );
+        setTotal(data.data.total);
         setQuestionList(data.data.records);
     }
 
