@@ -23,7 +23,7 @@ const PreTest = (props): JSX.Element => {
                 if (status == 1) {
                     setIsModalVisible(true)
                 } else if (status == 2) {
-                    navigate('/testFinsh')
+                    navigate('/testFinsh',{state:{status:status}})
                 } else {
                     message.error('考试未开始')
                 }

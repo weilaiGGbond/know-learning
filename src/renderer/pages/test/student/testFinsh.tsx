@@ -1,15 +1,17 @@
 import { CheckCircleOutlined, ClockCircleOutlined, LockOutlined } from "@ant-design/icons"
 import { Button, Card, Result, Space, Statistic, Typography } from "antd"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 const { Title, Paragraph } = Typography
 
 interface ExamCompletionProps {
-    status: 'completed' | 'hidden' | 'expired'
+    status: -1 | 'hidden' | 2
     score?: number
     totalScore?: number
 }
 const TestFinsh = () => {
-    const { status, score, totalScore } = { status: 'expired', score: 80, totalScore: 100 } as ExamCompletionProps
+    const location = useLocation();
+    const {status } = location.state || {};
+    const { score, totalScore } = { score: 80, totalScore: 100 } as ExamCompletionProps
     const navigate = useNavigate()
 
     const handleReturnToMain = () => {
@@ -18,7 +20,7 @@ const TestFinsh = () => {
 
     const renderContent = () => {
         switch (status) {
-            case 'completed':
+            case -1:
                 return (
                     <Space direction="vertical" size="large" style={{ width: '100%' }}>
                         <Statistic
@@ -32,13 +34,7 @@ const TestFinsh = () => {
                         </Button>
                     </Space>
                 )
-            case 'hidden':
-                return (
-                    <Paragraph>
-                        本试卷考试完成后不允许查看详细得分。如有疑问，请联系您的老师。
-                    </Paragraph>
-                )
-            case 'expired':
+            case 2:
                 return (
                     <Space direction="vertical" size="large" style={{ width: '100%' }}>
                         <Paragraph>
@@ -54,33 +50,27 @@ const TestFinsh = () => {
 
     const getIcon = () => {
         switch (status) {
-            case 'completed':
+            case -1:
                 return <CheckCircleOutlined style={{ color: '#52c41a' }} />
-            case 'hidden':
-                return <LockOutlined style={{ color: '#faad14' }} />
-            case 'expired':
+            case 2:
                 return <ClockCircleOutlined style={{ color: '#f5222d' }} />
         }
     }
 
     const getTitle = () => {
         switch (status) {
-            case 'completed':
+            case -1:
                 return "考试已完成"
-            case 'hidden':
-                return "考试已完成"
-            case 'expired':
+            case 2:
                 return "考试已逾期"
         }
     }
 
     const getSubTitle = () => {
         switch (status) {
-            case 'completed':
+            case -1:
                 return "您可以查看您的成绩了"
-            case 'hidden':
-                return "老师暂时不允许查看成绩"
-            case 'expired':
+            case 2:
                 return "已超过考试时间"
         }
     }

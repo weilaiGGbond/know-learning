@@ -4,12 +4,17 @@ interface PaperState {
     teacherPreviewId: string[];
     selectedQuestionIds: string[];
     studentAnswers: (string | null)[];
+    setTime: number | null,
+    paperId: string | null;
+    
 }
 
 const initialState = {
     teacherPreviewId: [],
     selectedQuestionIds: [],
     studentAnswers: [],
+    setTime: null,
+    paperId:null,
 }
 
 const PaperSlice = createSlice({
@@ -26,9 +31,14 @@ const PaperSlice = createSlice({
         setSelectedStudentAnswers(state, action) {
             state.studentAnswers = action.payload;
         },
-
+        setTimeNumber(state,action){
+            state.setTime = action.payload;
+        },
+        setPaperIdnow(state,action){
+            state.paperId = action.payload;
+        }
     },
 });
 
-export const { setTeacherPreviewId, setSelectedQuestionIds,setSelectedStudentAnswers } = PaperSlice.actions
+export const { setTeacherPreviewId,setPaperIdnow, setSelectedQuestionIds, setSelectedStudentAnswers,setTimeNumber } = PaperSlice.actions
 export default PaperSlice.reducer;

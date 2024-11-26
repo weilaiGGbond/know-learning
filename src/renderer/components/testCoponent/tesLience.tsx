@@ -1,18 +1,26 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons"
+import { setPaperIdnow } from "@renderer/store/reducers/paper"
 import { Button, List, Modal, Space, Typography } from "antd"
 import { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 const { Title, Paragraph } = Typography
 
-const TestLience = ({ isModalVisible, setIsModalVisible,examId,duration }) => {
+const TestLience = ({ isModalVisible, setIsModalVisible, examId, duration }) => {
+    const dispatch = useDispatch()
+    const paperId = useSelector((state: any) => state.PaperSliceReducer.paperId);
     const navigate = useNavigate()
     const handleOk = () => {
         setIsModalVisible(false)
     }
     const gotoTestMain = () => {
         setIsModalVisible(false)
-        navigate('/testMain', { state: {examId:examId,lessonId:1,duration} })
+        if (!paperId) {
+            dispatch(setPaperIdnow(examId))
+
+        }
+        navigate('/testMain', { state: { examId: examId, lessonId: 1, duration } })
     }
 
     const examInstructions = [
@@ -43,7 +51,7 @@ const TestLience = ({ isModalVisible, setIsModalVisible,examId,duration }) => {
                 ]}
                 width={600}
             >
-               
+
                 <Title level={4}>考试须知</Title>
                 <List
                     dataSource={examInstructions}
