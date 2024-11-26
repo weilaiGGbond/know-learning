@@ -39,7 +39,7 @@ export const uploadFile = (file: File) => {
   const formData = new FormData()
   formData.append('file', file)
   return myAxios({
-    url: '/user/upload',
+    url: '/user/upFile',
     method: 'post',
     data: formData
   })
