@@ -186,7 +186,7 @@ function CreateQuestion(): JSX.Element {
                           <RichTextEditor
                             value={enableEditor.itemContent.value}
                             onChange={(value) => handleEditor('itemContent', value)}
-                            getJSON={(value) => handleJSON('itemContent', value)}
+                            getJSON={(value: string) => handleJSON('itemContent', value)}
                           />
                         </div>
                       </div>

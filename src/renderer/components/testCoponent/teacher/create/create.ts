@@ -35,4 +35,7 @@ export const numberToLetter = (num: number) => {
     // 偏移量是 0 对应 'A'，所以需要加上 65
     return String.fromCharCode(num + 65)
 }
-
+// 判断是否是图片
+export const patternImage = (url: string) => {
+    return /\.(png|jpg|jpeg|gif|webp|bmp)$/.test(url)
+}

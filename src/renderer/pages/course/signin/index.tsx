@@ -1,7 +1,6 @@
 // 签到
 import { LineChartOutlined, SendOutlined } from '@ant-design/icons'
 import { PageContainer } from '@ant-design/pro-components'
-import CreatQuestion from '@renderer/components/testCoponent/teacher/create/createQuestion'
 
 const items = [
   {
@@ -29,9 +28,7 @@ function SingIn(): JSX.Element {
             深入理解机器学习算法与应用：从基础理论到实际案例分析
           </p>
         }
-      >
-        <CreatQuestion />
-      </PageContainer>
+      ></PageContainer>
     </div>
   )
 }
