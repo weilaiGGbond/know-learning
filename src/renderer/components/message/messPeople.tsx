@@ -18,12 +18,12 @@ interface ChatWindowProps {
 }
 interface ChatContextType {
   chatMessage: {
-    coverUrl: string;
-    lessonName: string;
-    name: string;
-  };
-  WebSocket:  WebSocket | null | undefined;
-  sendMessage: (message: string) => void;
+    coverUrl: string
+    lessonName: string
+    name: string
+  }
+  WebSocket: WebSocket | null | undefined
+  sendMessage: (message: string) => void
 }
 
 const ChatContext = createContext<ChatContextType>({
@@ -47,7 +47,16 @@ const MessagePeople = ({ contact }: ChatWindowProps) => {
     handleScroll
   } = chatMethods()
   const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
-    url: `ws://81.70.144.36:8080/ws/les`
+    url: `ws://81.70.144.36:8080/ws/les`,
+    onOpen(){
+      console.log('签到连接成功');
+    },
+    onError: (err) => {
+      console.log('连接错误', err)
+    },
+    onMessage: (message) => {
+      console.log('收到消息签到', message)
+    }
   })
   useEffect(() => {
     if (isConnected) {
@@ -64,8 +73,8 @@ const MessagePeople = ({ contact }: ChatWindowProps) => {
       <Layout className="h-full">
         {contact ? (
           <>
-            <ChatTop  lastMessage={lastMessage}/>
-            <ChatConten chatMessage={chatMessage}   loadMore={getChatMessage} page={page} />
+            <ChatTop lastMessage={lastMessage} webSocket={webSocket} />
+            <ChatConten chatMessage={chatMessage} loadMore={getChatMessage} page={page} />
             <ChatFooter
               lastMessage={lastMessage}
               chatMessage={chatMessage}

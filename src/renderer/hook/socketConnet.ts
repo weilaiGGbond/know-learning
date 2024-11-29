@@ -62,6 +62,7 @@ const useWebSocket = (
       console.log('websocket error', event);
     }
     socket.onmessage = (event) => {
+      console.log('event', event);
       const message = JSON.parse(event.data)
       console.log(`Websocket 接收到消息：${message}`);
       setLastMessage(message)
