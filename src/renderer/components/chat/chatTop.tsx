@@ -6,7 +6,7 @@ import StudentCheck from '@renderer/pages/course/signin/studentCheck'
 import { Avatar, Button, Space } from 'antd'
 import { Header } from 'antd/es/layout/layout'
 // 获取当前位置的地图
-const ChatTop = () => {
+const ChatTop = ({lastMessage}) => {
   const { chatMessage } = useChatContext()
   return (
     <div>
@@ -27,7 +27,7 @@ const ChatTop = () => {
             <span>{chatMessage.lessonName}</span>
           </Space>
           <Space>
-            <StudentCheck />
+            <StudentCheck lastMessage={lastMessage} />
             <Button icon={<PhoneOutlined />} shape="circle" />
             <Button icon={<VideoCameraOutlined />} shape="circle" />
             <MainPeople />

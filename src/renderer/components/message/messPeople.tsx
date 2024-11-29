@@ -64,8 +64,8 @@ const MessagePeople = ({ contact }: ChatWindowProps) => {
       <Layout className="h-full">
         {contact ? (
           <>
-            <ChatTop />
-            <ChatConten chatMessage={chatMessage} loadMore={getChatMessage} page={page} />
+            <ChatTop  lastMessage={lastMessage}/>
+            <ChatConten chatMessage={chatMessage}   loadMore={getChatMessage} page={page} />
             <ChatFooter
               lastMessage={lastMessage}
               chatMessage={chatMessage}

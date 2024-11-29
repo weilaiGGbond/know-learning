@@ -1,31 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, message, Modal } from 'antd'
 import BaiduMap from '@renderer/components/BaiduMap'
 import { EnvironmentFilled } from '@ant-design/icons'
 import useWebSocket from '@renderer/hook/socketConnet'
 import { studentSign } from '@renderer/api/student'
-const StudentCheck: React.FC = () => {
+const StudentCheck = ({lastMessage}) => {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const [position, setPosition] = useState<{ longitude: number; latitude: number }>({
     longitude: 0,
     latitude: 0
   })
-  const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
-    url: 'ws://81.70.144.36:8080/ws/les',
-    onOpen: () => {
-      console.log('连接成功')
-    },
-    onClose: () => {
-      console.log('连接关闭')
-    },
-    onError: () => {
-      console.log('连接错误')
-    },
-    onMessage: (message) => {
-      console.log('收到消息', message)
-    }
-  })
+  // const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
+  //   url: 'ws://81.70.144.36:8080/ws/les',
+  //   onOpen: () => {
+  //     console.log('连接成功')
+  //   },
+  //   onClose: () => {
+  //     console.log('连接关闭')
+  //   },
+  //   onError: (err) => {
+  //     console.log('连接错误',err)
+  //   },
+  //   onMessage: (message) => {
+  //     console.log('收到消息', message)
+  //   }
+  // })
+  useEffect(()=>{
+    console.log(lastMessage,'签到消息')
+  },[lastMessage])
   const showModal = () => {
     setOpen(true)
   }
