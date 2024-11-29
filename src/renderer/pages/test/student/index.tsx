@@ -12,7 +12,6 @@ const Test = (): JSX.Element => {
     return (
         <>
             <PreTest typeTitle='考试' status={status} title={exam.examName} examId={exam.examId}>
-
                 <div className='testMain__conten'>
 
                     <div className='testMain__mainConten'>

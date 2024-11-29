@@ -1,4 +1,4 @@
-import { Button, Input, List, Typography } from "antd"
+import { Button, Input, List, message, Typography } from "antd"
 import { EditOutlined } from "@ant-design/icons";
 import chatMethods from "@renderer/hook/chat/chat";
 import { useEffect } from "react";
@@ -29,7 +29,7 @@ const StudentTestList = () => {
     const onSearch = (value) => {
         setExamName(value)
     }
-    const getStatus = (startTime, endTime) => {
+    const getStatus = (startTime, endTime, hasFinshed) => {
         const now = moment();
         if (now.isBefore(startTime)) {
             return (
@@ -45,7 +45,17 @@ const StudentTestList = () => {
                     <Text type="secondary"> 考试时间：{turnDate(startTime, endTime)}</Text>
                 </>
             )
-        } else {
+        } else if (hasFinshed == 1) {
+            return (
+                <>
+                    <>
+                        <Text type="secondary">已完成</Text>
+                        <Text type="secondary"> 考试时间：{turnDate(startTime, endTime)}</Text>
+                    </>
+                </>
+            )
+        }
+        else {
             return (
                 <>
                     <>
@@ -56,16 +66,25 @@ const StudentTestList = () => {
             )
         }
     };
-    const getStatusNow = (startTime, endTime) => {
+    const getStatusNow = (startTime, endTime, hasFinshed) => {
         const now = moment();
         if (now.isBefore(startTime)) {
+            //未开始
             return 0
         } else if (now.isAfter(endTime)) {
+            //逾期
             return 2
-        } else {
+        }
+        else if (hasFinshed == 1) {
+            return -1
+        }
+        else {
+            //进行中
             return 1
         }
     };
+    const setTime = useSelector((state: any) => state.PaperSliceReducer.setTime);
+    const paperId = useSelector((state: any) => state.PaperSliceReducer.paperId);
     return (
         <div className="flex flex-col flex-grow h-full">
             <div className="flex w-full justify-between py-8 h-11 items-center border-b border-gray-300">
@@ -75,9 +94,24 @@ const StudentTestList = () => {
                 <div className="flex items-center m-6">
                     <Button icon={<EditOutlined />} onClick={gotoNewTest}>
                         发布考试
+                        {paperId}
                     </Button>
                     <Search placeholder="搜索考试" onSearch={onSearch} style={{ width: 200 }} />
                 </div>
+            </div>
+            <div>
+                {setTime && setTime != 0 && paperId != 0 ?
+                    <div className="flex items-center justify-between px-5 py-3">
+                        <Text type="secondary" onClick={
+
+                            () => {
+                                navigate('/testMain', { state: { examId: paperId, lessonId: 1 } })
+                            }
+                        }>
+                            您有考试未完成 请及时处理
+                        </Text>
+                    </div> : <></>
+                }
             </div>
             <div className="overflow-y-auto srollBar px-5 pb-5 flex-1" id="scrollableDiv">
                 <List
@@ -96,7 +130,11 @@ const StudentTestList = () => {
                         <List.Item
                             key={item.examId}
                             onClick={() => {
-                                navigate('/studenttest', { state: { exam: item, status: getStatusNow(item.startTime, item.endTime), name: lessonMessage,duration:item.keepTime } });
+                                if (setTime && setTime != 0 && paperId != 0) {
+                                    message.warning("您有考试未完成 请及时处理")
+                                } else {
+                                    navigate('/studenttest', { state: { exam: item, status: getStatusNow(item.startTime, item.endTime, item.hasFinshed), name: lessonMessage } });
+                                }
                             }
                             }
 
@@ -113,7 +151,7 @@ const StudentTestList = () => {
                                 description={`创建时间 ${timeAgo(item.createTime)}`}
                             />
                             {
-                                getStatus(item.startTime, item.endTime)
+                                getStatus(item.startTime, item.endTime, item.hasFinshed)
                             }
 
                         </List.Item>

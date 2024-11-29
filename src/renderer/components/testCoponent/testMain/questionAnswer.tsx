@@ -19,7 +19,7 @@ const QuestionStudentAnswer = ({ id, currentID, paperId }) => {
     }, [id, paperId]);
     const selectedStudentIds = useSelector((state: any) => state.PaperSliceReducer.studentAnswers);
     function handleJSON(arg0: string, value: any) {
-        throw new Error("Function not implemented.");
+
     }
 
     return (

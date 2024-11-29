@@ -1,5 +1,5 @@
 import { getPaperIdMethods, getPaperLeftQuestionMethods, getPaperQuestionIdMethods, sumbitAnswerMethods } from "@renderer/api/student/paper"
-import { setSelectedStudentAnswers } from "@renderer/store/reducers/paper"
+import { setPaperIdnow, setSelectedStudentAnswers, setTimeNumber } from "@renderer/store/reducers/paper"
 import { message } from "antd"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -10,6 +10,7 @@ interface Props {
 interface PaperQuestion {
     code: number,
     data: {
+        keepTime(keepTime: any): { payload: any; type: "person/setTimeNumber" }
         examName: string,
         radioList: checkList[],
         multiList: checkList[],
@@ -62,14 +63,21 @@ const StudentPaperHook = () => {
     const [multiList, setmultiList] = useState<checkList[]>([])
     const [radioList, setRadioList] = useState<checkList[]>([])
     const [allList, setAllList] = useState<checkList[]>([])
+    const setTime = useSelector((state: any) => state.PaperSliceReducer.setTime);
     //获取试卷左边信息
     const leftNailMessagepaper = async (id) => {
         const data = await getPaperLeftQuestionMethods(id) as unknown as PaperQuestion
-
         if (data.code == 20000) {
             setTitle(data.data.examName)
             const { bigList, judgeList, multiList, radioList } = data.data;
-            let index = 1;
+
+            let index = 1;        
+            if (setTime == null||setTime==0) {
+                //没有进行中的   
+                dispatch(setTimeNumber(data.data.keepTime))
+                console.log('5655555',data.data.keepTime);
+                
+            }
             const indexedRadioList = radioList.map((item) => ({ ...item, index: index++ }));
             const indexedMultiList = multiList.map((item) => ({ ...item, index: index++ }));
             const indexedJudgeList = judgeList.map((item) => ({ ...item, index: index++ }));
@@ -140,7 +148,7 @@ const StudentPaperHook = () => {
             } else {
                 studentIdsString = selectedStudentIds;
             }
-            const data = await sumbitAnswerMethods(paperId, questionID, selectedStudentIds) as unknown as Props
+            const data = await sumbitAnswerMethods(paperId, questionID, studentIdsString) as unknown as Props
             if (data.code == 20000) {
                 return true
             } else {
@@ -207,7 +215,7 @@ const StudentPaperHook = () => {
             judgeList.every(item => item.answered === 1) &&
             multiList.every(item => item.answered === 1) &&
             radioList.every(item => item.answered === 1);
-        
+
         if (allAnswered) {
             return true
         } else {

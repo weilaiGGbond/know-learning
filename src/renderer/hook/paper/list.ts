@@ -1,15 +1,17 @@
 import { getExamMethods } from "@renderer/api/teacher/paper/preview";
 import { useCourse } from "@renderer/pages/course";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 
 interface Props {
     code: number,
     data: {
+        total: SetStateAction<number>;
         pages:number,
         records:PageList[]
     },
 }
 interface PageList {
+    hasFinshed: any;
     examId: number,
     lessonId: number,
     examName: string,
@@ -18,7 +20,8 @@ interface PageList {
     keepTime: number,
     startTime: string,
     endTime: string,
-    createTime: number
+    createTime: number,
+    hasFin:number
 }
 
 const PapperListHook = () => {
@@ -34,11 +37,13 @@ const PapperListHook = () => {
             pageNum: page,
             pageSize: 10,
         }) as unknown as Props
-        console.log(pagelist,'55555');
+
         
         if (pagelist.code == 20000) {
             
-            setTotalPage(pagelist.data.pages);
+            setTotalPage(pagelist.data.total);
+            console.log(total);
+            
             setPaperList(pagelist.data.records)
         }
     }

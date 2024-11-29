@@ -11,6 +11,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import PaperLeftNail from '../testCoponent/paper/leftNail';
 import QuestionStudentAnswer from '../testCoponent/testMain/questionAnswer';
 import { sumbitPaper } from '@renderer/api/student/paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPaperIdnow } from '@renderer/store/reducers/paper';
 const { Content, Sider } = Layout;
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -63,6 +65,7 @@ export default function Component() {
     useEffect(() => {
         getPaperId(examId, lessonId)
     }, [])
+    const dispatch = useDispatch();
     const [currentQuestionIdget, setcurrentQuestionIdget] = useState<undefined | number>()
     const [nowpaperQuid, setnowpaperQuid] = useState<number>()
     const [currentType, setCurrentType] = useState('singleChoice');
@@ -124,7 +127,7 @@ export default function Component() {
                 // 变数据
                 changeStatus(currentQuestionIdget);
                 console.log(answerAll());
-                
+
                 // 跳转确定
                 if (!answerAll()) {
                     // 没写完
@@ -134,8 +137,9 @@ export default function Component() {
                         async onOk() {
                             const data = await sumbitPaper(paperId) as any
                             if (data.code == 20000) {
-                                // message.success('提交成功,一秒后返回主页面');
+                                message.success('提交成功,一秒后返回主页面');
                                 navigate(-2)
+                                dispatch(setPaperIdnow(0));
                             }
                         },
                         onCancel() { }
@@ -148,8 +152,9 @@ export default function Component() {
                         async onOk() {
                             const data = await sumbitPaper(paperId) as any
                             if (data.code == 20000) {
-                                // message.success('提交成功,一秒后返回主页面');
+                                message.success('提交成功,一秒后返回主页面');
                                 navigate(-2)
+                                dispatch(setPaperIdnow(0));
                             }
                         },
                         onCancel() { }
@@ -161,7 +166,15 @@ export default function Component() {
             message.error('提交失败，请重试');
         }
     };
-
+    const handleSelectType = async () => {
+        const data = await sumbitPaper(paperId) as any
+        if (data.code == 20000) {
+            message.success('提交成功,一秒后返回主页面');
+            dispatch(setPaperIdnow(0));
+            navigate(-2)
+        }
+    };
+    const setTime = useSelector((state: any) => state.PaperSliceReducer.setTime);
     //判断数据是不是
     return (
         <Layout>
@@ -176,8 +189,10 @@ export default function Component() {
                 </Sider>
                 <Content className="w-3/4 pl-6">
                     <Title level={2} className="mb-4">{title}</Title>
-
-                    <CountdownTimer duration={duration} />
+                    {
+                        setTime
+                    }
+                    <CountdownTimer summbit={handleSelectType} time={setTime} />
 
                     <QuestionStudentAnswer currentID={currentQuestionId}
                         id={currentQuestionIdget} paperId={paperId} />
