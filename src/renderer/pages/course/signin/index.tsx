@@ -1,12 +1,13 @@
 // 签到
 import { LineChartOutlined, SendOutlined } from '@ant-design/icons'
 import { PageContainer } from '@ant-design/pro-components'
-
+import BaiduMap from '../../../components/BaiduMap'
+import PostCheck from './postCheckIn'
 const items = [
   {
     key: '1',
     label: '发布签到',
-    children: 'Tab 1',
+    children: <PostCheck />,
     icon: <SendOutlined />
   },
   {

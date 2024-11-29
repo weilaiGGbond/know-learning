@@ -81,12 +81,12 @@ export const uploadFile = (param: {
 // 教师发布签到
 export const publishSign = (param: {
   lessonId: number
-  latitude: string
-  longitude: string
+  latitude: number
+  longitude: number
   distance: number
   keepTime: number
 }) => {
-  let data = { lessonId: 0, latitude: '', longitude: '', distance: 50, keepTime: 10 }
+  let data = { lessonId: 0, latitude: 0, longitude: 0, distance: 250, keepTime: 10 }
   data = { ...data, ...param }
   return myAxios({
     url: '/sign/pubSign',

@@ -9,11 +9,13 @@
 .ant-layout-header {
   -webkit-app-region: drag;
 }
+
 .ant-layout-header .ant-menu-title-content,
 .ant-layout-header .ant-menu-overflow-item,
 .ant-layout-header .dragger {
   -webkit-app-region: no-drag;
 }
+
 .ant-layout-header .ant-pro-global-header-collapsed-button {
   -webkit-app-region: no-drag;
 }
@@ -34,6 +36,7 @@
 .srollBar::-webkit-scrollbar {
   width: 6px;
 }
+
 .srollBar::-webkit-scrollbar-thumb {
   background-color: #d5e3ed;
   border-radius: 10px;
@@ -42,6 +45,7 @@
 .noSrollBar::-webkit-scrollbar {
   width: 2px;
 }
+
 .noSrollBar::-webkit-scrollbar-thumb {
   background-color: #d5e3ed;
   border-radius: 10px;
@@ -54,25 +58,36 @@
 .createQuestion :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-body {
   padding: 10px 15px;
 }
+
 .createQuestion :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head {
   padding: 0 20px;
   min-height: 30px;
 }
+
 .createQuestion .ql-toolbar.ql-snow {
   position: sticky;
   top: 0;
   background: white;
   z-index: 10;
 }
+
 .createQuestion .ql-container.ql-snow {
   min-height: 220px;
 }
+
 .createQuestion .ql-editor .ql-blank {
   min-height: 220px;
 }
+
 .createQuestion .BCE .ql-container.ql-snow {
   min-height: 250px;
 }
+
 .createQuestion .BCE .ql-editor .ql-blank {
   min-height: 250px;
-}/*# sourceMappingURL=common.css.map */
+}
+
+.BMap_cpyCtr span {
+  display: none;
+  opacity: 0;
+}

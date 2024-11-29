@@ -222,7 +222,7 @@ function CreateQuestion(): JSX.Element {
                       <RichTextEditor
                         value={enableEditor.analysis.value}
                         onChange={(value) => handleEditor('analysis', value)}
-                        getJSON={(value) => handleJSON('analysis', value)}
+                        getJSON={(value: string) => handleJSON('analysis', value)}
                       />
                     </div>
                   </div>

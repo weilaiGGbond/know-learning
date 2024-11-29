@@ -5,9 +5,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PapperListHook from "@renderer/hook/paper/list";
 import Utils from "@renderer/utils/util"
-import moment, { duration } from "moment";
+import moment from "moment";
 
-import { AlignEndVertical } from "lucide-react";
 const StudentTestList = () => {
     const { timeAgo, turnDate } = Utils
     const { Text } = Typography;

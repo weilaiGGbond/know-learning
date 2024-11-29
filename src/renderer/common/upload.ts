@@ -42,7 +42,7 @@ class FileUpload {
     }
   }
 
-  async startUpload(): Promise<void> {
+  async startUpload(): Promise<void> { 
     worker.postMessage({
       file: this.file,
       chunkSize: this.chunkSize,

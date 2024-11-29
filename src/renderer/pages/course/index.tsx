@@ -1,4 +1,4 @@
-import { useMemo, useState, createContext, useContext } from 'react'
+import { useMemo, useState, createContext, useContext, SetStateAction } from 'react'
 import { useParams } from 'react-router-dom'
 import {
   BookOutlined,
@@ -44,7 +44,7 @@ const Course = (): JSX.Element => {
   const actualLessonId = Number(lessonId) || 0
   const [selectedKey, setSelectedKey] = useState('1')
 
-  const handleMenuClick = (item) => {
+  const handleMenuClick = (item: { key: SetStateAction<string> }) => {
     setSelectedKey(item.key)
   }
 
