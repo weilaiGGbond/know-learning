@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import TestLience from '../testCoponent/tesLience'
 import ReturnNailbar from '../layout/returnNail'
 const PreTest = (props): JSX.Element => {
+    const { typeTitle, children, status, title,examId,duration } = props
     const { confirm } = Modal;
     const navigate = useNavigate()
     const gotoMemorandum = () => {
@@ -22,10 +23,10 @@ const PreTest = (props): JSX.Element => {
                 console.log('OK');
                 if (status == 1) {
                     setIsModalVisible(true)
-                } else if (status == 2) {
-                    navigate('/testFinsh',{state:{status:status}})
-                } else {
+                } else if(status == 0){
                     message.error('考试未开始')
+                } else  {
+                    navigate('/testFinsh',{state:{status:status}})
                 }
             },
             onCancel() {
@@ -33,8 +34,6 @@ const PreTest = (props): JSX.Element => {
             },
         });
     }
-
-    const { typeTitle, children, status, title,examId,duration } = props
     return (
         <div className='testMain'>
             <div className='testMain__center'>
@@ -42,7 +41,6 @@ const PreTest = (props): JSX.Element => {
                 <div style={{ padding: '10px' }}>
                     <ReturnNailbar />
                 </div>
-
 
                 <div className='testMain__center-title'>
                     <strong>

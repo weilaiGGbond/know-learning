@@ -30,7 +30,7 @@ const StudentTestList = () => {
     const onSearch = (value) => {
         setExamName(value)
     }
-    const getStatus = (startTime, endTime, hasFinshed) => {
+    const getStatus = (startTime, endTime) => {
         const now = moment();
         if (now.isBefore(startTime)) {
             return (
@@ -46,15 +46,6 @@ const StudentTestList = () => {
                     <Text type="secondary"> 考试时间：{turnDate(startTime, endTime)}</Text>
                 </>
             )
-        } else if (hasFinshed == 1) {
-            return (
-                <>
-                    <>
-                        <Text type="secondary">已完成</Text>
-                        <Text type="secondary"> 考试时间：{turnDate(startTime, endTime)}</Text>
-                    </>
-                </>
-            )
         }
         else {
             return (
@@ -67,21 +58,46 @@ const StudentTestList = () => {
             )
         }
     };
+    const getStatushasFinshe=(hasFinshed)=>{
+        if (hasFinshed ==0) {
+            return (
+                <>
+                    <Text type="danger">未交</Text>
+                </>
+            )
+        }else if(hasFinshed ==2){
+            return (
+                <>
+                    <Text type="success">待批阅</Text>
+                </>
+            )
+        }else{
+            return (
+                <>
+                    <Text type="success">已完成</Text>
+                </>
+            )
+        }
+    }
     const getStatusNow = (startTime, endTime, hasFinshed) => {
         const now = moment();
         if (now.isBefore(startTime)) {
             //未开始
             return 0
-        } else if (now.isAfter(endTime)) {
-            //逾期
+        } else if (now.isAfter(endTime)&& hasFinshed == 0) {
+            //逾期没做完
             return 2
         }
-        else if (hasFinshed == 1) {
-            return -1
-        }
         else {
-            //进行中
-            return 1
+            if(hasFinshed==0){
+                return 1
+            }else if(hasFinshed==2){
+                //写完了等批阅
+                return 3
+            }else{
+                //写完了有分数
+                return 4
+            }
         }
     };
     const setTime = useSelector((state: any) => state.PaperSliceReducer.setTime);
@@ -134,7 +150,7 @@ const StudentTestList = () => {
                                 if (setTime && setTime != 0 && paperId != 0) {
                                     message.warning("您有考试未完成 请及时处理")
                                 } else {
-                                    navigate('/studenttest', { state: { exam: item, status: getStatusNow(item.startTime, item.endTime, item.hasFinshed), name: lessonMessage } });
+                                    navigate('/studenttest', { state: { exam: item, status: getStatusNow(item.startTime, item.endTime, item.hasFin), name: lessonMessage } });
                                 }
                             }
                             }
@@ -152,9 +168,13 @@ const StudentTestList = () => {
                                 description={`创建时间 ${timeAgo(item.createTime)}`}
                             />
                             {
-                                getStatus(item.startTime, item.endTime, item.hasFinshed)
+                                getStatus(item.startTime, item.endTime)
                             }
-
+                            {
+                                getStatushasFinshe(item.hasFin)
+                            }
+                     
+                 
                         </List.Item>
                     )}
                 />
