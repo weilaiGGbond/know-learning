@@ -11,7 +11,6 @@ interface Props {
     },
 }
 interface PageList {
-    hasFinshed: any;
     examId: number,
     lessonId: number,
     examName: string,
