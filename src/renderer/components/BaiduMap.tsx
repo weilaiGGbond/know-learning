@@ -1,5 +1,5 @@
 import { ReloadOutlined } from '@ant-design/icons'
-import { Button, Modal } from 'antd'
+import { Button } from 'antd'
 import { useCallback, useEffect, useRef, useState } from 'react'
 interface mapProp {
   edit?: boolean

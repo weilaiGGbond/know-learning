@@ -1,31 +1,14 @@
 // 教师发布签到
-
 import { publishSign } from '@renderer/api/teacher'
 import BaiduMap from '@renderer/components/BaiduMap'
 import { Button, Form, InputNumber, message, Modal } from 'antd'
 import { useState } from 'react'
 import { useCourse } from '..'
-import useWebSocket from '@renderer/hook/socketConnet'
 // 获取课堂信息
-function PostCheck(): JSX.Element {
+function PostCheck({ sendMessage }): JSX.Element {
   const { lessonId } = useCourse()
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
-  const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
-    url: 'ws://81.70.144.36:8080/ws/les',
-    onOpen: () => {
-      console.log('连接成功')
-    },
-    onClose: () => {
-      console.log('连接关闭')
-    },
-    onError: () => {
-      console.log('连接错误')
-    },
-    onMessage: (message) => {
-      console.log('收到消息', message)
-    }
-  })
   const [from, setFrom] = useState<{
     keepTime: number
     distance: number
@@ -91,13 +74,15 @@ function PostCheck(): JSX.Element {
     publishSign({ lessonId, keepTime, distance, longitude, latitude }).then((res) => {
       if (res) {
         console.log(res)
-        sendMessage({
-          type: 1,
-          lessonId,
-          msg: {
-            ...res.data
-          }
-        })
+        sendMessage(
+          JSON.stringify({
+            lessonId,
+            type: 1,
+            msg: {
+              ...res.data
+            }
+          })
+        )
         message.success('发布成功')
         setLoading(false)
         setOpen(false)

@@ -6,9 +6,8 @@ import StudentCheck from '@renderer/pages/course/signin/studentCheck'
 import { Avatar, Button, Space } from 'antd'
 import { Header } from 'antd/es/layout/layout'
 // 获取当前位置的地图
-const ChatTop = ({lastMessage,webSocket}) => {
+const ChatTop = ({ lastMessage, sendMessage }) => {
   const { chatMessage } = useChatContext()
-  console.log(lastMessage,webSocket,'111111');
   return (
     <div>
       <Header
@@ -28,7 +27,7 @@ const ChatTop = ({lastMessage,webSocket}) => {
             <span>{chatMessage.lessonName}</span>
           </Space>
           <Space>
-            <StudentCheck lastMessage={lastMessage} />
+            <StudentCheck lastMessage={lastMessage} sendMessage={sendMessage} />
             <Button icon={<PhoneOutlined />} shape="circle" />
             <Button icon={<VideoCameraOutlined />} shape="circle" />
             <MainPeople />

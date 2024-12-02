@@ -11,6 +11,12 @@ const personSlice = createSlice({
     classid: '',
     classname: '',
     count: 0,
+    userInfo: {
+      username: '',
+      name: '',
+      sex: 0,
+      stuClass: '',
+    }
   },
   reducers: {
     increment: (state, action) => {
@@ -29,6 +35,9 @@ const personSlice = createSlice({
     setUserownName: (state, action) => {
       state.username = action.payload
     },
+    setUserInfo: (state, action) => {
+      state.userInfo = action.payload
+    },
     clearToken: (state) => {
       state.token = ''
       deleteTokenAuth()
@@ -36,5 +45,5 @@ const personSlice = createSlice({
   }
 })
 
-export const { setToken, clearToken,setUserownName } = personSlice.actions
+export const { setToken, clearToken, setUserownName, setUserInfo } = personSlice.actions
 export default personSlice.reducer

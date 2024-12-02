@@ -48,8 +48,8 @@ const MessagePeople = ({ contact }: ChatWindowProps) => {
   } = chatMethods()
   const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
     url: `ws://81.70.144.36:8080/ws/les`,
-    onOpen(){
-      console.log('签到连接成功');
+    onOpen() {
+      console.log('签到连接成功')
     },
     onError: (err) => {
       console.log('连接错误', err)
@@ -73,7 +73,7 @@ const MessagePeople = ({ contact }: ChatWindowProps) => {
       <Layout className="h-full">
         {contact ? (
           <>
-            <ChatTop lastMessage={lastMessage} webSocket={webSocket} />
+            <ChatTop lastMessage={lastMessage} sendMessage={sendMessage} />
             <ChatConten chatMessage={chatMessage} loadMore={getChatMessage} page={page} />
             <ChatFooter
               lastMessage={lastMessage}

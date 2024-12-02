@@ -1,34 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, message, Modal } from 'antd'
 import BaiduMap from '@renderer/components/BaiduMap'
 import { EnvironmentFilled } from '@ant-design/icons'
-import useWebSocket from '@renderer/hook/socketConnet'
 import { studentSign } from '@renderer/api/student'
-const StudentCheck = ({lastMessage}) => {
+import { useSelector } from 'react-redux'
+import { useCourse } from '..'
+
+const StudentCheck = ({ lastMessage, sendMessage }) => {
+  const { lessonId } = useCourse()
+  const userInfo = useSelector((state: any) => state.person.userInfo)
+  const [signId, setSignId] = useState(0)
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const [position, setPosition] = useState<{ longitude: number; latitude: number }>({
     longitude: 0,
     latitude: 0
   })
-  // const [webSocket, sendMessage, lastMessage, isConnected] = useWebSocket({
-  //   url: 'ws://81.70.144.36:8080/ws/les',
-  //   onOpen: () => {
-  //     console.log('连接成功')
-  //   },
-  //   onClose: () => {
-  //     console.log('连接关闭')
-  //   },
-  //   onError: (err) => {
-  //     console.log('连接错误',err)
-  //   },
-  //   onMessage: (message) => {
-  //     console.log('收到消息', message)
-  //   }
-  // })
-  useEffect(()=>{
-    console.log(lastMessage,'签到消息')
-  },[lastMessage])
+  useEffect(() => {
+    if (lastMessage.signId) {
+      setSignId(lastMessage.signId)
+    }
+  }, [lastMessage])
   const showModal = () => {
     setOpen(true)
   }
@@ -40,18 +32,26 @@ const StudentCheck = ({lastMessage}) => {
       return
     }
     console.log(position, 'position', lastMessage)
-    // studentSign({
-    //   longitude: position.longitude,
-    //   latitude: position.latitude,
-    //   lessonId: 1
-    // }).then((res) => {
-    //   if (res) {
-    //     console.log(res)
-    //     message.success('签到成功')
-    //   } else {
-    //     message.error('签到失败')
-    //   }
-    // })
+    studentSign({
+      longitude: position.longitude,
+      latitude: position.latitude,
+      signId: signId
+    }).then((res) => {
+      if (res) {
+        console.log(res)
+        sendMessage(
+          JSON.stringify({
+            lessonId,
+            type: 1,
+            msg: {
+              ...userInfo
+            }
+          })
+        )
+        message.success('签到成功')
+        // 获取个人信息
+      }
+    })
     setTimeout(() => {
       setLoading(false)
       setOpen(false)
